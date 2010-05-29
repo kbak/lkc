@@ -1,0 +1,144 @@
+\documentclass{chi2009}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage[pdftex]{hyperref}
+
+\newcommand{\docTitle}{Improving Usability of the Linux Kernel Configuration Tools}
+\newcommand{\docKeywords}{usability, linux, configuration}
+
+\hypersetup{%
+pdftitle={\docTitle},
+pdfauthor={Kacper Bak},
+pdfkeywords={\docKeywords},
+bookmarksnumbered,
+pdfstartview={FitH},
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black,
+breaklinks=true,
+}
+\newcommand{\comment}[1]{}
+\definecolor{Orange}{rgb}{1,0.5,0}
+\newcommand{\todo}[1]{\textsf{\textbf{\textcolor{Orange}{[[#1]]}}}}
+
+\pagenumbering{arabic}  % Arabic page numbers for submission.  Remove this line to eliminate page numbers for the camera ready copy
+
+\begin{document}
+% to make various LaTeX processors do the right thing with page size
+\special{papersize=8.5in,11in}
+\setlength{\paperheight}{11in}
+\setlength{\paperwidth}{8.5in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+% use this command to override the default ACM copyright statement 
+% (e.g. for preprints). Remove for camera ready copy.
+\toappear{Submitted for review to CHI 2009.}
+
+\title{\docTitle}
+\numberofauthors{2}
+\author{
+  \alignauthor Kacper Bak\\
+    \affaddr{Generative Software Development Lab}\\
+    \affaddr{University of Waterloo, Canada}\\
+    \email{kbak@gsd.uwaterloo.ca}
+  \alignauthor Author 2\\
+    \affaddr{Affiliation}\\
+    \affaddr{Affiliation}\\
+    \email{author2@b.com}
+}
+
+\maketitle
+
+\begin{abstract}
+  Every submission should begin with an abstract of about 150 words,
+followed by a set of keywords. The abstract and keywords should be
+placed in the left column of the first page under the left half of the
+title. The abstract should be a concise statement of the problem,
+approach and conclusions of the work described.  It should clearly
+state the paper's contribution to the field of HCI.
+\end{abstract}
+
+\keywords{\docKeywords} 
+
+\category{H.5.2}{Information Interfaces and Presentation}{Miscellaneous}[Optional sub-category]
+
+\todo{update category}
+
+\section{Introduction}
+
+GNU/Linux is a free operating system with Linux as its kernel. The Linux kernel\footnote{Available at: \url{http://www.kernel.org/}} is a mature and very complex piece of software. It has been developed by thousands of programmers led by Linus Torvalds since 1991. The kernel supports many computer architectures, network protocols, includes thousands of drivers, and many debugging options.
+
+% mention the router case; limited resources; dependencies
+
+Structure of the kernel is very modular, so that each user can tailor kernel to her particular needs and specific hardware. Users upgrade their kernels mostly to improve stability, apply new bug-fixes, add functionality, and drivers. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
+
+\section{Problem}
+All the configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability and supports users during the configuration stage. LKC uses internally the KConfig language to represent variability and dependencies among features. As several researchers \cite{sincero:lkc:2008,she:kernel:2010} showed, there is a direct correspondence between well-understood feature models and practically crafted variability model used by the Linux kernel. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is a serious problem, because users can unconsciously create wrong configurations and they have no clue why particular configuration does not work.
+
+Many users complained about the lack of kernel autoconfiguration \cite{debian:config:2010,soft32:config:2007}, where LKC could detect current hardware and automatically choose relevant modules. The situation is slowly improving as developers added the \textsf{localmodconfig} target to Linux-2.6.32. The command detects current kernel configuration and applies the same options to the new kernel. It is a step ahead, but the tool is very simplistic and assumes that all the required modules are already loaded. For example, if a computer has built-in Bluetooth, but the module is not loaded, the new kernel will not support the Bluetooth device. Furthermore, the autoconfiguration script offers a very coarse level of options granularity, e.g. if a computer has one sound card, such as Intel HD Audio, the script will select all available sound card drivers and all Intel HD Audio modules. The autoconfiguration tool reads configuration of the running kernel instead of detecting the actual hardware, e.g. for a laptop with the Core Duo 2 processor, it selected 686 processor in the new kernel, because that processor is selected in the running kernel.
+
+Linux kernel configurators are targeted to advanced users. Some kernel developers expressed opinion \cite{ADDREF} that kernel should be configured only by experienced users. While this statement might be true, there are still lots of Linux novice users who want to learn how to configure kernel or need to compile a particular driver. As of now, there are millions of web pages describing how to configure and compile the Linux kernel. Novice users are often overwhelmed by the number of available options and required knowledge. LKC offers no progressive-disclosure for them.
+
+There are also minor issues with configurators usability, such as inaccurate searching in xconfig. It allows to search for features by their name or symbol, but searching ignores long text descriptions. These descriptions are for humans, so that they can learn about specific configuration options.
+
+Another issue is lack of good navigation when debug info is displayed. User can only move forward from one feature to the other, but cannot go back or see where the feature is located. It is especially annoying when a configuration option depends on another feature, but the feature cannot be easily located.
+
+\section{Past Attempts}
+Some of the above issues were already solved in 2002 when Eric S. Raymond presented the CML2 configuration system \cite{raymond:cml2:2000}. It allowed for effective reasoning on kernel feature model and also provided progressive-disclosure. There was a long debate and flame war about using that system \cite{kerneltrap:linux:2002}. Finally, it was rejected for various (sometimes silly) reasons, such as Eric S. Raymond's attitude, Python dependency, complexity, radically new design. Many developers preferred to introduce gradual updates instead of applying one big patch. They simply objected big changes.
+
+\section{Solution}
+Many of the LKC shortcomings can be fixed incrementally, without throwing away the whole infrastructure. Perhaps the most significant part, but fairly invisible for an end user, is adding a formal reasoning engine, such as a SAT-solver. It would solve all the problems with constraints, dependencies, and choice propagation. A more visible part would be autoconfiguration, i.e. kernel is automatically tailored to currently running machine. This can be done separately from the SAT-solver, but without reliable choice propagation, some configurations cannot be automatically applied. Although current autoconfiguration works fairly well in simple cases, it still requires post configuration in a dedicated tool. Furthermore, progressive-disclosure would allow different groups of users to configure kernel in a simpler way. Progressive-disclosure can be done separately from the SAT-solver, but it would require a hand-crafted algorithm for showing and hiding configuration options. Finally, the minor issues are relatively small (in terms of code) user interface improvements, but they have impact on overall usability.
+
+I believe that the proposed improvements would make kernel configuration infrastructure more robust and easier to use. Many of the techniques are not tied to this specific project. The problem of effective product configuration is very common, but rarely solved, it is enough to mention package managers, feature model configurators or even tailoring medical messages to specific patients. The FOSS community could use the algorithms and ideas in any kind of software that has variability in it.
+
+\todo{what do you think about creating a graphical tool that goes with you step by step and configures a kernel? basically you answer some questions, press next, and finally click install to install the new kernel. It might be appreciated by beginners. Is it too simplistic? would it be useful? it improves usability, but are there many users who need such a limited tool?}
+
+\section{Scope}
+
+\todo{1. reasoning engine only indicates conflicts, but it doesn't have to resolve them; 2. we'd have to scope hardware detection to the most popular devices}
+
+\section{Evaluation Plan}
+
+An evaluation plan. For any project, you should indicate how you will evaluate your project and its value (or potential value) to the FOSS community.
+
+\todo{todo}
+
+\section{Outline}
+Provide a rough outline of your plan of action from the time of submission until the end of the term.
+
+\todo{todo}
+
+\section{Division of Labor}
+
+\todo{KB - I'd like to work on the reasoning engine and something else}
+
+\subsection{References and Citations}
+
+Use a numbered list of references at the end of the article, ordered
+alphabetically by first author, and referenced by numbers in brackets
+[2,4,5,7]. For papers from conference proceedings, include the title
+of the paper and an abbreviated name of the conference (e.g., for
+Interact 2003 proceedings, use Proc. Interact 2003). Do not include
+the location of the conference or the exact date; do include the page
+numbers if available. See the examples of citations at the end of this
+document. Within this template file, use the References style for the
+text of your citation.
+
+Your references should be published materials accessible to the
+public.  Internal technical reports may be cited only if they are
+easily accessible (i.e., you provide the address for obtaining the
+report within your citation) and may be obtained by any reader for a
+nominal fee.  Proprietary information may not be cited. Private
+communications should be acknowledged in the main text, not referenced
+(e.g., ``[Robertson, personal communication]'').
+
+
+\bibliographystyle{abbrv}
+\bibliography{doc}
+
+\end{document}
