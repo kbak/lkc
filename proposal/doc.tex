@@ -4,6 +4,9 @@
 \usepackage{graphics}
 \usepackage{color}
 \usepackage[pdftex]{hyperref}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
 
 \newcommand{\docTitle}{Improving Usability of the Linux Kernel Configuration Tools}
 \newcommand{\docKeywords}{usability, linux, kernel, configuration}
@@ -37,7 +40,7 @@ breaklinks=true,
 
 % use this command to override the default ACM copyright statement 
 % (e.g. for preprints). Remove for camera ready copy.
-\toappear{Submitted for review to CHI 2009.}
+\toappear{Submitted for CS 889 - Open Source Usability.}
 
 \title{\docTitle}
 \numberofauthors{2}
@@ -46,10 +49,10 @@ breaklinks=true,
     \affaddr{Generative Software Development Lab}\\
     \affaddr{University of Waterloo, Canada}\\
     \email{kbak@gsd.uwaterloo.ca}
-  \alignauthor Author 2\\
-    \affaddr{Affiliation}\\
-    \affaddr{Affiliation}\\
-    \email{author2@b.com}
+  \alignauthor Karim Ali\\
+    \affaddr{PLG Group}\\
+    \affaddr{University of Waterloo, Canada}\\
+    \email{karim@uwaterloo.ca}
 }
 
 \maketitle
@@ -69,14 +72,14 @@ state the paper's contribution to the field of HCI.
 
 \section{Introduction}
 
-GNU/Linux is a free operating system with Linux as its kernel. The Linux kernel\footnote{Available at: \url{http://www.kernel.org/}} is a mature and very complex piece of software. It has been developed by thousands of programmers led by Linus Torvalds since 1991. The kernel supports many computer architectures, network protocols, includes thousands of drivers, and many debugging options.
+GNU/Linux is a free operating system with Linux as its kernel. The Linux kernel\footnote{Available at: \url{http://www.kernel.org/}} is a mature and very complex piece of software. It has been developed by thousands of programmers led by Linus Torvalds since 1991. The kernel supports many computer architectures, network protocols, thousands of drivers, and many debugging options.
 
 % mention the router case; limited resources; dependencies
 
-Structure of the kernel is very modular, so that each user can tailor kernel to her particular needs and specific hardware. Users upgrade their kernels mostly to improve stability, apply new bug-fixes, add functionality, and drivers. Sometimes it is necessary to upgrade kernel in an embedded system, such as network router. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
+Structure of the kernel is very modular, so that each user can tailor it to her particular needs and specific hardware. Users upgrade their kernels mostly to improve stability, apply new bug-fixes, add functionality, and drivers. Sometimes it is necessary to upgrade kernel in an embedded system, such as network router. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
 
 \section{Problem}
-All the configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability and supports users during the configuration stage. LKC uses internally the KConfig language to represent variability and dependencies among features. As several researchers \cite{sincero:lkc:2008,she:kernel:2010} showed, there is a direct correspondence between well-understood feature models and practically crafted variability model used by the Linux kernel. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is a serious problem, because users can unconsciously create wrong configurations and they have no clue why particular configuration does not work.
+All the configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability and supports users during the configuration stage. LKC uses internally the KConfig language to represent variability and dependencies among features. As several researchers \cite{sincero:lkc:2008,she:kernel:2010} showed, there is a direct correspondence between well-understood feature models and practically crafted variability model used by the Linux kernel. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is a serious problem, because users can unconsciously create wrong configurations while having no clue why a particular configuration does not work.
 
 Many users complain about the lack of kernel autoconfiguration \cite{debian:config:2010,soft32:config:2007}, where LKC could detect current hardware and automatically choose relevant modules. The situation is slowly improving as developers added the \textsf{localmodconfig} target to Linux-2.6.32. The command detects current kernel configuration and applies the same options to the new kernel. It is a step ahead, but the tool is very simplistic and assumes that all the required modules are already loaded. For example, if a computer has built-in Bluetooth, but the module is not loaded, the new kernel will not support the Bluetooth device. Furthermore, the autoconfiguration script offers a very coarse level of options granularity, e.g. if a computer has one sound card, such as Intel HD Audio, the script will select all available sound card drivers and all Intel HD Audio modules. The autoconfiguration tool reads configuration of the running kernel instead of detecting the actual hardware, e.g. for a laptop with the Core Duo 2 processor, it selected 686 processor in the new kernel, because that processor is selected in the running kernel.
 
@@ -93,9 +96,6 @@ Some of the above issues were already solved in 2002 when Eric S. Raymond presen
 Many of the LKC shortcomings can be fixed incrementally, without throwing away the whole infrastructure. Perhaps the most significant part, but fairly invisible for an end user, is adding a formal reasoning engine, such as a SAT-solver. It would solve all the problems with constraints, dependencies, and choice propagation. A more visible part would be autoconfiguration, i.e. kernel is automatically tailored to currently running machine. This can be done separately from the SAT-solver, but without reliable choice propagation, some configurations cannot be automatically applied. Although current autoconfiguration works fairly well in simple cases, it still requires post configuration in a dedicated tool. Furthermore, progressive-disclosure would allow different groups of users to configure kernel in a simpler way. Progressive-disclosure can be done separately from the SAT-solver, but it would require a hand-crafted algorithm for showing and hiding configuration options. Finally, the minor issues are relatively small (in terms of code) user interface improvements, but they have impact on overall usability.
 
 We believe that the proposed improvements would make the kernel configuration infrastructure more robust and easier to use. Many of the techniques are not tied to this specific project. The problem of effective product configuration is very common, but rarely solved, it is enough to mention package managers, feature model configurators or even tailoring medical messages to specific patients. The FOSS community could use the algorithms and ideas in any kind of software that has variability in it.
-
-% future work
-% \todo{what do you think about creating a graphical tool that goes with you step by step and configures a kernel? basically you answer some questions, press next, and finally click install to install the new kernel. It might be appreciated by beginners. Is it too simplistic? would it be useful? it improves usability, but are there many users who need such a limited tool?}
 
 \section{Scope}
 
@@ -126,30 +126,52 @@ An evaluation plan. For any project, you should indicate how you will evaluate y
 \todo{Some end-study on users. Will ask them to configure kernel using old and improved tools. Any specific ideas?}
 
 \section{Outline}
+Table \ref{tab:outline} shows our project milestones until the end of the term.
 
-\begin{tabular}{l|l l}
-  & Start & End\\ \hline
-  Searching & June 1 & June 2\\
-  Navigation & June 1 & June 4\\
-  Progressive Disclosure & June 3 & June 11\\
-  Reasoning Engine & June 7 & July 9\\
-  Autoconfiguration & June 13 & July 9\\
-  User Study & July 12 & July 14\\
-  Report and Blog Entry & July 15 & July 28 
-\end{tabular}
+\begin{table}[!h]
+\centering
+\begin{tabularx}{0.5\textwidth}{X c c}
+\toprule
+\textbf{Milestone} & \textbf{Start} & \textbf{End}\\ \midrule
+Initial Proposal & May 27 & May 31\\
+Final proposal & May 31 & June 14 \\
+Searching & June 1 & June 2\\
+Navigation & June 1 & June 4\\
+Progressive Disclosure & June 3 & June 11\\
+Reasoning Engine & June 7 & July 9\\
+Autoconfiguration & June 13 & July 9\\
+User Study & July 12 & July 14\\
+Report and Blog Entry & July 15 & July 28\\
+\bottomrule
+\end{tabularx}
+\caption{Project Milestones}
+\label{tab:outline}
+\end{table}
+
 
 \section{Division of Labor}
+Table \ref{tab:plan} shows our project tasks and the group member responsible for each task.
 
-\begin{tabular}{l|c c}
-  & Karim Ali & Kacper Bak\\ \hline
-  Searching & $\surd$ &\\
-  Navigation & & $\surd$\\
-  Progressive Disclosure & $\surd$ &\\
-  Reasoning Engine & & $\surd$\\
-  Autoconfiguration & $\surd$ &\\
-  User Study & $\surd$ & $\surd$\\
-  Report & $\surd$ & $\surd$
-\end{tabular}
+\begin{table}[!h]
+\centering
+\begin{tabularx}{0.5\textwidth}{X c c}
+\toprule
+\textbf{Task} & \textbf{Karim Ali} & \textbf{Kacper Bak}\\ \midrule
+Searching & $\surd$ &\\
+Navigation & & $\surd$\\
+Progressive Disclosure & $\surd$ &\\
+Reasoning Engine & & $\surd$\\
+Autoconfiguration & $\surd$ &\\
+User Study & $\surd$ & $\surd$\\
+Report & $\surd$ & $\surd$\\
+\bottomrule
+\end{tabularx}
+\caption{Project Tasks}
+\label{tab:plan}
+\end{table}
+
+\section{Future Work}
+% \todo{what do you think about creating a graphical tool that goes with you step by step and configures a kernel? basically you answer some questions, press next, and finally click install to install the new kernel. It might be appreciated by beginners. Is it too simplistic? would it be useful? it improves usability, but are there many users who need such a limited tool?}
 
 \bibliographystyle{abbrv}
 \bibliography{doc}
