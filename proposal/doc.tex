@@ -58,12 +58,7 @@ breaklinks=true,
 \maketitle
 
 \begin{abstract}
-  Every submission should begin with an abstract of about 150 words,
-followed by a set of keywords. The abstract and keywords should be
-placed in the left column of the first page under the left half of the
-title. The abstract should be a concise statement of the problem,
-approach and conclusions of the work described.  It should clearly
-state the paper's contribution to the field of HCI.
+Tailoring a Linux kernel to ones needs has been one of the most cumbersome tasks a GNU/Linux user can do. That is why there have been many attempts to overcome such problem by introducing configuration tools that facilitate the process of configuring an image of the Linux kernel. However, those tools still lack some important features that discourage users from using them. In this project, we plan to address five major problems that we have identified: lack of a reasoning engine to automatically resolve dependencies and detect inconsistencies; hardware support for autoconfiguration tool; lack of progressive-disclosure in the xconfig tool; incomplete search in xconfig; and lack of navigation in xconfig.
 \end{abstract}
 
 \keywords{\docKeywords} 
@@ -81,7 +76,7 @@ Structure of the kernel is very modular, so that each user can tailor it to her 
 \section{Problem}
 All the configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability and supports users during the configuration stage. LKC uses internally the KConfig language to represent variability and dependencies among features. As several researchers \cite{sincero:lkc:2008,she:kernel:2010} showed, there is a direct correspondence between well-understood feature models and practically crafted variability model used by the Linux kernel. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is a serious problem, because users can unconsciously create wrong configurations while having no clue why a particular configuration does not work.
 
-Many users complain about the lack of kernel autoconfiguration \cite{debian:config:2010,soft32:config:2007}, where LKC could detect current hardware and automatically choose relevant modules. The situation is slowly improving as developers added the \textsf{localmodconfig} target to Linux-2.6.32. The command detects current kernel configuration and applies the same options to the new kernel. It is a step ahead, but the tool is very simplistic and assumes that all the required modules are already loaded. For example, if a computer has built-in Bluetooth, but the module is not loaded, the new kernel will not support the Bluetooth device. Furthermore, the autoconfiguration script offers a very coarse level of options granularity, e.g. if a computer has one sound card, such as Intel HD Audio, the script will select all available sound card drivers and all Intel HD Audio modules. The autoconfiguration tool reads configuration of the running kernel instead of detecting the actual hardware, e.g. for a laptop with the Core Duo 2 processor, it selected 686 processor in the new kernel, because that processor is selected in the running kernel.
+Many users complain about the lack of kernel autoconfiguration \cite{debian:config:2010,soft32:config:2007}, where LKC could detect current hardware and automatically choose relevant modules. The situation is slowly improving as developers added the \textsf{localmodconfig} \footnote{More info at: \url{http://bit.ly/cPgq8R}} target to Linux-2.6.32. The command detects current kernel configuration and applies the same options to the new kernel. It is a step ahead, but the tool is very simplistic and assumes that all the required modules are already loaded. For example, if a computer has built-in Bluetooth, but the module is not loaded, the new kernel will not support the Bluetooth device. Furthermore, the autoconfiguration script offers a very coarse level of options granularity, e.g. if a computer has one sound card, such as Intel HD Audio, the script will select all available sound card drivers and all Intel HD Audio modules. The autoconfiguration tool reads configuration of the running kernel instead of detecting the actual hardware, e.g. for a laptop with the Core Duo 2 processor, it selected 686 processor in the new kernel, because that processor is selected in the running kernel.
 
 Linux kernel configurators are targeted to advanced users. Some kernel developers expressed opinion \cite{ADDREF} that kernel should be configured only by experienced users. While this statement might be true, there are still lots of Linux novice users who want to learn how to configure kernel or need to compile a particular driver. As of now, there are millions of web pages describing how to configure and compile the Linux kernel. Novice users are often overwhelmed by the number of available options and required knowledge. LKC offers no progressive-disclosure for them.
 
@@ -105,7 +100,7 @@ We are going to use one of available SAT-solvers to reason upon kernel configura
 
 \subsection{Autoconfiguration}
 
-\todo{we'd have to scope hardware detection to the most popular devices. Think about CPU, sound cards, memory cards, network devices, usb devices. It would be ok to ask user if he wants to enable support for certain non-detectable stuff, such as pendrives. Take a look at make localmodconfig.}
+There is a broad spectrum of hardware components that a Linux kernel can support, including: processors, motherboards, network devices, media devices, usb devices, and input/output devices. Adding support for all hardware devices in all those categories in our autoconfiguration tool needs more time than what we have for the course of this term. Therefore, we will start by supporting the most popular devices for now, then the community can take it from there and add support for other devices later. Autoconfiguration will also allow the user to enable support for certain non-detectable stuff, (e.g pendrives) in a way similar to how \textsf{localmodconfig} functions.
 
 \subsection{Progressive Disclosure}
 
@@ -121,12 +116,9 @@ As for navigation, we are going to add a browser-like functionality. It will all
 
 \section{Evaluation Plan}
 
-An evaluation plan. For any project, you should indicate how you will evaluate your project and its value (or potential value) to the FOSS community.
-
 \todo{Some end-study on users. Will ask them to configure kernel using old and improved tools. Any specific ideas?}
 
 \section{Outline}
-Table \ref{tab:outline} shows our project milestones until the end of the term.
 
 \begin{table}[!h]
 \centering
@@ -150,7 +142,6 @@ Report and Blog Entry & July 15 & July 28\\
 
 
 \section{Division of Labor}
-Table \ref{tab:plan} shows our project tasks and the group member responsible for each task.
 
 \begin{table}[!h]
 \centering
