@@ -100,7 +100,7 @@ We are going to use one of available SAT-solvers to reason upon kernel configura
 
 \subsection{Autoconfiguration}
 
-There is a broad spectrum of hardware components that a Linux kernel can support, including: processors, motherboards, network devices, media devices, usb devices, and input/output devices. Adding support for all hardware devices in all those categories in our autoconfiguration tool needs more time than what we have for the course of this term. Therefore, we will initially support ISA hardware devices \footnote{http://bit.ly/1WASzK}, then the community can take it from there and add support for other devices later. Autoconfiguration will also allow the user to enable support for certain non-detectable stuff, (e.g pendrives) in a way similar to how \textsf{localmodconfig} functions.
+There is a broad spectrum of hardware components that a Linux kernel can support, including: processors, motherboards, network devices, media devices, usb devices, and input/output devices. Adding support for all hardware devices in all those categories in our autoconfiguration tool needs more time than what we have for the course of this term. Therefore, we will initially support the most popular hardware devices in three categories: wireless network devices, wired network devices, and sound cards. Then the FOSS community can take it from there and add support for more devices later. Autoconfiguration will also allow the user to enable support for certain non-detectable stuff, (e.g pendrives) in a way similar to how \textsf{localmodconfig} functions.
 
 \subsection{Progressive Disclosure}
 
