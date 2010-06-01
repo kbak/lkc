@@ -58,7 +58,7 @@ breaklinks=true,
 \maketitle
 
 \begin{abstract}
-Tailoring a Linux kernel to ones needs has been one of the most cumbersome tasks a GNU/Linux user can do. That is why there have been many attempts to overcome such problem by introducing configuration tools that facilitate the process of configuring an image of the Linux kernel. However, those tools still lack some important features that discourage users from using them. In this project, we plan to address five major problems that we have identified: lack of a reasoning engine to automatically resolve dependencies and detect inconsistencies; hardware support for autoconfiguration tool; lack of progressive-disclosure in the xconfig tool; incomplete search in xconfig; and lack of navigation in xconfig.
+Tailoring a Linux kernel to one's needs has been one of the most cumbersome tasks a GNU/Linux user can do. There have been many attempts to overcome this problem by introducing smarter configuration tools. Those tools, however, still lack some important features, which discourages users from using them. In this project, we plan to address five major problems that we have identified: lack of a reasoning engine to automatically resolve dependencies and detect inconsistencies; hardware support for autoconfiguration tool; lack of progressive-disclosure in the xconfig tool; incomplete search in xconfig; and lack of navigation in xconfig.
 \end{abstract}
 
 \keywords{\docKeywords} 
@@ -71,7 +71,7 @@ GNU/Linux is a free operating system with Linux as its kernel. The Linux kernel\
 
 % mention the router case; limited resources; dependencies
 
-Structure of the kernel is very modular, so that each user can tailor it to her particular needs and specific hardware. Users upgrade their kernels mostly to improve stability, apply new bug-fixes, add functionality, and drivers. Sometimes it is necessary to upgrade kernel in an embedded system, such as network router. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
+Structure of the kernel is very modular, so that each user can tailor it to her particular needs and specific hardware. Users upgrade their kernels mostly to improve stability, apply new bug-fixes, add functionality and drivers. Sometimes it is necessary to upgrade kernel in an embedded system, such as network router. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
 
 \section{Problem}
 All the configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability and supports users during the configuration stage. LKC uses internally the KConfig language to represent variability and dependencies among features. As several researchers \cite{sincero:lkc:2008,she:kernel:2010} showed, there is a direct correspondence between well-understood feature models and practically crafted variability model used by the Linux kernel. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is a serious problem, because users can unconsciously create wrong configurations while having no clue why a particular configuration does not work.
@@ -116,9 +116,10 @@ As for navigation, we are going to add a browser-like functionality. It will all
 
 \section{Evaluation Plan}
 
-We will make our code publicly available for the FOSS community so that we get feedback from them on how useful our solutions are. In addition, we plan to do a user study targeting people with different levels of experience in configuring the Linux kernel. The study will focus on the five problems we identified and how/if the solutions we will implement help alleviate those problems or not.
+We will make our code publicly available for the FOSS community so that we get feedback from them on how useful our solutions are. In addition, we plan to do a user study targeting people with different levels of experience in configuring the Linux kernel. They will be asked to configure kernel for one of popular laptops for typical home/office use. A person succeeds if the new kernel is ready to play music and movies, connect to Ethernet, use WiFi, memory cards, USB devices, Bluetooth, CD/DVD. The study will focus on the five problems we identified and how/if the solutions we will implement help alleviate those problems or not.
 
 \section{Outline}
+Table \ref{tab:outline} shows proposed outline.
 
 \begin{table}[!h]
 \centering
@@ -140,8 +141,8 @@ Report and Blog Entry & July 15 & July 28\\
 \label{tab:outline}
 \end{table}
 
-
 \section{Division of Labor}
+Table \ref{tab:plan} shows proposed division of labor.
 
 \begin{table}[!h]
 \centering
