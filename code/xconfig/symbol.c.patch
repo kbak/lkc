@@ -1,0 +1,13 @@
+--- linux-2.6.34/scripts/kconfig/symbol.c	2010-05-16 17:17:36.000000000 -0400
++++ linux/scripts/kconfig/symbol.c	2010-06-01 22:31:45.228651815 -0400
+@@ -739,7 +739,9 @@
+ 	for_all_symbols(i, sym) {
+ 		if (sym->flags & SYMBOL_CONST || !sym->name)
+ 			continue;
+-		if (regexec(&re, sym->name, 0, NULL, 0))
++		if (!(regexec(&re, sym->name, 0, NULL, 0) == 0) &&
++			!(sym->prop && sym->prop->text && regexec(&re, sym->prop->text, 0, NULL, 0) == 0) &&
++			!(sym->prop && sym->prop->menu && sym->prop->menu->help && regexec(&re, sym->prop->menu->help, 0, NULL, 0) == 0))
+ 			continue;
+ 		if (cnt + 1 >= size) {
+ 			void *tmp = sym_arr;
