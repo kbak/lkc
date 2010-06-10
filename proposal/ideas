@@ -1,0 +1,15 @@
+Solution
+- main objective: study the behavior of people when it comes to kernel configuration. This will probably come from the pilot study.
+- After doing the Wizard-of-Oz, we should be able to come up with a tool this is user-friendly and matches users expectations the most.
+
+Scope
+- Focus on linux kernel configuration tools
+- Computer enthusiats who have experience with linux and are interested in kernel configuration
+
+Evaluation Plan
+- Only the last study goes here. 
+- Ideas
+- 2 separate groups, one uses the current tools, another one that uses our tool.
+- Same group of people use both tools.
+- We have two groups of users, one using the current tools and the other group is using our tool. We will present each group with the same configuration file and ask them to create this file by using the tool they have. We can compare how close each group is to the configuration file we came up with before and consequently can assess the usability of our tool as opposed to the current tools.
+
