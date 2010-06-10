@@ -58,7 +58,7 @@ breaklinks=true,
 \maketitle
 
 \begin{abstract}
-Tailoring a Linux kernel to one's needs has been one of the most cumbersome tasks a GNU/Linux user can do. There have been many attempts to overcome this problem by introducing smarter configuration tools. Those tools, however, still lack some important features, which discourages users from using them. In this project, we plan to address five major problems that we have identified: lack of a reasoning engine to automatically resolve dependencies and detect inconsistencies; hardware support for autoconfiguration tool; lack of progressive-disclosure in the xconfig tool; incomplete search in xconfig; and lack of navigation in xconfig.
+Tailoring a Linux kernel to one's needs has been one of the most cumbersome tasks a GNU/Linux user can do. There have been many attempts to overcome this problem by introducing smarter configuration tools. Those tools, however, still lack some important features, which discourages users from using them. In this project, we plan to address the problem of usability of the Linux kernel configuration tools. Our aim is to identify the major usability issues with current tools, propose a better user interface and evaluate it on a group of Linux enthusiasts.
 \end{abstract}
 
 \keywords{\docKeywords} 
@@ -80,22 +80,20 @@ Many users complain about the lack of kernel autoconfiguration \cite{debian:conf
 
 Linux kernel configurators are targeted to advanced users. Some kernel developers expressed opinion \cite{kernel:aunt:2002} that kernel should be configured only by experienced users. While this statement might be true, there are still lots of Linux novice users who want to learn how to configure kernel or need to compile a particular driver. As of now, there are millions of web pages describing how to configure and compile the Linux kernel. Novice users are often overwhelmed by the number of available options and required knowledge. LKC offers no progressive-disclosure for them.
 
-There are also minor issues with configurators usability, such as inaccurate searching in xconfig. It allows to search for features by their name or symbol, but searching ignores long text descriptions. These descriptions are for humans, so that they can learn about specific configuration options.
-
-Another issue with xconfig is lack of good navigation when debug info is displayed. User can only move forward from one feature to the other, but cannot go back or see where the feature is located. It is especially annoying when a configuration option depends on another feature, but the feature cannot be easily located.
-
 \section{Past Attempts}
 Some of the above issues were already solved in 2002 when Eric S. Raymond presented the CML2 configuration system \cite{raymond:cml2:2000}. It allowed for effective reasoning on kernel feature model and also provided progressive-disclosure. There was a long debate and flame war about using that system \cite{kerneltrap:linux:2002}. Finally, it was rejected for various (sometimes silly) reasons, such as Eric S. Raymond's attitude, Python dependency, complexity, radically new design. Many developers preferred to introduce gradual updates instead of applying one big patch.
 
 \section{Solution}
-Many of the LKC shortcomings can be fixed incrementally, without throwing away the whole infrastructure. Perhaps the most significant part, but fairly invisible for an end user, is adding a formal reasoning engine, such as a SAT-solver. It would solve all the problems with constraints, dependencies, and choice propagation. A more visible part would be autoconfiguration, i.e. kernel is automatically tailored to currently running machine. This can be done separately from the SAT-solver, but without reliable choice propagation, some configurations cannot be automatically applied. Although current autoconfiguration works fairly well in simple cases, it still requires post configuration in a dedicated tool. Furthermore, progressive-disclosure would allow different groups of users to configure kernel in a simpler way. Progressive-disclosure can be done separately from the SAT-solver, but it would require a hand-crafted algorithm for showing and hiding configuration options. Finally, the minor issues are relatively small (in terms of code) user interface improvements, but they have impact on overall usability.
+Many of the LKC shortcomings can be fixed incrementally, without throwing away the whole infrastructure. In our solution we would eliminate the problem of reasoning by limiting user-selectable set of features. User should see only the most relevant and non-conflicting configuration options. Furthermore, the software would be aware of autoconfiguration limitations. Thus, the tool shall ask the user about non-discoverable devices. We would like to improve usability of the Linux kernel configuration tools either by fixing them or by adding a more intuitive front-end. The final solution will depend on two initial studies on users.
 
-We believe that the proposed improvements would make the kernel configuration infrastructure more robust and easier to use. Many of the techniques are not tied to this specific project. The problem of effective product configuration is very common, but rarely solved, it is enough to mention package managers, feature model configurators or even tailoring medical messages to specific patients. The FOSS community could use the algorithms and ideas in any kind of software that has variability in it.
+In the first study people will be asked to use current tools (i.e. \textsf{xconfig} to configure and compile the Linux kernel. We would like to observe how participants interact with these tools and what problems they have. This will create a baseline for comparing our new interface against. After that, we will propose several paper prototypes of user interfaces and apply the Wizard of Oz method to quickly evaluate and refine them. The method should capture users' expectations and reveal design faults in the proposed interfaces. After the two studies, we shall be ready to construct and implement the most promising solution.
+
+We believe that the proposed improvements will make the kernel configuration infrastructure more intuitive and easier to use. Many of the techniques are not tied to this specific project. The problem of effective product configuration is very common, but rarely solved, it is enough to mention package managers, feature model configurators or even tailoring medical messages to specific patients. The FOSS community could use the ideas in any kind of software that has variability in it.
 
 \section{Scope}
 
 \subsection{Reasoning Engine}
-
+NO BACKEND
 We are going to use one of available SAT-solvers to reason upon kernel configurations. Although the KConfig language is much richer than propositional formulas, it is possible to translate KConfig to Boolean propositional logic \cite{she:kconfig:2010}. The SAT-solver will be injected into LKC to automatically resolve dependencies and detect inconsistencies. The engine will report problems to the user, but will not be responsible for resolving conflicts.
 
 \subsection{Autoconfiguration}
