@@ -86,31 +86,22 @@ Some of the above issues were already solved in 2002 when Eric S. Raymond presen
 \section{Solution}
 Many of the LKC shortcomings can be fixed incrementally, without throwing away the whole infrastructure. In our solution we would eliminate the problem of reasoning by limiting user-selectable set of features. User should see only the most relevant and non-conflicting configuration options. Furthermore, the software would be aware of autoconfiguration limitations. Thus, the tool shall ask the user about non-discoverable devices. We would like to improve usability of the Linux kernel configuration tools either by fixing them or by adding a more intuitive front-end. The final solution will depend on two initial studies on users.
 
-In the first study people will be asked to use current tools (i.e. \textsf{xconfig} to configure and compile the Linux kernel. We would like to observe how participants interact with these tools and what problems they have. This will create a baseline for comparing our new interface against. After that, we will propose several paper prototypes of user interfaces and apply the Wizard of Oz method to quickly evaluate and refine them. The method should capture users' expectations and reveal design faults in the proposed interfaces. After the two studies, we shall be ready to construct and implement the most promising solution.
+In the first study people will be asked to use current tools (i.e. \textsf{xconfig}) to configure and compile the Linux kernel. We would like to observe how participants interact with these tools and what problems they have. This will create a baseline for comparing our new interface against. After that, we will propose several paper prototypes of user interfaces and apply the Wizard of Oz method to quickly evaluate and refine them. The method should capture users' expectations and reveal design faults in the proposed interfaces. After the two studies, we shall be ready to construct and implement the most promising solution.
 
 We believe that the proposed improvements will make the kernel configuration infrastructure more intuitive and easier to use. Many of the techniques are not tied to this specific project. The problem of effective product configuration is very common, but rarely solved, it is enough to mention package managers, feature model configurators or even tailoring medical messages to specific patients. The FOSS community could use the ideas in any kind of software that has variability in it.
 
 \section{Scope}
 
-\subsection{Reasoning Engine}
-NO BACKEND
-We are going to use one of available SAT-solvers to reason upon kernel configurations. Although the KConfig language is much richer than propositional formulas, it is possible to translate KConfig to Boolean propositional logic \cite{she:kconfig:2010}. The SAT-solver will be injected into LKC to automatically resolve dependencies and detect inconsistencies. The engine will report problems to the user, but will not be responsible for resolving conflicts.
+\subsection{Initial User Studies}
+We are going to conduct the two initial studies mostly on computer enthusiasts who have some experience with GNU/Linux and are interested in kernel configuration. The studies will also include less experienced users, so that we can observe the most fundamental problems that people have with configuration. In both studies the number of participants will be around 10.
 
-\subsection{Autoconfiguration}
+In the first study participants will be asked to configure the Linux kernel for a popular laptop for typical home/office use. A person succeeds if the new kernel is ready to play music and movies, connect to Ethernet, use WiFi, memory cards, USB devices, Bluetooth, CD/DVD.
 
-There is a broad spectrum of hardware components that a Linux kernel can support, including: processors, motherboards, network devices, media devices, usb devices, and input/output devices. Adding support for all hardware devices in all those categories in our autoconfiguration tool needs more time than what we have for the course of this term. Therefore, we will initially support the most popular hardware devices in three categories: wireless network devices, wired network devices, and sound cards. Then the FOSS community can take it from there and add support for more devices later. Autoconfiguration will also allow the user to enable support for certain non-detectable stuff, (e.g pendrives) in a way similar to how \textsf{localmodconfig} functions.
+In the second study we will propose several UI paper prototypes that address the problems found during the first study. We will present the prototypes to participants and ask them how they would configure the kernel again using these prototypes. Observations from the second study will tell us which prototype is the most intuitive and what users expect from such a configurator.
 
-\subsection{Progressive Disclosure}
+\subsection{Implementation}
 
-We plan on adding progressive disclosure to the LKC infrastructure and the xconfig tool. It will offer a different set of configuration options for each of three user profiles: beginner, advanced, hacker. Beginner is a home/office user who is mostly interested in multimedia, Internet, popular external devices. An advanced user will have access to all configuration options but will not see hidden features. Hacker will see all available configuration options.
-
-\subsection{Searching in xconfig}
-
-Searching will work in the same way as with feature names or symbols, but it will include long text descriptions.
-
-\subsection{Navigation in xconfig}
-
-As for navigation, we are going to add a browser-like functionality. It will allow user to move forward, backward and jump to specific feature in the feature hierarchy.
+We will implement a graphical user interface in some popular language. The interface shell match expectations of our target user group. It will not, however, try to solve problems of novice or advanced users. The interface will most likely have some connection to the backend, or will be able to update the \textsf{.config} file with user-selected features. When it comes to hardware, the interface will support the most common non-discoverable devices, such as wireless network devices, external devices, and sound cards.
 
 \section{Evaluation Plan}
 
