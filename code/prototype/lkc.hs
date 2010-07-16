@@ -7,7 +7,7 @@ import Control.Concurrent
 main = do
     initGUI
     timeoutAddFull (yield >> return True) priorityDefaultIdle 50
-    Just xml <- xmlNew "splash.glade"
+    Just xml <- xmlNew "gui.glade"
     runStart xml
     mainGUI
 
@@ -32,7 +32,8 @@ runStart xml = do
                 onClicked btnFileOk $ do
                     widgetHide fileChooser
                     widgetHide wndStart
-                    -- select file
+                    file <- fileChooserGetURI fileChooser
+                    putStrLn $ show file
                     -- run config
                 onClicked btnFileCancel $ do
                     widgetHide fileChooser
