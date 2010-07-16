@@ -8,16 +8,68 @@ main = do
     initGUI
     timeoutAddFull (yield >> return True) priorityDefaultIdle 50
     Just xml <- xmlNew "splash.glade"
-    window   <- xmlGetWidget xml castToWindow "windowMain"
-    onDestroy window mainQuit
-    closeButton <- xmlGetWidget xml castToButton "btnCancel"
-    onClicked closeButton $ do
-        widgetDestroy window
-    widgetShowAll window
+    runStart xml
+    mainGUI
+
+runStart xml = do
+    wndStart   <- xmlGetWidget xml castToWindow "wndStart"
+    onDestroy wndStart mainQuit
+    btnCancel <- xmlGetWidget xml castToButton "btnCancel1"
+    onClicked btnCancel $ do
+        widgetDestroy wndStart
+    btnNext <- xmlGetWidget xml castToButton "btnNext"
+    onClicked btnNext $ do
+        rbtnStartNew <- xmlGetWidget xml castToRadioButton "rbtnStartNew"
+        isActive <- toggleButtonGetActive rbtnStartNew
+        if isActive
+            then do
+                widgetHide wndStart
+                runSplash xml
+            else do
+                fileChooser <- xmlGetWidget xml castToFileChooserDialog "fcdChooseFile"
+                btnFileOk <- xmlGetWidget xml castToButton "btnFileOk"
+                btnFileCancel <- xmlGetWidget xml castToButton "btnFileCancel"
+                onClicked btnFileOk $ do
+                    widgetHide fileChooser
+                    widgetHide wndStart
+                    -- select file
+                    -- run config
+                onClicked btnFileCancel $ do
+                    widgetHide fileChooser
+                dialogRun fileChooser
+                return ()
+    widgetShowAll wndStart
+
+runSplash xml = do
+    wndStartNew   <- xmlGetWidget xml castToWindow "wndStartNew"
+    onDestroy wndStartNew mainQuit
+    btnCancel <- xmlGetWidget xml castToButton "btnCancel"
+    onClicked btnCancel $ do
+        widgetDestroy wndStartNew
+    tbtnInfo <- xmlGetWidget xml castToToggleButton "tbtnInfo"
+    onToggled tbtnInfo $ do
+        entOutput <- xmlGetWidget xml castToEntry "entOutput"
+        sepSplash <- xmlGetWidget xml castToHSeparator "sepSplash"
+        btnCopy <- xmlGetWidget xml castToButton "btnCopy"
+        isActive <- toggleButtonGetActive tbtnInfo
+        (width, _) <- windowGetSize wndStartNew
+        if isActive
+            then do
+                widgetShow entOutput
+                widgetShow sepSplash
+                widgetShow btnCopy
+            else do
+                widgetHide entOutput
+                widgetHide sepSplash
+                widgetHide btnCopy
+        windowResize wndStartNew width $ -1
+    widgetShowAll wndStartNew
     forkIO $ do
         dumpConfiguration xml
         detectHardware xml
-    mainGUI
+    return ()
+--        widgetDestroy wndStartNew
+  --      mainQuit
 
 taskTime = 1000 * 10
 
@@ -37,7 +89,7 @@ detectHardware xml = do
 
 doSomething nParts progressBar = do
     sequence $ concat $ replicate nParts
-        [threadDelay $ taskTime, progressBarIncrement progressBar]
+        [threadDelay taskTime, progressBarIncrement progressBar]
 
 workAndUpdate xml waitStr doneStr f = do
     imgWait <- xmlGetWidget xml castToImage waitStr
