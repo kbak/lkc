@@ -2,7 +2,7 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkWindow" id="wndStartNew">
+  <widget class="GtkWindow" id="wndInspect">
     <property name="title" translatable="yes">Linux Kernel Configuration Tool</property>
     <property name="resizable">False</property>
     <child>
@@ -10,7 +10,7 @@
         <property name="visible">True</property>
         <child>
           <widget class="GtkProgressBar" id="progressbar">
-            <property name="width_request">280</property>
+            <property name="width_request">344</property>
             <property name="height_request">10</property>
             <property name="visible">True</property>
           </widget>
@@ -21,7 +21,7 @@
         </child>
         <child>
           <widget class="GtkLabel" id="lblWelcome">
-            <property name="width_request">240</property>
+            <property name="width_request">304</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
             <property name="xalign">0</property>
@@ -37,7 +37,7 @@ configuration and installed hardware.</property>
         </child>
         <child>
           <widget class="GtkLabel" id="lblConfiguration">
-            <property name="width_request">160</property>
+            <property name="width_request">201</property>
             <property name="height_request">20</property>
             <property name="visible">True</property>
             <property name="xalign">0</property>
@@ -146,7 +146,7 @@ configuration and installed hardware.</property>
             <property name="receives_default">True</property>
           </widget>
           <packing>
-            <property name="x">217</property>
+            <property name="x">282</property>
             <property name="y">153</property>
           </packing>
         </child>
@@ -161,13 +161,13 @@ configuration and installed hardware.</property>
             <accelerator key="Return" signal="clicked"/>
           </widget>
           <packing>
-            <property name="x">140</property>
+            <property name="x">205</property>
             <property name="y">153</property>
           </packing>
         </child>
         <child>
-          <widget class="GtkHSeparator" id="sepSplash">
-            <property name="width_request">280</property>
+          <widget class="GtkHSeparator" id="sepInspect">
+            <property name="width_request">344</property>
             <property name="no_show_all">True</property>
           </widget>
           <packing>
@@ -185,13 +185,13 @@ configuration and installed hardware.</property>
             <property name="no_show_all">True</property>
           </widget>
           <packing>
-            <property name="x">218</property>
+            <property name="x">282</property>
             <property name="y">398</property>
           </packing>
         </child>
         <child>
           <widget class="GtkTextView" id="tvConsole">
-            <property name="width_request">280</property>
+            <property name="width_request">344</property>
             <property name="height_request">200</property>
             <property name="can_focus">True</property>
             <property name="no_show_all">True</property>
@@ -205,7 +205,7 @@ configuration and installed hardware.</property>
       </widget>
     </child>
   </widget>
-  <widget class="GtkWindow" id="wndStart">
+  <widget class="GtkWindow" id="wndWelcome">
     <property name="visible">True</property>
     <property name="title" translatable="yes">Linux Kernel Configuration Tool</property>
     <child>
@@ -227,7 +227,7 @@ configuration and installed hardware.</property>
         </child>
         <child>
           <widget class="GtkLabel" id="lblWelcome1">
-            <property name="width_request">240</property>
+            <property name="width_request">328</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
             <property name="xalign">0</property>
@@ -302,7 +302,7 @@ This tool will help you configure the Linux Kernel.
             <accelerator key="Return" signal="clicked"/>
           </widget>
           <packing>
-            <property name="x">140</property>
+            <property name="x">229</property>
             <property name="y">155</property>
           </packing>
         </child>
@@ -316,7 +316,7 @@ This tool will help you configure the Linux Kernel.
             <property name="receives_default">True</property>
           </widget>
           <packing>
-            <property name="x">216</property>
+            <property name="x">305</property>
             <property name="y">155</property>
           </packing>
         </child>
@@ -333,7 +333,6 @@ This tool will help you configure the Linux Kernel.
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <placeholder/>
@@ -387,7 +386,6 @@ This tool will help you configure the Linux Kernel.
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkToolbar" id="toolbar1">
             <property name="height_request">50</property>
@@ -475,7 +473,6 @@ This tool will help you configure the Linux Kernel.
           <widget class="GtkVPaned" id="vpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="orientation">vertical</property>
             <property name="position">510</property>
             <property name="position_set">True</property>
             <child>
@@ -486,7 +483,6 @@ This tool will help you configure the Linux Kernel.
                 <child>
                   <widget class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkViewport" id="viewport2">
                         <property name="visible">True</property>
@@ -634,7 +630,6 @@ This tool will help you configure the Linux Kernel.
                 <child>
                   <widget class="GtkVBox" id="vbox3">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkLabel" id="lblOption">
                         <property name="visible">True</property>
