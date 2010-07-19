@@ -388,7 +388,7 @@ This tool will help you configure the Linux Kernel.
         <property name="visible">True</property>
         <child>
           <widget class="GtkToolbar" id="toolbar1">
-            <property name="height_request">50</property>
+            <property name="height_request">62</property>
             <property name="visible">True</property>
             <property name="toolbar_style">both</property>
             <child>
@@ -545,8 +545,8 @@ This tool will help you configure the Linux Kernel.
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkProgressBar" id="progressbar3">
-                            <property name="height_request">14</property>
+                          <widget class="GtkProgressBar" id="totalSizeProgressBar">
+                            <property name="height_request">20</property>
                             <property name="visible">True</property>
                             <property name="show_text">True</property>
                             <property name="fraction">0.5</property>
@@ -559,8 +559,8 @@ This tool will help you configure the Linux Kernel.
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkProgressBar" id="progressbar4">
-                            <property name="height_request">14</property>
+                          <widget class="GtkProgressBar" id="totalNumFeaturesProgressBar">
+                            <property name="height_request">20</property>
                             <property name="visible">True</property>
                             <property name="show_text">True</property>
                             <property name="fraction">0.20000000000000001</property>
@@ -579,7 +579,9 @@ This tool will help you configure the Linux Kernel.
                             <property name="height_request">20</property>
                             <property name="visible">True</property>
                             <child>
-                              <widget class="GtkImage" id="imgKernelUnstable1">
+                              <widget class="GtkImage" id="imgKernelUnstable">
+                                <property name="width_request">20</property>
+                                <property name="height_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>
@@ -588,7 +590,9 @@ This tool will help you configure the Linux Kernel.
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkImage" id="imgKernelWarningStable1">
+                              <widget class="GtkImage" id="imgKernelWarningStable">
+                                <property name="width_request">20</property>
+                                <property name="height_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>
@@ -597,7 +601,9 @@ This tool will help you configure the Linux Kernel.
                               </widget>
                             </child>
                             <child>
-                              <widget class="GtkImage" id="imgKernelStable1">
+                              <widget class="GtkImage" id="imgKernelStable">
+                                <property name="width_request">20</property>
+                                <property name="height_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>
@@ -700,7 +706,7 @@ This tool will help you configure the Linux Kernel.
                         </child>
                         <child>
                           <widget class="GtkLayout" id="layout4">
-                            <property name="width_request">10</property>
+                            <property name="width_request">43</property>
                             <property name="visible">True</property>
                           </widget>
                           <packing>
@@ -725,6 +731,8 @@ This tool will help you configure the Linux Kernel.
                             <property name="visible">True</property>
                             <child>
                               <widget class="GtkImage" id="imgFeatureUnstable">
+                                <property name="width_request">20</property>
+                                <property name="height_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>
@@ -734,6 +742,7 @@ This tool will help you configure the Linux Kernel.
                             </child>
                             <child>
                               <widget class="GtkImage" id="imgFeatureWarningStable">
+                                <property name="width_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>
@@ -743,6 +752,7 @@ This tool will help you configure the Linux Kernel.
                             </child>
                             <child>
                               <widget class="GtkImage" id="imgFeatureStable">
+                                <property name="width_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>

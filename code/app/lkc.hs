@@ -4,7 +4,6 @@ import Graphics.UI.Gtk
 import Graphics.UI.Gtk.Glade
 import Control.Concurrent
 
-main :: IO ()
 main = do
     initGUI
     timeoutAddFull (yield >> return True) priorityDefaultIdle 50
@@ -12,9 +11,8 @@ main = do
     runWelcome xml
     mainGUI
 
-runWelcome :: GladeXML -> IO ()
 runWelcome xml = do
-    wndWelcome   <- xmlGetWidget xml castToWindow "wndWelcome"
+    wndWelcome <- xmlGetWidget xml castToWindow "wndWelcome"
     onDestroy wndWelcome mainQuit
     btnCancel <- xmlGetWidget xml castToButton "btnCancel1"
     onClicked btnCancel $ do
@@ -44,7 +42,7 @@ runWelcome xml = do
     widgetShowAll wndWelcome
 
 runInspect xml = do
-    wndInspect   <- xmlGetWidget xml castToWindow "wndInspect"
+    wndInspect <- xmlGetWidget xml castToWindow "wndInspect"
     onDestroy wndInspect mainQuit
     btnCancel <- xmlGetWidget xml castToButton "btnCancel"
     onClicked btnCancel $ do
@@ -69,14 +67,41 @@ runInspect xml = do
     forkIO $ do
         dumpConfiguration xml
         detectHardware xml
+        widgetHide wndInspect
+        runApp xml
     return ()
 --        widgetDestroy wndInspect mainQuit
+
+
+runApp xml = do
+    wndConfig <- xmlGetWidget xml castToWindow "wndConfig"
+    onDestroy wndConfig mainQuit
+    -- tool bar buttons --
+    -- open
+    tbtnOpen <- xmlGetWidget xml castToButton "tbtnOpen"
+    onClicked tbtnOpen $ do
+        file <- chooseFile xml
+        putStrLn $ show file
+
+    widgetShowAll wndConfig
+
+--chooseFile :: GladeXML -> IO [String]
+chooseFile xml = do
+    fileChooser <- xmlGetWidget xml castToFileChooserDialog "fcdChooseFile"
+    btnFileOk <- xmlGetWidget xml castToButton "btnFileOk"
+    btnFileCancel <- xmlGetWidget xml castToButton "btnFileCancel"
+    onClicked btnFileOk $ do
+        widgetHide fileChooser
+        file <- fileChooserGetURI fileChooser
+    onClicked btnFileCancel $ do
+        widgetHide fileChooser
+    dialogRun fileChooser
 
 taskTime = 1000 * 10
 
 nPartsConfiguration = 2
 
-nPartsHardware = 300
+nPartsHardware = 20
 
 nParts = nPartsConfiguration + nPartsHardware
 
@@ -87,7 +112,7 @@ dumpConfiguration xml = do
 detectHardware xml = do
     workAndUpdate xml "imgWaitHardware" "imgDoneHardware" $
                   doSomething nPartsHardware
-
+   
 doSomething nParts progressBar = do
     sequence $ concat $ replicate nParts
         [threadDelay taskTime, progressBarIncrement progressBar]
