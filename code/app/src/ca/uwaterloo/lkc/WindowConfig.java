@@ -16,14 +16,19 @@ import org.gnome.gtk.ToolButton;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
+import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
+
 public class WindowConfig {
 	public final Window w;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
+	public final ToolButton tbtnUndo;
+	public final ToolButton tbtnRedo;
 	public final ToolButton tbtnAdvanced;
 
-	private Vector<Map<String, String>> features;
+	private Vector<Features> featuresUndoRedo;
 	private int currentFeaturesIndex;
+	private int MAX_UNDO_REDO = 10;
 
 	private FeatureScreenHandler fsh;
 	
@@ -47,7 +52,7 @@ public class WindowConfig {
 		
 		fsh = new FeatureScreenHandler(xmlWndConfig);
 		
-		features = new Vector<Map<String,String>>();
+		featuresUndoRedo = new Vector<Features>();
 		currentFeaturesIndex = -1;
 		
 		// Adding events for tool bar buttons
@@ -120,7 +125,6 @@ public class WindowConfig {
 				try {
 					// Run xconfig
 				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
-				    pb.directory(new File("/usr/src/linux"));
 				    pb.start();
 				    w.hide();
 				} catch (IOException e) {
@@ -128,6 +132,35 @@ public class WindowConfig {
 				}
 			}
 		});
+		
+		/* Undo */
+		tbtnUndo = (ToolButton) xmlWndConfig.getWidget("tbtnUndo");
+		tbtnUndo.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
+				currentFeaturesIndex--;
+				if (currentFeaturesIndex <= 0) {
+                    tbtnUndo.setSensitive(false);
+                    tbtnRedo.setSensitive(true);
+                }
+			}
+		});
+		
+		/* Redo */
+		tbtnRedo = (ToolButton) xmlWndConfig.getWidget("tbtnRedo");
+		tbtnRedo.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
+				currentFeaturesIndex++;
+				if (currentFeaturesIndex >= MAX_UNDO_REDO) {
+                    tbtnUndo.setSensitive(true);
+                    tbtnRedo.setSensitive(false);
+                }
+			}
+		});
+		
 	}
 	
     public void run()
