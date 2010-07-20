@@ -23,6 +23,7 @@ import org.gnome.gtk.Layout;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
+import org.gnome.gtk.Viewport;
 import org.gnome.gtk.Widget;
 
 import ca.uwaterloo.lkc.IFeatureHandler.Stability;
@@ -45,6 +46,9 @@ public class FeatureScreenHandler {
     private Label lblFeatureSizeN;
     private Image imgFeatureStability;
     private TextBuffer textBuffer = new TextBuffer();
+    private Viewport vp;
+    final Button btnBackFeature;
+    final Button btnNextFeature;
     
     private Vector<Integer> featureHistory = new Vector<Integer>();
     
@@ -52,10 +56,12 @@ public class FeatureScreenHandler {
     {   
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
+        vp = (Viewport) xmlWndConfig.getWidget("viewport3");
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
         imgFeatureStability = (Image) xmlWndConfig.getWidget("imgFeatureStability");
         
+        featureHandlers.add(new FeatureHandlerWelcome(this));
         featureHandlers.add(new FeatureHandlerPurpose(this));
         featureHandlers.add(new FeatureHandlerSoftRT(this));
         featureHandlers.add(new FeatureHandlerProcessor(this));
@@ -65,8 +71,8 @@ public class FeatureScreenHandler {
         featureHandlers.add(new FeatureHandlerVirtualization(this));
         featureHandlers.add(new FeatureHandlerSummary(this));
         
-        final Button btnBackFeature = (Button) xmlWndConfig.getWidget("btnBackFeature");
-        final Button btnNextFeature = (Button) xmlWndConfig.getWidget("btnNextFeature");
+        btnBackFeature = (Button) xmlWndConfig.getWidget("btnBackFeature");
+        btnNextFeature = (Button) xmlWndConfig.getWidget("btnNextFeature");
         final Button btnFinishFeature = (Button) xmlWndConfig.getWidget("btnFinishFeature");
         
         featureHistory.add(0);
@@ -138,6 +144,26 @@ public class FeatureScreenHandler {
     
     public void showScreen()
     {
+        if (0 == featureHistory.lastElement())
+        {
+            btnBackFeature.setSensitive(false);
+            vp.hide();
+            btnNextFeature.setSensitive(true);
+        }
+        else if (featureHandlers.size() - 1 == featureHistory.lastElement())
+        {
+            btnBackFeature.setSensitive(true);
+            vp.hide();
+            btnNextFeature.setSensitive(false);
+        }
+        else
+        {
+            btnBackFeature.setSensitive(true);
+            btnNextFeature.setSensitive(true);
+            vp.show();
+        }
+        
+        
         for (Widget c : layOption.getChildren())
         {
             c.hide();
