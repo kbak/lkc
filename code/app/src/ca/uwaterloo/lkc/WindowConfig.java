@@ -22,7 +22,8 @@ public class WindowConfig {
 	public final Window w;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
-	
+	public final ToolButton tbtnAdvanced;
+
 	private Vector<Map<String, String>> features;
 	private int currentFeaturesIndex;
 
@@ -97,6 +98,25 @@ public class WindowConfig {
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		/* Advanced (i.e. calling xconfig) */
+		tbtnAdvanced = (ToolButton) xmlWndConfig.getWidget("tbtnAdvanced");
+		tbtnAdvanced.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
+				try {
+					// Run xconfig
+				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
+				    pb.directory(new File("/usr/src/linux"));
+				    pb.start().waitFor();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
