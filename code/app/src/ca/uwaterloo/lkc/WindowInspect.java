@@ -79,23 +79,23 @@ public class WindowInspect extends Thread {
     
     void dumpConfiguration()
     {
-        work((Image) xmlWndInspect.getWidget("imgConfiguration"));
+        work((Image) xmlWndInspect.getWidget("imgConfiguration"), nPartsConfiguration);
     }
     
     void dumpHardware()
     {
-        work((Image) xmlWndInspect.getWidget("imgHardware"));
+        work((Image) xmlWndInspect.getWidget("imgHardware"), nPartsHardware);
     }
     
-    void work(Image img)
+    void work(Image img, int steps)
     {
         img.setImage(Stock.FIND, IconSize.BUTTON);
         
-        for (int i = 0; i < nParts; ++i)
+        for (int i = 0; i < steps; ++i)
         {
             try {
                 sleep(taskTime);
-                pg.setFraction(Math.floor(pg.getFraction() + (1.0 / nParts)));
+                pg.setFraction(Math.min(1.0, pg.getFraction() + (1.0 / nParts)));
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

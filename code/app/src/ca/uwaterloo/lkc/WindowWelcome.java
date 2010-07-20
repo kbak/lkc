@@ -57,7 +57,7 @@ public class WindowWelcome {
                     try {
                         wndInspect = new WindowInspect(gladeFile);
                         wndInspect.w.show();
-                        wndInspect.run();
+                        wndInspect.start();
                     } catch (FileNotFoundException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
