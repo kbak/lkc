@@ -2,6 +2,8 @@ package ca.uwaterloo.lkc;
 
 import java.util.Vector;
 
+import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
+
 public interface IFeatureHandler {
     
     public static enum Stability { Stable, Warning, Unstable };
@@ -10,5 +12,7 @@ public interface IFeatureHandler {
     
     public void show();
     
-    public Vector<FeatureScreenHandler.Features> getSelectedOptions();
+    void load(Vector<Features> features);
+    
+    Vector<Features> save();
 }

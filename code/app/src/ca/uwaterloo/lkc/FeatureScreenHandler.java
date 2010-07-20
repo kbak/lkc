@@ -169,10 +169,8 @@ public class FeatureScreenHandler {
 				while(strTok.hasMoreTokens()){
 					
 				}
-				
 			}
 		}
-    	
     }
     
     public void save(URI file) throws IOException {
