@@ -151,7 +151,7 @@ public class FeatureScreenHandler {
         featureHistory.add(featureHistory.lastElement() + 1);
     }
     
-    public void load(URI file) throws IOException {
+    public void load(URI file) throws IOException, ClassNotFoundException {
     	File outputFile = new File(file);
 		
 		if(outputFile.isFile() && outputFile.canRead()) {
@@ -159,15 +159,24 @@ public class FeatureScreenHandler {
 			String line;
 			while((line = reader.readLine()) != null ){
 				StringTokenizer strTok = new StringTokenizer(line, "=,");
-				String featureHandler;
-				Vector<Features> features;
+				String featureHandler = "";
+				Vector<Features> features = new Vector<Features>();
 				
+				// Get the feature handler name to load the right class
 				if(strTok.hasMoreTokens()) {
 					featureHandler = strTok.nextToken();
 				}
 				
+				// Get the features
 				while(strTok.hasMoreTokens()){
-					
+					features.add(Features.values()[Integer.parseInt(strTok.nextToken())]);
+				}
+				
+				// Load the features to the specific feature handler
+				for(IFeatureHandler fh : featureHandlers){
+					if(Class.forName(featureHandler).isInstance(fh)){
+						fh.load(features);
+					}
 				}
 			}
 		}
