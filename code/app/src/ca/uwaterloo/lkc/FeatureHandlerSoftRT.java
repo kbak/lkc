@@ -1,8 +1,5 @@
 package ca.uwaterloo.lkc;
 
-import java.util.Vector;
-
-import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public class FeatureHandlerSoftRT extends FeatureHandler {
 

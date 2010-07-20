@@ -2,7 +2,6 @@ package ca.uwaterloo.lkc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
@@ -122,10 +121,9 @@ public class WindowConfig {
 					// Run xconfig
 				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
 				    pb.directory(new File("/usr/src/linux"));
-				    pb.start().waitFor();
+				    pb.start();
+				    w.hide();
 				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
