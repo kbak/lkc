@@ -5,14 +5,13 @@ import java.util.Vector;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
-import org.gnome.gtk.RadioGroup;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public class FeatureHandlerPurpose implements IFeatureHandler {
 
     private final FeatureScreenHandler fsh;
-    private RadioGroup rg = new RadioGroup();
+    private RadioButtonGroup rg = new RadioButtonGroup();
     private RadioButton rbDesktop = new RadioButton(rg, "Desktop");
     private RadioButton rbServer = new RadioButton(rg, "Server");
     private RadioButton rbMinimal = new RadioButton(rg, "Minimal Kernel");
