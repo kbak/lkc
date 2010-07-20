@@ -2,7 +2,6 @@ package ca.uwaterloo.lkc;
 
 import java.util.TreeMap;
 import java.util.Map;
-import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;

@@ -1,9 +1,17 @@
 package ca.uwaterloo.lkc;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collections;
 import java.util.TreeMap;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URI;
+
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.gnome.glade.XML;
@@ -150,13 +158,50 @@ public class FeatureScreenHandler {
         featureHistory.add(featureHistory.lastElement() + 1);
     }
     
-    void load(Vector<Features> features)
-    {
-        
+    public void load(URI file) throws IOException, ClassNotFoundException {
+    	File outputFile = new File(file);
+		
+		if(outputFile.isFile() && outputFile.canRead()) {
+			BufferedReader reader = new BufferedReader(new FileReader(outputFile));
+			String line;
+			while((line = reader.readLine()) != null ){
+				StringTokenizer strTok = new StringTokenizer(line, "=,");
+				String featureHandler = "";
+				Vector<Features> features = new Vector<Features>();
+				
+				// Get the feature handler name to load the right class
+				if(strTok.hasMoreTokens()) {
+					featureHandler = strTok.nextToken();
+				}
+				
+				// Get the features
+				while(strTok.hasMoreTokens()){
+					features.add(Features.values()[Integer.parseInt(strTok.nextToken())]);
+				}
+				
+				// Load the features to the specific feature handler
+				for(IFeatureHandler fh : featureHandlers){
+					if(Class.forName(featureHandler).isInstance(fh)){
+						fh.load(features);
+					}
+				}
+			}
+		}
     }
     
-    Vector<Features> save()
-    {
-        return null;
+    public void save(URI file) throws IOException {
+    	File outputFile = new File(file);
+		
+		if(outputFile.isFile() && outputFile.canWrite()) {
+			FileWriter writer = new FileWriter(outputFile);
+			
+			for(IFeatureHandler featureHandler : this.featureHandlers){
+				writer.write(featureHandler.getClass().getCanonicalName() + "=");
+				for(Features feature : featureHandler.save()) {
+					writer.write(feature.ordinal() + ",");
+				}
+				writer.write("\n");
+			}
+		}
     }
 }

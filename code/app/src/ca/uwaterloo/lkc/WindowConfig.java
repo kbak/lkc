@@ -2,7 +2,6 @@ package ca.uwaterloo.lkc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
@@ -21,7 +20,8 @@ public class WindowConfig {
 	public final Window w;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
-	
+	public final ToolButton tbtnAdvanced;
+
 	private Vector<Map<String, String>> features;
 	private int currentFeaturesIndex;
 
@@ -68,11 +68,17 @@ public class WindowConfig {
 					 */
 					if (responseType == ResponseType.OK) {
 						w.hide();
-						new WindowConfig(gladeFile, fcdChooseFile.getURI()).w.show();
+						fsh.load(fcdChooseFile.getURI());
 					} else if (responseType == ResponseType.CANCEL) {
 						fcdChooseFile.hide();
 					}
 				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -93,7 +99,7 @@ public class WindowConfig {
 					 * If a file is chosen, save the current configuration.
 					 */
 					if (responseType == ResponseType.OK) {
-						saveConfigFile(configFile);
+						fsh.save(fcdChooseFile.getURI());
 					} else if (responseType == ResponseType.CANCEL) {
 						fcdChooseFile.hide();
 					}
@@ -104,18 +110,24 @@ public class WindowConfig {
 				}
 			}
 		});
-	}
-	
-	public void saveConfigFile(URI configFile) throws IOException {
-		File outputFile = new File(configFile);
-		Map<String, String> currentFeatures = features.get(currentFeaturesIndex);
 		
-		if(outputFile.isFile() && outputFile.canWrite()) {
-			FileWriter writer = new FileWriter(outputFile);
-			for(String feature : currentFeatures.keySet()){
-				writer.write(feature + "=" + currentFeatures.get(feature));
+		/* Advanced (i.e. calling xconfig) */
+		tbtnAdvanced = (ToolButton) xmlWndConfig.getWidget("tbtnAdvanced");
+		tbtnAdvanced.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
+				try {
+					// Run xconfig
+				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
+				    pb.directory(new File("/usr/src/linux"));
+				    pb.start();
+				    w.hide();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		}
+		});
 	}
 	
     public void run()
