@@ -133,8 +133,8 @@ public class WindowConfig {
 
 			@Override
 			public void onClicked(ToolButton source) {
-				currentFeaturesIndex--;
-				if (currentFeaturesIndex <= 0) {
+				fsh.currentFeaturesIndex--;
+				if (fsh.currentFeaturesIndex <= 0) {
                     tbtnUndo.setSensitive(false);
                     tbtnRedo.setSensitive(true);
                 }
@@ -147,8 +147,8 @@ public class WindowConfig {
 
 			@Override
 			public void onClicked(ToolButton source) {
-				currentFeaturesIndex++;
-				if (currentFeaturesIndex >= MAX_UNDO_REDO) {
+				fsh.currentFeaturesIndex++;
+				if (fsh.currentFeaturesIndex >= fsh.MAX_UNDO_REDO) {
                     tbtnUndo.setSensitive(true);
                     tbtnRedo.setSensitive(false);
                 }
