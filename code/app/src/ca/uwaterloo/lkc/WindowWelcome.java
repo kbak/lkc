@@ -71,7 +71,8 @@ public class WindowWelcome {
                     {
                         w.hide();
                         try {
-                            new WindowConfig(gladeFile, fcdChooseFile.getURI()).w.show();
+                            WindowConfig wnd = new WindowConfig(gladeFile, fcdChooseFile.getURI());
+                            wnd.run();
                         } catch (FileNotFoundException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();

@@ -18,7 +18,6 @@ import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
 public class WindowConfig {
-
 	public final Window w;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
@@ -27,6 +26,8 @@ public class WindowConfig {
 	private Vector<Map<String, String>> features;
 	private int currentFeaturesIndex;
 
+	private FeatureScreenHandler fsh;
+	
 	public WindowConfig(final String gladeFile) throws FileNotFoundException {
 		this(gladeFile, null);
 	}
@@ -44,6 +45,8 @@ public class WindowConfig {
 				return false;
 			}
 		});
+		
+		fsh = new FeatureScreenHandler(xmlWndConfig);
 		
 		features = new Vector<Map<String,String>>();
 		currentFeaturesIndex = -1;
@@ -134,4 +137,11 @@ public class WindowConfig {
 			}
 		}
 	}
+	
+    public void run()
+    {
+        w.show();
+        fsh.showScreen();
+    }
+
 }
