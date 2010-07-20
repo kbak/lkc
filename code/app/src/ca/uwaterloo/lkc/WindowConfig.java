@@ -26,10 +26,6 @@ public class WindowConfig {
 	public final ToolButton tbtnRedo;
 	public final ToolButton tbtnAdvanced;
 
-	private Vector<Features> featuresUndoRedo;
-	private int currentFeaturesIndex;
-	private int MAX_UNDO_REDO = 10;
-
 	private FeatureScreenHandler fsh;
 	
 	public WindowConfig(final String gladeFile) throws FileNotFoundException {
@@ -51,10 +47,7 @@ public class WindowConfig {
 		});
 		
 		fsh = new FeatureScreenHandler(xmlWndConfig);
-		
-		featuresUndoRedo = new Vector<Features>();
-		currentFeaturesIndex = -1;
-		
+				
 		// Adding events for tool bar buttons
 		/* Open */
 		tbtnOpen = (ToolButton) xmlWndConfig.getWidget("tbtnOpen");
@@ -98,6 +91,7 @@ public class WindowConfig {
 				try {
 					FcdChooseFile fcdChooseFile;
 					fcdChooseFile = new FcdChooseFile(gladeFile);
+					fcdChooseFile.setFileChooserActionSave();
 					ResponseType responseType = fcdChooseFile.run();
 
 					/*

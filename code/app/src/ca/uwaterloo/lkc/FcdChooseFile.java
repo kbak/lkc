@@ -5,6 +5,7 @@ import java.net.URI;
 
 import org.gnome.glade.Glade;
 import org.gnome.glade.XML;
+import org.gnome.gtk.FileChooserAction;
 import org.gnome.gtk.FileChooserDialog;
 import org.gnome.gtk.ResponseType;
 import org.gnome.gtk.Stock;
@@ -20,6 +21,10 @@ public class FcdChooseFile {
 		// Adding OK and Cancel buttons (not added by default)
 		fcdChooseFile.addButton(Stock.OK, ResponseType.OK);
         fcdChooseFile.addButton(Stock.CANCEL, ResponseType.CANCEL);
+	}
+	
+	public void setFileChooserActionSave() {
+		fcdChooseFile.setAction(FileChooserAction.SAVE);
 	}
 	
 	public ResponseType run() {
