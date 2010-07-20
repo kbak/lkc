@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
+import java.util.Vector;
 
 import org.gnome.gdk.Event;
 import org.gnome.glade.Glade;
@@ -22,7 +23,8 @@ public class WindowConfig {
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
 	
-	private Map<String, String> features;
+	private Vector<Map<String, String>> features;
+	private int currentFeaturesIndex;
 
 	public WindowConfig(final String gladeFile) throws FileNotFoundException {
 		this(gladeFile, null);
@@ -41,6 +43,9 @@ public class WindowConfig {
 				return false;
 			}
 		});
+		
+		features = new Vector<Map<String,String>>();
+		currentFeaturesIndex = -1;
 		
 		// Adding events for tool bar buttons
 		/* Open */
@@ -85,7 +90,7 @@ public class WindowConfig {
 					 * If a file is chosen, save the current configuration.
 					 */
 					if (responseType == ResponseType.OK) {
-						saveConfigFile(features, configFile);
+						saveConfigFile(configFile);
 					} else if (responseType == ResponseType.CANCEL) {
 						fcdChooseFile.hide();
 					}
@@ -98,13 +103,14 @@ public class WindowConfig {
 		});
 	}
 	
-	public void saveConfigFile(Map<String, String> features, URI configFile) throws IOException {
+	public void saveConfigFile(URI configFile) throws IOException {
 		File outputFile = new File(configFile);
+		Map<String, String> currentFeatures = features.get(currentFeaturesIndex);
 		
 		if(outputFile.isFile() && outputFile.canWrite()) {
 			FileWriter writer = new FileWriter(outputFile);
-			for(String feature : features.keySet()){
-				writer.write(feature + "=" + features.get(feature));
+			for(String feature : currentFeatures.keySet()){
+				writer.write(feature + "=" + currentFeatures.get(feature));
 			}
 		}
 	}
