@@ -1,6 +1,5 @@
 package ca.uwaterloo.lkc;
 
-<<<<<<< HEAD
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -10,8 +9,6 @@ import org.gnome.gtk.CheckButton;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 import ca.uwaterloo.lkc.IFeatureHandler.Stability;
-=======
->>>>>>> f9d87ef95eea21b30ca81ad01a4dd74e7be02c19
 
 public class FeatureHandlerVirtualization extends FeatureHandler {
 
