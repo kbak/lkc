@@ -2,7 +2,7 @@ package ca.uwaterloo.lkc;
 
 import java.io.FileNotFoundException;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 import java.util.Vector;
 
@@ -21,9 +21,9 @@ import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureScreenHandler {
 
-    public static enum Features { Desktop, Server, Minimum, SoftRT, Proc32, Proc64, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
+    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, Proc32, Proc64, NoHighMem, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
     
-    public static final Map<Stability, Stock> stabilityMap = new HashMap<IFeatureHandler.Stability, Stock>() {{ 
+    public static final Map<Stability, Stock> stabilityMap = new TreeMap<IFeatureHandler.Stability, Stock>() {{ 
         put(IFeatureHandler.Stability.Stable, Stock.APPLY);
         put(IFeatureHandler.Stability.Warning, Stock.INFO);
         put(IFeatureHandler.Stability.Unstable, Stock.STOP);
@@ -55,6 +55,7 @@ public class FeatureScreenHandler {
         featureHandlers.add(new FeatureHandlerServer(this));
         featureHandlers.add(new FeatureHandlerSecurity(this));
         featureHandlers.add(new FeatureHandlerVirtualization(this));
+        featureHandlers.add(new FeatureHandlerSummary(this));
         
         final Button btnBackFeature = (Button) xmlWndConfig.getWidget("btnBackFeature");
         final Button btnNextFeature = (Button) xmlWndConfig.getWidget("btnNextFeature");
@@ -107,14 +108,19 @@ public class FeatureScreenHandler {
         }
         else if (1024 <= size & size < 1024 * 1024)
         {
-            str = Double.toString(size / 1024.0) + " kb";
+            str = Double.toString(normalize(size / 1024.0)) + " kb";
         }
         else
         {
-            str = Double.toString(size / 1024.0 / 1024.0) + " mb";
+            str = Double.toString(normalize(size / 1024.0 / 1024.0)) + " mb";
         }
         
         lblFeatureSizeN.setLabel(str);
+    }
+    
+    private double normalize(double d)
+    {
+        return ((double) Math.round(d * 100.0)) / 100.0;
     }
     
     public void updateFeatureDescription(String str)
