@@ -181,7 +181,7 @@ public class FeatureScreenHandler {
 			
 			for(IFeatureHandler featureHandler : this.featureHandlers){
 				writer.write(featureHandler.getClass().getCanonicalName() + "=");
-				for(Features feature : featureHandler.getSelectedOptions()) {
+				for(Features feature : featureHandler.save()) {
 					writer.write(feature.ordinal() + ",");
 				}
 				writer.write("\n");
