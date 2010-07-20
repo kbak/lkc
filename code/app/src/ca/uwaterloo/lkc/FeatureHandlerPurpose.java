@@ -5,7 +5,6 @@ import java.util.Vector;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
-
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public class FeatureHandlerPurpose implements IFeatureHandler {

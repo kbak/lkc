@@ -69,7 +69,7 @@ public class WindowConfig {
 					 */
 					if (responseType == ResponseType.OK) {
 						w.hide();
-						new WindowConfig(gladeFile, fcdChooseFile.getURI()).w.show();
+						fsh.load(fcdChooseFile.getURI());
 					} else if (responseType == ResponseType.CANCEL) {
 						fcdChooseFile.hide();
 					}
@@ -94,7 +94,7 @@ public class WindowConfig {
 					 * If a file is chosen, save the current configuration.
 					 */
 					if (responseType == ResponseType.OK) {
-						saveConfigFile(configFile);
+						fsh.save(fcdChooseFile.getURI());
 					} else if (responseType == ResponseType.CANCEL) {
 						fcdChooseFile.hide();
 					}
@@ -124,18 +124,6 @@ public class WindowConfig {
 				}
 			}
 		});
-	}
-	
-	public void saveConfigFile(URI configFile) throws IOException {
-		File outputFile = new File(configFile);
-		Map<String, String> currentFeatures = features.get(currentFeaturesIndex);
-		
-		if(outputFile.isFile() && outputFile.canWrite()) {
-			FileWriter writer = new FileWriter(outputFile);
-			for(String feature : currentFeatures.keySet()){
-				writer.write(feature + "=" + currentFeatures.get(feature));
-			}
-		}
 	}
 	
     public void run()
