@@ -488,8 +488,8 @@ This tool will help you configure the Linux Kernel.
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0</property>
+                                <property name="stock">gtk-dialog-warning</property>
                                 <property name="pixel_size">14</property>
-                                <property name="icon_name">emblem-default</property>
                               </widget>
                             </child>
                           </widget>
@@ -514,7 +514,7 @@ This tool will help you configure the Linux Kernel.
                         <property name="homogeneous">True</property>
                         <property name="layout_style">end</property>
                         <child>
-                          <widget class="GtkButton" id="btnBack">
+                          <widget class="GtkButton" id="btnBackFeature">
                             <property name="label" translatable="yes">Back</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -527,7 +527,7 @@ This tool will help you configure the Linux Kernel.
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="btnNex">
+                          <widget class="GtkButton" id="btnNextFeature">
                             <property name="label" translatable="yes">Next</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -540,7 +540,7 @@ This tool will help you configure the Linux Kernel.
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="btnFinish">
+                          <widget class="GtkButton" id="btnFinishFeature">
                             <property name="label" translatable="yes">Finish</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>

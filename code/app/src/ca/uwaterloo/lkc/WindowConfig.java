@@ -12,23 +12,29 @@ import org.gnome.gtk.Window;
 
 public class WindowConfig {
     
-   public final Window w;
-    
+    public final Window w;
+    private FeatureScreenHandler fsh;
+   
     WindowConfig(final String gladeFile, URI configFile) throws FileNotFoundException
     {
         final XML xmlWndConfig = Glade.parse(gladeFile, "wndConfig");
-        
+       
         w = (Window) xmlWndConfig.getWidget("wndConfig");
         
         w.connect(new Window.DeleteEvent() {
             
-            @Override
-            public boolean onDeleteEvent(Widget arg0, Event arg1) {
-                Gtk.mainQuit();
-                return false;
+           @Override
+           public boolean onDeleteEvent(Widget arg0, Event arg1) {
+               Gtk.mainQuit();
+               return false;
             }
-        });
-        
+       });
+       fsh = new FeatureScreenHandler(xmlWndConfig);
     }
-
+    
+    public void run()
+    {
+        w.show();
+        fsh.showScreen();
+    }
 }
