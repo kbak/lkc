@@ -1,5 +1,7 @@
 package ca.uwaterloo.lkc;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import org.gnome.gtk.Button;
@@ -8,23 +10,29 @@ import org.gnome.gtk.RadioButtonGroup;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
-public class FeatureHandlerPurpose implements IFeatureHandler {
+public class FeatureHandlerPurpose extends FeatureHandler {
 
     private final FeatureScreenHandler fsh;
-    private RadioButtonGroup rg = new RadioButtonGroup();
-    private RadioButton rbDesktop = new RadioButton(rg, "Desktop");
-    private RadioButton rbServer = new RadioButton(rg, "Server");
-    private RadioButton rbMinimal = new RadioButton(rg, "Minimal Kernel");
+    private static RadioButtonGroup rg = new RadioButtonGroup();
+    
+    public static final Map<FeatureScreenHandler.Features, RadioButton> buttonMap = new HashMap<FeatureScreenHandler.Features, RadioButton>() {{ 
+        put(Features.Desktop, new RadioButton(rg, "Desktop"));
+        put(Features.Server, new RadioButton(rg, "Server"));
+        put(Features.Minimum, new RadioButton(rg, "Minimal Configuration"));
+    }};
     
     FeatureHandlerPurpose(final FeatureScreenHandler fsh)
     {
         this.fsh = fsh;
+    
+        for (int i = 0; i < buttonMap.size(); ++i)
+        {
+            fsh.layOption.put((RadioButton) buttonMap.values().toArray()[i], 0, i * 20);
+        }
         
-        fsh.layOption.add(rbDesktop);
-        fsh.layOption.add(rbServer);
-        fsh.layOption.add(rbMinimal);
+        selectedOptions.add(Features.Desktop);
         
-        rbDesktop.connect(new Button.Clicked() {
+        buttonMap.get(Features.Desktop).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
@@ -41,17 +49,18 @@ public class FeatureHandlerPurpose implements IFeatureHandler {
         return "How are you going to use this computer?";
     }
 
-    @Override
-    public Vector<Features> getSelectedOptions() {
-        // TODO Auto-generated method stub
-        return null;
+    public void updateUI()
+    {
+        buttonMap.get(selectedOptions.elementAt(0)).activate();
     }
-
+    
     @Override
     public void show() {
-        rbDesktop.show();
-        rbServer.show();
-        rbMinimal.show();
+        updateUI();
+        for (RadioButton rb : buttonMap.values())
+        {
+            rb.show();
+        }
     }
 
 }

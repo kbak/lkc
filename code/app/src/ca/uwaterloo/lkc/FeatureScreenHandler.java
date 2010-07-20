@@ -143,4 +143,14 @@ public class FeatureScreenHandler {
     {
         featureHistory.add(featureHistory.lastElement() + 1);
     }
+    
+    void load(Vector<Features> features)
+    {
+        
+    }
+    
+    Vector<Features> save()
+    {
+        return null;
+    }
 }

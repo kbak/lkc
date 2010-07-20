@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
-public class FeatureHandlerServer implements IFeatureHandler {
+public class FeatureHandlerServer extends FeatureHandler {
 
     private FeatureScreenHandler fsh;
     
@@ -15,12 +15,6 @@ public class FeatureHandlerServer implements IFeatureHandler {
     
     @Override
     public String getQuestion() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Vector<Features> getSelectedOptions() {
         // TODO Auto-generated method stub
         return null;
     }
