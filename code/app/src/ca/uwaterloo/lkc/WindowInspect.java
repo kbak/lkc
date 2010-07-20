@@ -12,6 +12,9 @@ import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
 import org.gnome.gtk.ProgressBar;
 import org.gnome.gtk.Stock;
+import org.gnome.gtk.ToggleButton;
+import org.gnome.gtk.Widget;
+import org.gnome.gtk.Window;
 
 public class WindowInspect extends Thread {
 
