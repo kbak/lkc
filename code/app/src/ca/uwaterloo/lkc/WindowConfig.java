@@ -125,7 +125,6 @@ public class WindowConfig {
 				try {
 					// Run xconfig
 				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
-				    pb.directory(new File("/usr/src/linux"));
 				    pb.start();
 				    w.hide();
 				} catch (IOException e) {
