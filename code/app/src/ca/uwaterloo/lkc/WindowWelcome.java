@@ -70,8 +70,12 @@ public class WindowWelcome {
                     if (ResponseType.OK == rt)
                     {
                         w.hide();
-                        fcdChooseFile.getURI();
-                        // run config with given file URI
+                        try {
+                            new WindowConfig(gladeFile, fcdChooseFile.getURI()).w.show();
+                        } catch (FileNotFoundException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

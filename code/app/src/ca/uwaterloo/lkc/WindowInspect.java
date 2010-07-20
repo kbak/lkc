@@ -18,6 +18,7 @@ import org.gnome.gtk.Window;
 
 public class WindowInspect extends Thread {
 
+    final String gladeFile;
     final XML xmlWndInspect;
     
     public final Window w;
@@ -31,6 +32,8 @@ public class WindowInspect extends Thread {
     
     WindowInspect(String gladeFile) throws FileNotFoundException
     {
+        this.gladeFile = gladeFile;
+        
         xmlWndInspect = Glade.parse(gladeFile, "wndInspect");
         
         w = (Window) xmlWndInspect.getWidget("wndInspect");
@@ -75,6 +78,13 @@ public class WindowInspect extends Thread {
     public void run() {
         dumpConfiguration();
         dumpHardware();
+        w.hide();
+        try {
+            new WindowConfig(gladeFile, null).w.show();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     void dumpConfiguration()
