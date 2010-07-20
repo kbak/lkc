@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import org.gnome.glade.XML;
 import org.gnome.gtk.Button;
+import org.gnome.gtk.HBox;
 import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
 import org.gnome.gtk.Label;
@@ -47,6 +48,7 @@ public class FeatureScreenHandler {
     private Image imgFeatureStability;
     private TextBuffer textBuffer = new TextBuffer();
     private Viewport vp;
+    private HBox hbox1;
     final Button btnBackFeature;
     final Button btnNextFeature;
     
@@ -64,6 +66,7 @@ public class FeatureScreenHandler {
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
         vp = (Viewport) xmlWndConfig.getWidget("viewport3");
+        hbox1 = (HBox) xmlWndConfig.getWidget("hbox1");
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
         imgFeatureStability = (Image) xmlWndConfig.getWidget("imgFeatureStability");
@@ -155,12 +158,14 @@ public class FeatureScreenHandler {
         {
             btnBackFeature.setSensitive(false);
             vp.hide();
+            hbox1.hide();
             btnNextFeature.setSensitive(true);
         }
         else if (featureHandlers.size() - 1 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(true);
             vp.hide();
+            hbox1.hide();
             btnNextFeature.setSensitive(false);
         }
         else
@@ -168,6 +173,7 @@ public class FeatureScreenHandler {
             btnBackFeature.setSensitive(true);
             btnNextFeature.setSensitive(true);
             vp.show();
+            hbox1.show();
         }
         
         
