@@ -80,7 +80,7 @@ public class WindowInspect extends Thread {
         dumpHardware();
         w.hide();
         try {
-            new WindowConfig(gladeFile, null).w.show();
+            new WindowConfig(gladeFile).w.show();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

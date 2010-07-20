@@ -1,7 +1,11 @@
 package ca.uwaterloo.lkc;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
+import java.util.Map;
 
 import org.gnome.gdk.Event;
 import org.gnome.glade.Glade;
@@ -13,44 +17,51 @@ import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
 public class WindowConfig {
-    
-   public final Window w;
-   public final ToolButton tbtnOpen;
-    
-    WindowConfig(final String gladeFile, URI configFile) throws FileNotFoundException
-    {
-        final XML xmlWndConfig = Glade.parse(gladeFile, "wndConfig");
-        
-        w = (Window) xmlWndConfig.getWidget("wndConfig");
-        
-        w.connect(new Window.DeleteEvent() {
-            
-            @Override
-            public boolean onDeleteEvent(Widget arg0, Event arg1) {
-                Gtk.mainQuit();
-                return false;
-            }
-        });
-        
-        // Adding evens for tool bar buttons
-        tbtnOpen = (ToolButton) xmlWndConfig.getWidget("tbtnOpen");
-        tbtnOpen.connect(new ToolButton.Clicked() {
-			
+
+	public final Window w;
+	public final ToolButton tbtnOpen;
+	public final ToolButton tbtnSave;
+	
+	private Map<String, String> features;
+
+	public WindowConfig(final String gladeFile) throws FileNotFoundException {
+		this(gladeFile, null);
+	}
+
+	public WindowConfig(final String gladeFile, final URI configFile) throws FileNotFoundException {
+		final XML xmlWndConfig = Glade.parse(gladeFile, "wndConfig");
+
+		w = (Window) xmlWndConfig.getWidget("wndConfig");
+
+		w.connect(new Window.DeleteEvent() {
+
 			@Override
-			public void onClicked(ToolButton arg0) {
+			public boolean onDeleteEvent(Widget arg0, Event arg1) {
+				Gtk.mainQuit();
+				return false;
+			}
+		});
+		
+		// Adding events for tool bar buttons
+		/* Open */
+		tbtnOpen = (ToolButton) xmlWndConfig.getWidget("tbtnOpen");
+		tbtnOpen.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
 				try {
 					FcdChooseFile fcdChooseFile;
 					fcdChooseFile = new FcdChooseFile(gladeFile);
 					ResponseType responseType = fcdChooseFile.run();
-					
+
 					/*
-					 *  If a file is chosen, hide the current WindowConfig,
-					 *  instantiate a new one with the new configuration.
+					 * If a file is chosen, hide the current WindowConfig,
+					 * instantiate a new one with the new configuration.
 					 */
-					if(responseType == ResponseType.OK) {
+					if (responseType == ResponseType.OK) {
 						w.hide();
 						new WindowConfig(gladeFile, fcdChooseFile.getURI()).w.show();
-					} else if(responseType == ResponseType.CANCEL) {
+					} else if (responseType == ResponseType.CANCEL) {
 						fcdChooseFile.hide();
 					}
 				} catch (FileNotFoundException e) {
@@ -58,7 +69,43 @@ public class WindowConfig {
 				}
 			}
 		});
-        
-    }
 
+		/* Save */
+		tbtnSave = (ToolButton) xmlWndConfig.getWidget("tbtnSave");
+		tbtnSave.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
+				try {
+					FcdChooseFile fcdChooseFile;
+					fcdChooseFile = new FcdChooseFile(gladeFile);
+					ResponseType responseType = fcdChooseFile.run();
+
+					/*
+					 * If a file is chosen, save the current configuration.
+					 */
+					if (responseType == ResponseType.OK) {
+						saveConfigFile(features, configFile);
+					} else if (responseType == ResponseType.CANCEL) {
+						fcdChooseFile.hide();
+					}
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public void saveConfigFile(Map<String, String> features, URI configFile) throws IOException {
+		File outputFile = new File(configFile);
+		
+		if(outputFile.isFile() && outputFile.canWrite()) {
+			FileWriter writer = new FileWriter(outputFile);
+			for(String feature : features.keySet()){
+				writer.write(feature + "=" + features.get(feature));
+			}
+		}
+	}
 }
