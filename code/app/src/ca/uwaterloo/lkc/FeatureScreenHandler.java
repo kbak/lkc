@@ -52,8 +52,15 @@ public class FeatureScreenHandler {
     
     private Vector<Integer> featureHistory = new Vector<Integer>();
     
+    public Vector<Features> featuresUndoRedo;
+	public int currentFeaturesIndex;
+	public int MAX_UNDO_REDO = 10;
+    
     FeatureScreenHandler(final XML xmlWndConfig) throws FileNotFoundException
     {   
+    	featuresUndoRedo = new Vector<Features>();
+		currentFeaturesIndex = -1;
+		
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
         vp = (Viewport) xmlWndConfig.getWidget("viewport3");

@@ -1,5 +1,7 @@
 package ca.uwaterloo.lkc;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -36,6 +38,13 @@ public class FeatureHandlerMemory extends FeatureHandler {
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Warning);
                 selectedOptions.set(0, Features.HighMem);
+                
+                try {
+					fsh.save(new File("history").toURI());
+					fsh.currentFeaturesIndex++;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
         
