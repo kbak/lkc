@@ -1,4 +1,4 @@
-package lkctool;
+package code.app.src.ca.uwaterloo.lkc;
 
 import java.io.FileNotFoundException;
 

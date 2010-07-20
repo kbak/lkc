@@ -1,4 +1,4 @@
-package lkctool;
+package code.app.src.ca.uwaterloo.lkc;
 
 import java.io.FileNotFoundException;
 
@@ -13,6 +13,7 @@ import org.gnome.gtk.ResponseType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
+
 
 public class WindowWelcome {
 
