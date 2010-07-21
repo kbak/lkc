@@ -16,15 +16,21 @@ import java.util.Vector;
 
 import org.gnome.glade.XML;
 import org.gnome.gtk.Button;
+import org.gnome.gtk.CellRendererText;
+import org.gnome.gtk.DataColumn;
+import org.gnome.gtk.DataColumnString;
 import org.gnome.gtk.HBox;
 import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
 import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
+import org.gnome.gtk.ListStore;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToolButton;
+import org.gnome.gtk.TreeView;
+import org.gnome.gtk.TreeViewColumn;
 import org.gnome.gtk.Viewport;
 import org.gnome.gtk.Widget;
 
@@ -40,7 +46,7 @@ public class FeatureScreenHandler {
         put(IFeatureHandler.Stability.Unstable, Stock.STOP);
     }};
     
-    private Vector<IFeatureHandler> featureHandlers = new Vector<IFeatureHandler>();
+    public Vector<IFeatureHandler> featureHandlers = new Vector<IFeatureHandler>();
 
     private Label lblOption;
     public Layout layOption;
@@ -52,6 +58,7 @@ public class FeatureScreenHandler {
     private HBox hbox1;
     final Button btnBackFeature;
     final Button btnNextFeature;
+    final TreeView treeviewFeatures;
     
     // To manage the enable/disable of those buttons
     public final ToolButton tbtnUndo;
@@ -59,6 +66,7 @@ public class FeatureScreenHandler {
     
     private Vector<Integer> featureHistory = new Vector<Integer>();
     
+    // Undo/Redo related variables
     public Vector<URI> featuresUndoRedo;
 	public int currentFeaturesIndex;
 	public int MAX_UNDO_REDO = 100;
@@ -123,6 +131,34 @@ public class FeatureScreenHandler {
         
 		tbtnUndo = (ToolButton) xmlWndConfig.getWidget("tbtnUndo");
 		tbtnRedo = (ToolButton) xmlWndConfig.getWidget("tbtnRedo");
+		
+		// Create the left feature panel
+		treeviewFeatures = (TreeView) xmlWndConfig.getWidget("treeviewFeatures");
+		createLeftPanel();
+    }
+    
+    private void createLeftPanel() {
+		TreeViewColumn column = treeviewFeatures.appendColumn();
+		DataColumnString featureName = new DataColumnString();
+		ListStore model = new ListStore( new DataColumn[] {featureName});
+
+		// Populate the feature names in the cells of the tree
+		model.setValue(model.appendRow(), featureName, "Welcome");
+		model.setValue(model.appendRow(), featureName, "Purpose");
+		model.setValue(model.appendRow(), featureName, "Software Real Time");
+		model.setValue(model.appendRow(), featureName, "Processor");
+		model.setValue(model.appendRow(), featureName, "Memory");
+		model.setValue(model.appendRow(), featureName, "Server");
+		model.setValue(model.appendRow(), featureName, "Security");
+		model.setValue(model.appendRow(), featureName, "Virtualization");
+		model.setValue(model.appendRow(), featureName, "Summary");
+		
+		treeviewFeatures.setModel(model);
+				
+		column.setTitle("Steps");
+		CellRendererText text = new CellRendererText(column);
+		text.setText(featureName);
+		treeviewFeatures.show();
     }
     
     public void updateStability(IFeatureHandler.Stability s)
@@ -190,6 +226,33 @@ public class FeatureScreenHandler {
             c.hide();
         }
         IFeatureHandler fh = featureHandlers.elementAt(featureHistory.lastElement());
+        lblOption.setLabel(fh.getQuestion());
+        fh.show();
+    }
+    
+    public void showScreen(int screenIndex) {
+    	if (0 == screenIndex) {
+            btnBackFeature.setSensitive(false);
+            vp.hide();
+            hbox1.hide();
+            btnNextFeature.setSensitive(true);
+        } else if (featureHandlers.size() - 1 == screenIndex) {
+            btnBackFeature.setSensitive(true);
+            vp.hide();
+            hbox1.hide();
+            btnNextFeature.setSensitive(false);
+        } else {
+            btnBackFeature.setSensitive(true);
+            btnNextFeature.setSensitive(true);
+            vp.show();
+            hbox1.show();
+        }
+        
+        for (Widget c : layOption.getChildren()) {
+            c.hide();
+        }
+        
+        IFeatureHandler fh = featureHandlers.elementAt(screenIndex);
         lblOption.setLabel(fh.getQuestion());
         fh.show();
     }
