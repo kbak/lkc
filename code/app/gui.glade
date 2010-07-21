@@ -784,6 +784,7 @@
     <child>
       <widget class="GtkVBox" id="vbox5">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkHBox" id="hbox2">
             <property name="visible">True</property>
@@ -826,7 +827,7 @@ This tool will help you configure the Linux Kernel.</property>
             <property name="xalign">0</property>
             <property name="xpad">5</property>
             <property name="ypad">5</property>
-            <property name="label" translatable="yes">How do you want to configure kernel?</property>
+            <property name="label" translatable="yes">Do you want to automatically detect hardware?</property>
           </widget>
           <packing>
             <property name="expand">False</property>
@@ -835,7 +836,7 @@ This tool will help you configure the Linux Kernel.</property>
         </child>
         <child>
           <widget class="GtkRadioButton" id="rbtnStartNew">
-            <property name="label" translatable="yes">Start new configuration</property>
+            <property name="label" translatable="yes">Yes</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
@@ -850,7 +851,7 @@ This tool will help you configure the Linux Kernel.</property>
         </child>
         <child>
           <widget class="GtkRadioButton" id="rtbnLoad">
-            <property name="label" translatable="yes">Load configuration from file</property>
+            <property name="label" translatable="yes">No</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>

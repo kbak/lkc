@@ -21,13 +21,11 @@ public class WindowWelcome {
     WindowWelcome(final String gladeFile) throws FileNotFoundException
     {
         final XML xmlWndWelcome = Glade.parse(gladeFile, "wndWelcome");
-        final XML xmlChooseFile = Glade.parse(gladeFile, "fcdChooseFile");
         
         w = (Window) xmlWndWelcome.getWidget("wndWelcome");
         final Button btnCancel = (Button) xmlWndWelcome.getWidget("btnCancel1");
         final Button btnNext = (Button) xmlWndWelcome.getWidget("btnNext");
         final RadioButton rbtnStartNew = (RadioButton) xmlWndWelcome.getWidget("rbtnStartNew");
-        final FileChooserDialog fcdChooseFile = (FileChooserDialog) xmlChooseFile.getWidget("fcdChooseFile");
         
         w.connect(new Window.DeleteEvent() {
             
@@ -65,24 +63,16 @@ public class WindowWelcome {
                 }
                 else
                 {
-                    ResponseType rt = fcdChooseFile.run();
-                    fcdChooseFile.hide();
-                    if (ResponseType.OK == rt)
-                    {
-                        w.hide();
-                        try {
-                            WindowConfig wnd = new WindowConfig(gladeFile, fcdChooseFile.getURI());
-                            wnd.run();
-                        } catch (FileNotFoundException e) {
-                            // TODO Auto-generated catch block
+                    w.hide();
+                    try {
+                        WindowConfig wnd = new WindowConfig(gladeFile, null);
+                        wnd.run();
+                    } catch (FileNotFoundException e) {
+                        // TODO Auto-generated catch block
                             e.printStackTrace();
-                        }
                     }
                 }
             }
         });
-        
-        fcdChooseFile.addButton(Stock.OK, ResponseType.OK);
-        fcdChooseFile.addButton(Stock.CANCEL, ResponseType.CANCEL);
     }
 }
