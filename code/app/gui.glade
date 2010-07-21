@@ -148,6 +148,7 @@
                       <widget class="GtkViewport" id="viewport2">
                         <property name="visible">True</property>
                         <property name="resize_mode">queue</property>
+                        <property name="shadow_type">etched-in</property>
                         <child>
                           <widget class="GtkTreeView" id="treeview1">
                             <property name="visible">True</property>
