@@ -236,14 +236,17 @@ public class FeatureScreenHandler {
 					}
 				}
 			}
+			reader.close();
 		}
     }
     
     public void save(URI file) throws IOException {
     	File outputFile = new File(file);
-		
+    	outputFile.createNewFile();
+
 		if(outputFile.isFile() && outputFile.canWrite()) {
 			FileWriter writer = new FileWriter(outputFile);
+			System.out.println(outputFile.getAbsolutePath());
 			
 			for(IFeatureHandler featureHandler : this.featureHandlers){
 				writer.write(featureHandler.getClass().getCanonicalName() + "=");
@@ -252,6 +255,7 @@ public class FeatureScreenHandler {
 				}
 				writer.write("\n");
 			}
+			writer.close();
 		}
     }
 }

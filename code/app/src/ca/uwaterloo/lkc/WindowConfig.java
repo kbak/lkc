@@ -64,11 +64,9 @@ public class WindowConfig {
 					 * If a file is chosen, hide the current WindowConfig,
 					 * instantiate a new one with the new configuration.
 					 */
+					fcdChooseFile.hide();
 					if (responseType == ResponseType.OK) {
-						w.hide();
 						fsh.load(fcdChooseFile.getURI());
-					} else if (responseType == ResponseType.CANCEL) {
-						fcdChooseFile.hide();
 					}
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -97,10 +95,9 @@ public class WindowConfig {
 					/*
 					 * If a file is chosen, save the current configuration.
 					 */
+					fcdChooseFile.hide();
 					if (responseType == ResponseType.OK) {
 						fsh.save(fcdChooseFile.getURI());
-					} else if (responseType == ResponseType.CANCEL) {
-						fcdChooseFile.hide();
 					}
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
