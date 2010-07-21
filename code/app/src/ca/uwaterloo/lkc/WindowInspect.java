@@ -7,14 +7,15 @@ import org.gnome.glade.Glade;
 import org.gnome.glade.XML;
 import org.gnome.gtk.Alignment;
 import org.gnome.gtk.Button;
+import org.gnome.gtk.Clipboard;
 import org.gnome.gtk.Gtk;
 import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
-import org.gnome.gtk.Layout;
 import org.gnome.gtk.ProgressBar;
 import org.gnome.gtk.Stock;
+import org.gnome.gtk.TextBuffer;
+import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToggleButton;
-import org.gnome.gtk.VBox;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
@@ -31,6 +32,7 @@ public class WindowInspect extends Thread {
     private final int taskTime = 10;
     
     private final ProgressBar pg;
+    private final TextView tvConsole;
     
     WindowInspect(String gladeFile) throws FileNotFoundException
     {
@@ -41,9 +43,11 @@ public class WindowInspect extends Thread {
         w = (Window) xmlWndInspect.getWidget("wndInspect");
         final Button btnCancel = (Button) xmlWndInspect.getWidget("btnCancel");
         final ToggleButton tbtnInfo = (ToggleButton) xmlWndInspect.getWidget("tbtnInfo");
+        final Button btnCopy = (Button) xmlWndInspect.getWidget("btnCopy");
         final Alignment alignInfo = (Alignment) xmlWndInspect.getWidget("alignInfo");
         pg = (ProgressBar) xmlWndInspect.getWidget("pgInspect");
-        final VBox vbox4 = (VBox) xmlWndInspect.getWidget("vboxInformation");
+        tvConsole = (TextView) xmlWndInspect.getWidget("tvConsole");
+        tvConsole.setBuffer(new TextBuffer());
         
         w.connect(new Window.DeleteEvent() {
             
@@ -81,6 +85,14 @@ public class WindowInspect extends Thread {
                 }
             }
         });
+        
+        btnCopy.connect(new Button.Clicked() {
+            
+            @Override
+            public void onClicked(Button arg0) {
+                Clipboard.getDefault().setText(tvConsole.getBuffer().getText());
+            }
+        });
     }
     
     public void run() {
@@ -113,7 +125,12 @@ public class WindowInspect extends Thread {
         for (int i = 0; i < steps; ++i)
         {
             try {
+                tvConsole.getBuffer().insert(tvConsole.getBuffer().getIterEnd(), "Detecting device... ");
                 sleep(taskTime);
+                tvConsole.getBuffer().insert(tvConsole.getBuffer().getIterEnd(), "Dev" + i + "\n");
+                tvConsole.getBuffer().placeCursor(tvConsole.getBuffer().getIterEnd());
+                tvConsole.scrollTo(tvConsole.getBuffer().getInsert());
+                
                 pg.setFraction(Math.min(1.0, pg.getFraction() + (1.0 / nParts)));
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
