@@ -36,7 +36,7 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 fsh.updateFeatureDescription("SELinux Description");
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(0, Features.SELinux);
+                selectedOptions.set(0, buttonMap.get(Features.SELinux).getActive() ? Features.None : Features.SELinux);
             }
         });
         
@@ -48,7 +48,7 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 fsh.updateFeatureDescription("CryptoAPIDescription");
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(1, Features.CryptoAPI);
+                selectedOptions.set(1, buttonMap.get(Features.CryptoAPI).getActive() ? Features.None : Features.CryptoAPI);
             }
         });
 
