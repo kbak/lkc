@@ -35,7 +35,7 @@ public class FeatureScreenHandler {
     
     public static final Map<Stability, Stock> stabilityMap = new TreeMap<IFeatureHandler.Stability, Stock>() {{ 
         put(IFeatureHandler.Stability.Stable, Stock.APPLY);
-        put(IFeatureHandler.Stability.Warning, Stock.INFO);
+        put(IFeatureHandler.Stability.Warning, Stock.DIALOG_WARNING);
         put(IFeatureHandler.Stability.Unstable, Stock.STOP);
     }};
     

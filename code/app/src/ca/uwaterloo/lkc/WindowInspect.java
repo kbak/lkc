@@ -10,9 +10,11 @@ import org.gnome.gtk.Button;
 import org.gnome.gtk.Gtk;
 import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
+import org.gnome.gtk.Layout;
 import org.gnome.gtk.ProgressBar;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.ToggleButton;
+import org.gnome.gtk.VBox;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
@@ -24,7 +26,7 @@ public class WindowInspect extends Thread {
     public final Window w;
 
     private final int nPartsConfiguration = 2;
-    private final int nPartsHardware = 200;
+    private final int nPartsHardware = 100;
     private final int nParts = nPartsConfiguration + nPartsHardware;
     private final int taskTime = 10;
     
@@ -41,6 +43,7 @@ public class WindowInspect extends Thread {
         final ToggleButton tbtnInfo = (ToggleButton) xmlWndInspect.getWidget("tbtnInfo");
         final Alignment alignInfo = (Alignment) xmlWndInspect.getWidget("alignInfo");
         pg = (ProgressBar) xmlWndInspect.getWidget("pgInspect");
+        final VBox vbox4 = (VBox) xmlWndInspect.getWidget("vboxInformation");
         
         w.connect(new Window.DeleteEvent() {
             
@@ -51,10 +54,13 @@ public class WindowInspect extends Thread {
             }
         });
         
+        final WindowInspect wi = this;
+        
         btnCancel.connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
+                wi.stop();
                 Gtk.mainQuit();
             }
         });
@@ -66,10 +72,12 @@ public class WindowInspect extends Thread {
                 if (tbtnInfo.getActive())
                 {
                     alignInfo.show();
+                    alignInfo.setSizeRequest(-1, 300);
                 }
                 else
                 {
                     alignInfo.hide();
+                    w.resize(1, 1);
                 }
             }
         });

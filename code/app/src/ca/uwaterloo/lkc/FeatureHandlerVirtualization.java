@@ -35,7 +35,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 fsh.updateFeatureDescription("KVM Description");
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(0, Features.KVM);
+                selectedOptions.set(0, buttonMap.get(Features.KVM).getActive() ? Features.None : Features.KVM);
             }
         });
         
@@ -47,7 +47,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 fsh.updateFeatureDescription("XEN Description");
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(1, Features.XEN);
+                selectedOptions.set(1, buttonMap.get(Features.XEN).getActive() ? Features.None : Features.XEN);
             }
         });
 
