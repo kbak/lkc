@@ -729,16 +729,17 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkViewport" id="viewport4">
+                  <widget class="GtkScrolledWindow" id="scrolledwindow2">
                     <property name="visible">True</property>
-                    <property name="no_show_all">True</property>
-                    <property name="resize_mode">queue</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">automatic</property>
+                    <property name="vscrollbar_policy">automatic</property>
                     <property name="shadow_type">etched-in</property>
                     <child>
                       <widget class="GtkTextView" id="tvConsole">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="editable">False</property>
+                        <property name="wrap_mode">word</property>
                       </widget>
                     </child>
                   </widget>
