@@ -37,7 +37,7 @@ public class FeatureHandlerServer extends FeatureHandler {
                 fsh.updateFeatureDescription("IPv6 Description");
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(0, Features.IPv6);
+                selectedOptions.set(0, buttonMap.get(Features.IPv6).getActive() ? Features.None : Features.IPv6);
             }
         });
         
@@ -49,7 +49,7 @@ public class FeatureHandlerServer extends FeatureHandler {
                 fsh.updateFeatureDescription("Netfilter Description");
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(1, Features.Netfilter);
+                selectedOptions.set(1, buttonMap.get(Features.Netfilter).getActive() ? Features.None : Features.Netfilter);
             }
         });
         
@@ -61,7 +61,7 @@ public class FeatureHandlerServer extends FeatureHandler {
                 fsh.updateFeatureDescription("Qos Description");
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
-                selectedOptions.set(2, Features.Qos);
+                selectedOptions.set(2, buttonMap.get(Features.Qos).getActive() ? Features.None : Features.Qos);
             }
         });
 
