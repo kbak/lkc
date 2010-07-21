@@ -24,5 +24,9 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     public boolean isRelevant(Vector<Features> v) {
         return true;
     }
-
+	@Override
+	public void updateUI() {
+		// TODO Auto-generated method stub
+		
+	}
 }

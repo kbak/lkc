@@ -1,5 +1,6 @@
 package ca.uwaterloo.lkc;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -36,6 +37,12 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(0, Features.KVM);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
         
@@ -48,6 +55,12 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(1, Features.XEN);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
 

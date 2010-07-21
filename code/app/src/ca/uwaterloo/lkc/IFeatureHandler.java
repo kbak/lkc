@@ -17,4 +17,6 @@ public interface IFeatureHandler {
     Vector<Features> save();
     
     boolean isRelevant(Vector<Features> v);
+    
+    public void updateUI();
 }

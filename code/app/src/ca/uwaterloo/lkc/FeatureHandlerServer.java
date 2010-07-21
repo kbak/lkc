@@ -1,5 +1,6 @@
 package ca.uwaterloo.lkc;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -38,6 +39,12 @@ public class FeatureHandlerServer extends FeatureHandler {
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(0, Features.IPv6);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
         
@@ -50,6 +57,12 @@ public class FeatureHandlerServer extends FeatureHandler {
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(1, Features.Netfilter);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
         
@@ -62,6 +75,12 @@ public class FeatureHandlerServer extends FeatureHandler {
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(2, Features.Qos);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
 

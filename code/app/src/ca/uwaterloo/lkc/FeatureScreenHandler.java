@@ -24,6 +24,7 @@ import org.gnome.gtk.Layout;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
+import org.gnome.gtk.ToolButton;
 import org.gnome.gtk.Viewport;
 import org.gnome.gtk.Widget;
 
@@ -52,15 +53,19 @@ public class FeatureScreenHandler {
     final Button btnBackFeature;
     final Button btnNextFeature;
     
+    // To manage the enable/disable of those buttons
+    public final ToolButton tbtnUndo;
+	public final ToolButton tbtnRedo;
+    
     private Vector<Integer> featureHistory = new Vector<Integer>();
     
-    public Vector<Features> featuresUndoRedo;
+    public Vector<URI> featuresUndoRedo;
 	public int currentFeaturesIndex;
-	public int MAX_UNDO_REDO = 10;
+	public int MAX_UNDO_REDO = 100;
     
     FeatureScreenHandler(final XML xmlWndConfig) throws FileNotFoundException
     {   
-    	featuresUndoRedo = new Vector<Features>();
+    	featuresUndoRedo = new Vector<URI>();
 		currentFeaturesIndex = -1;
 		
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
@@ -115,6 +120,9 @@ public class FeatureScreenHandler {
         });
         
         tvFeatureDescription.setBuffer(textBuffer);
+        
+		tbtnUndo = (ToolButton) xmlWndConfig.getWidget("tbtnUndo");
+		tbtnRedo = (ToolButton) xmlWndConfig.getWidget("tbtnRedo");
     }
     
     public void updateStability(IFeatureHandler.Stability s)
@@ -240,13 +248,17 @@ public class FeatureScreenHandler {
 		}
     }
     
+    public void updateCurrentFeatures() throws IOException, ClassNotFoundException {
+    	this.load(this.featuresUndoRedo.get(this.currentFeaturesIndex));
+    	System.out.println("Load current index: " + this.featuresUndoRedo.get(this.currentFeaturesIndex));
+    }
+    
     public void save(URI file) throws IOException {
     	File outputFile = new File(file);
     	outputFile.createNewFile();
 
 		if(outputFile.isFile() && outputFile.canWrite()) {
 			FileWriter writer = new FileWriter(outputFile);
-			System.out.println(outputFile.getAbsolutePath());
 			
 			for(IFeatureHandler featureHandler : this.featureHandlers){
 				writer.write(featureHandler.getClass().getCanonicalName() + "=");
@@ -257,5 +269,43 @@ public class FeatureScreenHandler {
 			}
 			writer.close();
 		}
+    }
+    
+    public void rememberForUndoRedo() throws IOException {
+    	// Add to the vector that holds the history for undo/redo
+    	URI fileName = new File("history" + File.pathSeparator + System.currentTimeMillis()).toURI(); 
+    	this.save(fileName);
+    	this.featuresUndoRedo.add(fileName);
+    	
+    	// If we are over the max size of history, delete the first element in the vector
+    	if(this.featuresUndoRedo.size() > this.MAX_UNDO_REDO) {
+    		this.featuresUndoRedo.removeElementAt(0);
+    	}
+    	
+    	this.incrementCurrentFeaturesIndex();
+    	
+    	tbtnUndo.setSensitive(this.currentFeaturesIndex > 0);
+    	
+    	System.out.println("Remember current index: " + this.featuresUndoRedo.get(this.currentFeaturesIndex));
+    }
+    
+    public boolean incrementCurrentFeaturesIndex() {
+    	this.currentFeaturesIndex++;
+    	if (this.currentFeaturesIndex >= this.MAX_UNDO_REDO) {
+            this.currentFeaturesIndex = this.MAX_UNDO_REDO;
+            return true;
+        }
+    	
+    	return false;
+    }
+    
+    public boolean decrementCurrentFeaturesIndex() {
+    	this.currentFeaturesIndex--;
+		if (this.currentFeaturesIndex <= 0) {
+            this.currentFeaturesIndex = 0;
+            return true;
+        }
+		
+		return false;
     }
 }

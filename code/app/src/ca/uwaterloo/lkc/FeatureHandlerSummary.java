@@ -27,4 +27,10 @@ public class FeatureHandlerSummary extends FeatureHandler {
         return true;
     }
 
+	@Override
+	public void updateUI() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

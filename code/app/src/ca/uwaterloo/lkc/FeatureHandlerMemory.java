@@ -44,8 +44,7 @@ public class FeatureHandlerMemory extends FeatureHandler {
                 selectedOptions.set(0, Features.HighMem);
                 
                 try {
-					fsh.save(new File("history").toURI());
-					fsh.currentFeaturesIndex++;
+					fsh.rememberForUndoRedo();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -61,6 +60,12 @@ public class FeatureHandlerMemory extends FeatureHandler {
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(0, Features.NoHighMem);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
 
