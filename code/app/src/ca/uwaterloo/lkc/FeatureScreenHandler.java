@@ -289,7 +289,7 @@ public class FeatureScreenHandler {
     public boolean incrementCurrentFeaturesIndex() {
     	this.currentFeaturesIndex++;
     	if (this.currentFeaturesIndex >= this.MAX_UNDO_REDO) {
-            this.currentFeaturesIndex = this.MAX_UNDO_REDO;
+            this.currentFeaturesIndex = this.MAX_UNDO_REDO - 1;
             return true;
         }
     	
