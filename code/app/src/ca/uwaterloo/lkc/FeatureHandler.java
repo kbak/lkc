@@ -12,7 +12,7 @@ public abstract class FeatureHandler implements IFeatureHandler {
     @Override
     public void load(Vector<Features> features) {
         selectedOptions = features;
-        
+        updateUI();
     }
 
     @Override

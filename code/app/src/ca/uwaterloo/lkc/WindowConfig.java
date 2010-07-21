@@ -126,32 +126,68 @@ public class WindowConfig {
 		
 		/* Undo */
 		tbtnUndo = (ToolButton) xmlWndConfig.getWidget("tbtnUndo");
+		tbtnUndo.setSensitive(false);
 		tbtnUndo.connect(new ToolButton.Clicked() {
 
 			@Override
 			public void onClicked(ToolButton source) {
-				fsh.currentFeaturesIndex--;
-				if (fsh.currentFeaturesIndex <= 0) {
-                    tbtnUndo.setSensitive(false);
-                    tbtnRedo.setSensitive(true);
-                }
+				if(fsh.decrementCurrentFeaturesIndex()) {
+					updateUndoRedo(false, true);
+				} else {
+					updateUndoRedo(true, true);
+				}
+				
+				// Update current features
+				try {
+					fsh.updateCurrentFeatures();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
 		/* Redo */
 		tbtnRedo = (ToolButton) xmlWndConfig.getWidget("tbtnRedo");
+		tbtnRedo.setSensitive(false);
 		tbtnRedo.connect(new ToolButton.Clicked() {
 
 			@Override
 			public void onClicked(ToolButton source) {
-				fsh.currentFeaturesIndex++;
-				if (fsh.currentFeaturesIndex >= fsh.MAX_UNDO_REDO) {
-                    tbtnUndo.setSensitive(true);
-                    tbtnRedo.setSensitive(false);
-                }
+				if(fsh.incrementCurrentFeaturesIndex()) {
+					updateUndoRedo(true, false);
+				} else {
+					updateUndoRedo(true, true);
+				}
+				
+				// Update current features
+				try {
+					fsh.updateCurrentFeatures();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
+		// Load config file
+		if(configFile != null) {
+			try {
+				fsh.load(configFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void updateUndoRedo(boolean undoSensitive, boolean redoSensitive) {
+		tbtnUndo.setSensitive(undoSensitive);
+		tbtnRedo.setSensitive(redoSensitive);
 	}
 	
     public void run()

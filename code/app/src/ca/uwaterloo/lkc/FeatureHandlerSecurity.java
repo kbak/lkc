@@ -1,5 +1,6 @@
 package ca.uwaterloo.lkc;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -36,7 +37,14 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 fsh.updateFeatureDescription("SELinux Description");
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Stable);
+
                 selectedOptions.set(0, buttonMap.get(Features.SELinux).getActive() ? Features.None : Features.SELinux);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
         
@@ -49,6 +57,12 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(1, buttonMap.get(Features.CryptoAPI).getActive() ? Features.None : Features.CryptoAPI);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
 

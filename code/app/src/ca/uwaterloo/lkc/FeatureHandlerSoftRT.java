@@ -1,5 +1,6 @@
 package ca.uwaterloo.lkc;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -38,6 +39,12 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
                 fsh.updateSize(200000);
                 fsh.updateStability(Stability.Warning);
                 selectedOptions.set(0, Features.SoftRT);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
         
@@ -50,6 +57,12 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
                 fsh.updateSize(5000);
                 fsh.updateStability(Stability.Stable);
                 selectedOptions.set(0, Features.NoSoftRT);
+                
+                try {
+					fsh.rememberForUndoRedo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         });
 
