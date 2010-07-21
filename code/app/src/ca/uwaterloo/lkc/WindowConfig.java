@@ -10,9 +10,15 @@ import java.util.Vector;
 import org.gnome.gdk.Event;
 import org.gnome.glade.Glade;
 import org.gnome.glade.XML;
+import org.gnome.gtk.CellRendererText;
+import org.gnome.gtk.DataColumn;
+import org.gnome.gtk.DataColumnString;
 import org.gnome.gtk.Gtk;
+import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ResponseType;
 import org.gnome.gtk.ToolButton;
+import org.gnome.gtk.TreeView;
+import org.gnome.gtk.TreeViewColumn;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
@@ -24,7 +30,7 @@ public class WindowConfig {
 	public final ToolButton tbtnSave;
 	public final ToolButton tbtnUndo;
 	public final ToolButton tbtnRedo;
-	public final ToolButton tbtnAdvanced;
+	public final ToolButton tbtnAdvanced; 
 
 	private FeatureScreenHandler fsh;
 	
@@ -116,6 +122,7 @@ public class WindowConfig {
 				try {
 					// Run xconfig
 				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
+				    pb.directory(new File("/usr/src/linux"));
 				    pb.start();
 				    w.hide();
 				} catch (IOException e) {
