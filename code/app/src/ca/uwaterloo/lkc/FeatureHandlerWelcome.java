@@ -1,5 +1,9 @@
 package ca.uwaterloo.lkc;
 
+import java.util.Vector;
+
+import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
+
 public class FeatureHandlerWelcome extends FeatureHandler {
 
     FeatureHandlerWelcome(final FeatureScreenHandler fsh)
@@ -15,6 +19,10 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     public void show() {
         // TODO Auto-generated method stub
 
+    }
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return true;
     }
 
 }

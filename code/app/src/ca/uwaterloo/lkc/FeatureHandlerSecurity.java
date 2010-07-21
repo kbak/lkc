@@ -79,4 +79,9 @@ public class FeatureHandlerSecurity extends FeatureHandler {
             rb.show();
         }
     }
+
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return !v.contains(Features.Minimum);
+    }
 }

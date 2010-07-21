@@ -74,4 +74,9 @@ public class FeatureHandlerProcessor extends FeatureHandler {
         }
     }
 
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return true;
+    }
+
 }
