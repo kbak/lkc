@@ -142,7 +142,7 @@ public class FeatureScreenHandler {
 		DataColumnString featureName = new DataColumnString();
 		ListStore model = new ListStore( new DataColumn[] {featureName});
 
-		// Populate the feature names in the cells of the tree
+		// Populate the step names in the cells of the tree
 		model.setValue(model.appendRow(), featureName, "Welcome");
 		model.setValue(model.appendRow(), featureName, "Purpose");
 		model.setValue(model.appendRow(), featureName, "Software Real Time");
@@ -158,7 +158,6 @@ public class FeatureScreenHandler {
 		column.setTitle("Steps");
 		CellRendererText text = new CellRendererText(column);
 		text.setText(featureName);
-		treeviewFeatures.show();
     }
     
     public void updateStability(IFeatureHandler.Stability s)
