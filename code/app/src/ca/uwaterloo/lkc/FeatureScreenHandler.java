@@ -250,7 +250,6 @@ public class FeatureScreenHandler {
     
     public void updateCurrentFeatures() throws IOException, ClassNotFoundException {
     	this.load(this.featuresUndoRedo.get(this.currentFeaturesIndex));
-    	System.out.println("Load current index: " + this.featuresUndoRedo.get(this.currentFeaturesIndex));
     }
     
     public void save(URI file) throws IOException {
@@ -285,8 +284,6 @@ public class FeatureScreenHandler {
     	this.incrementCurrentFeaturesIndex();
     	
     	tbtnUndo.setSensitive(this.currentFeaturesIndex > 0);
-    	
-    	System.out.println("Remember current index: " + this.featuresUndoRedo.get(this.currentFeaturesIndex));
     }
     
     public boolean incrementCurrentFeaturesIndex() {
