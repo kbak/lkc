@@ -287,22 +287,28 @@ public class FeatureScreenHandler {
     }
     
     public boolean incrementCurrentFeaturesIndex() {
+    	System.out.println("BEFORE IncrementIndex: " + this.currentFeaturesIndex);
     	this.currentFeaturesIndex++;
     	if (this.currentFeaturesIndex >= this.MAX_UNDO_REDO) {
             this.currentFeaturesIndex = this.MAX_UNDO_REDO - 1;
+            System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
             return true;
         }
     	
+    	System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
     	return false;
     }
     
     public boolean decrementCurrentFeaturesIndex() {
+    	System.out.println("BEFORE DecrementIndex: " + this.currentFeaturesIndex);
     	this.currentFeaturesIndex--;
 		if (this.currentFeaturesIndex <= 0) {
             this.currentFeaturesIndex = 0;
+            System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
             return true;
         }
 		
+        System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
 		return false;
     }
 }
