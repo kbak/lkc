@@ -9,7 +9,6 @@ import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerServer extends FeatureHandler {
 
@@ -30,14 +29,16 @@ public class FeatureHandlerServer extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
         
+        featureMap.put(Features.IPv6, new Feature(fsh, "ipv6 Description", 200000, Stability.Warning));
+        featureMap.put(Features.Netfilter, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        featureMap.put(Features.Qos, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        
         buttonMap.get(Features.IPv6).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("IPv6 Description");
-                fsh.updateSize(200000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.IPv6).updateUI();
                 selectedOptions.set(0, buttonMap.get(Features.IPv6).getActive() ? Features.None : Features.IPv6);
                 
                 try {
@@ -53,11 +54,9 @@ public class FeatureHandlerServer extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("Netfilter Description");
-                fsh.updateSize(5000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.Netfilter).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.Netfilter).getActive() ? Features.None : Features.Netfilter);
-
+                
                 try {
 					fsh.rememberForUndoRedo();
 				} catch (IOException e) {
@@ -71,9 +70,7 @@ public class FeatureHandlerServer extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("Qos Description");
-                fsh.updateSize(5000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.Qos).updateUI();
                 selectedOptions.set(2, buttonMap.get(Features.Qos).getActive() ? Features.None : Features.Qos);
                 
                 try {
@@ -92,12 +89,13 @@ public class FeatureHandlerServer extends FeatureHandler {
     }
 
     public void updateUI()
-    {
+    {        
         for (Features f : selectedOptions)
         {
             if (Features.None != f)
             {
-                buttonMap.get(f).emitClicked();
+                featureMap.get(f).updateUI();
+                buttonMap.get(f).setActive(true);
             }
         }
     }

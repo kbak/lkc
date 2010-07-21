@@ -30,14 +30,15 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         
         selectedOptions.add(Features.NoSoftRT);
         
+        featureMap.put(Features.SoftRT, new Feature(fsh, "4gb Description", 200000, Stability.Warning));
+        featureMap.put(Features.NoSoftRT, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        
         buttonMap.get(Features.SoftRT).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("SoftRT Description");
-                fsh.updateSize(200000);
-                fsh.updateStability(Stability.Warning);
+                featureMap.get(Features.SoftRT).updateUI();
                 selectedOptions.set(0, Features.SoftRT);
                 
                 try {
@@ -53,9 +54,7 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("No soft rt Description");
-                fsh.updateSize(5000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.NoSoftRT).updateUI();
                 selectedOptions.set(0, Features.NoSoftRT);
                 
                 try {
@@ -75,7 +74,8 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
 
     public void updateUI()
     {
-        buttonMap.get(selectedOptions.elementAt(0)).emitClicked();
+        featureMap.get(selectedOptions.elementAt(0)).updateUI();
+        buttonMap.get(selectedOptions.elementAt(0)).setActive(true);
     }
     
     @Override

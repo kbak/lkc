@@ -10,6 +10,7 @@ import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
+import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerPurpose extends FeatureHandler {
 
@@ -30,14 +31,16 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         
         selectedOptions.add(Features.Desktop);
         
+        featureMap.put(Features.Desktop, new Feature(fsh, "4gb Description", 200000, Stability.Warning));
+        featureMap.put(Features.Server, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        featureMap.put(Features.Minimum, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+              
         buttonMap.get(Features.Desktop).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("Desktop Description");
-                fsh.updateSize(200000);
-                fsh.updateStability(Stability.Warning);
+                featureMap.get(Features.Desktop).updateUI();
                 selectedOptions.set(0, Features.Desktop);
                 
                 try {
@@ -53,9 +56,7 @@ public class FeatureHandlerPurpose extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("Server Description");
-                fsh.updateSize(5000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.Server).updateUI();
                 selectedOptions.set(0, Features.Server);
                 
                 try {
@@ -71,9 +72,7 @@ public class FeatureHandlerPurpose extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("Minimal Description");
-                fsh.updateSize(20);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.Minimum).updateUI();
                 selectedOptions.set(0, Features.Minimum);
                 
                 try {
@@ -92,7 +91,8 @@ public class FeatureHandlerPurpose extends FeatureHandler {
 
     public void updateUI()
     {
-        buttonMap.get(selectedOptions.elementAt(0)).emitClicked();
+        featureMap.get(selectedOptions.elementAt(0)).updateUI();
+        buttonMap.get(selectedOptions.elementAt(0)).setActive(true);
     }
     
     @Override

@@ -28,14 +28,15 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
         
+        featureMap.put(Features.KVM, new Feature(fsh, "ipv6 Description", 200000, Stability.Warning));
+        featureMap.put(Features.XEN, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+
         buttonMap.get(Features.KVM).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("KVM Description");
-                fsh.updateSize(200000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.KVM).updateUI();
                 selectedOptions.set(0, buttonMap.get(Features.KVM).getActive() ? Features.None : Features.KVM);
 
                 try {
@@ -51,9 +52,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("XEN Description");
-                fsh.updateSize(5000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.XEN).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.XEN).getActive() ? Features.None : Features.XEN);
                 
                 try {
@@ -77,7 +76,8 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
         {
             if (Features.None != f)
             {
-                buttonMap.get(f).emitClicked();
+                featureMap.get(f).updateUI();
+                buttonMap.get(f).setActive(true);
             }
         }
     }

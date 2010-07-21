@@ -52,6 +52,7 @@ public class FeatureScreenHandler {
     private HBox hbox1;
     final Button btnBackFeature;
     final Button btnNextFeature;
+    final Button btnFinishFeature;
     
     // To manage the enable/disable of those buttons
     public final ToolButton tbtnUndo;
@@ -88,7 +89,7 @@ public class FeatureScreenHandler {
         
         btnBackFeature = (Button) xmlWndConfig.getWidget("btnBackFeature");
         btnNextFeature = (Button) xmlWndConfig.getWidget("btnNextFeature");
-        final Button btnFinishFeature = (Button) xmlWndConfig.getWidget("btnFinishFeature");
+        btnFinishFeature = (Button) xmlWndConfig.getWidget("btnFinishFeature");
         
         featureHistory.add(0);
         
@@ -168,6 +169,7 @@ public class FeatureScreenHandler {
             vp.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(true);
+            btnFinishFeature.setSensitive(true);
         }
         else if (featureHandlers.size() - 1 == featureHistory.lastElement())
         {
@@ -175,11 +177,13 @@ public class FeatureScreenHandler {
             vp.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(false);
+            btnFinishFeature.setSensitive(false);
         }
         else
         {
             btnBackFeature.setSensitive(true);
             btnNextFeature.setSensitive(true);
+            btnFinishFeature.setSensitive(true);
             vp.show();
             hbox1.show();
         }
@@ -198,6 +202,7 @@ public class FeatureScreenHandler {
     {
         pickNext();
         showScreen();
+        textBuffer.setText("");
     }
     
     void pickNext()

@@ -30,14 +30,15 @@ public class FeatureHandlerProcessor extends FeatureHandler {
         
         selectedOptions.add(Features.Proc32);
         
+        featureMap.put(Features.Proc32, new Feature(fsh, "4gb Description", 200000, Stability.Warning));
+        featureMap.put(Features.Proc64, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        
         buttonMap.get(Features.Proc32).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("32-bit Description");
-                fsh.updateSize(2000);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.Proc32).updateUI();
                 selectedOptions.set(0, Features.Proc32);
                 
                 try {
@@ -53,9 +54,7 @@ public class FeatureHandlerProcessor extends FeatureHandler {
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                fsh.updateFeatureDescription("64-bitDescription");
-                fsh.updateSize(500);
-                fsh.updateStability(Stability.Stable);
+                featureMap.get(Features.Proc64).updateUI();
                 selectedOptions.set(0, Features.Proc64);
                 
                 try {
@@ -75,7 +74,8 @@ public class FeatureHandlerProcessor extends FeatureHandler {
 
     public void updateUI()
     {
-        buttonMap.get(selectedOptions.elementAt(0)).emitClicked();
+        featureMap.get(selectedOptions.elementAt(0)).updateUI();
+        buttonMap.get(selectedOptions.elementAt(0)).setActive(true);
     }
     
     @Override
