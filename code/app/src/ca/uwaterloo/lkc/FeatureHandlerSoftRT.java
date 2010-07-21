@@ -74,4 +74,9 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         }
     }
 
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return v.contains(Features.Desktop);
+    }
+
 }

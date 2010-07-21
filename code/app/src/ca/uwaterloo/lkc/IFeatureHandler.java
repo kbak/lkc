@@ -15,4 +15,6 @@ public interface IFeatureHandler {
     void load(Vector<Features> features);
     
     Vector<Features> save();
+    
+    boolean isRelevant(Vector<Features> v);
 }

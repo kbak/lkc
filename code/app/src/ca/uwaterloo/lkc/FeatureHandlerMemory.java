@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Vector;
 
+import org.gnome.gdk.EventCrossing;
+import org.gnome.gdk.EventFocus;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
+import org.gnome.gtk.Widget;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -79,6 +83,11 @@ public class FeatureHandlerMemory extends FeatureHandler {
         {
             rb.show();
         }
+    }
+
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return !v.contains(Features.Minimum);
     }
 
 }

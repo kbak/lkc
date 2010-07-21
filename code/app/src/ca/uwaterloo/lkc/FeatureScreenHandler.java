@@ -194,7 +194,18 @@ public class FeatureScreenHandler {
     
     void pickNext()
     {
-        featureHistory.add(featureHistory.lastElement() + 1);
+        int i = 1;
+        
+        Vector<Features> v = new Vector<Features>();
+        
+        for (IFeatureHandler fh : featureHandlers)
+        {
+            v.addAll(fh.save());
+        }
+        
+        for (; !featureHandlers.elementAt(featureHistory.lastElement() + i).isRelevant(v); ++i);
+        
+        featureHistory.add(featureHistory.lastElement() + i);
     }
     
     public void load(URI file) throws IOException, ClassNotFoundException {

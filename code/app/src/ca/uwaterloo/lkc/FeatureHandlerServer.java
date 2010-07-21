@@ -92,4 +92,9 @@ public class FeatureHandlerServer extends FeatureHandler {
         }
     }
 
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return v.contains(Features.Server);
+    }
+
 }

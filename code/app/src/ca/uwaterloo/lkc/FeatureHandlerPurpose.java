@@ -2,6 +2,7 @@ package ca.uwaterloo.lkc;
 
 import java.util.TreeMap;
 import java.util.Map;
+import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
@@ -82,6 +83,11 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         {
             rb.show();
         }
+    }
+
+    @Override
+    public boolean isRelevant(Vector<Features> v) {
+        return true;
     }
 
 }
