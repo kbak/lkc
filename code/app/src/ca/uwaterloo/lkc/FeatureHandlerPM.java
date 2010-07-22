@@ -34,8 +34,8 @@ public class FeatureHandlerPM extends FeatureHandler {
         
         selectedOptions.add(Features.PM);
         
-        featureMap.put(Features.PM, new Feature(fsh, description, 200000, Stability.Stable));
-        featureMap.put(Features.NoPM, new Feature(fsh, description, 5000, Stability.Stable));
+        featureMap.put(Features.PM, new Feature(fsh, description, 2000000, Stability.Stable));
+        featureMap.put(Features.NoPM, new Feature(fsh, description, 0, Stability.Stable));
         
         buttonMap.get(Features.PM).connect(new Button.Clicked() {
             

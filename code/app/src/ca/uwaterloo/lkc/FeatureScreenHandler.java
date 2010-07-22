@@ -399,8 +399,8 @@ public class FeatureScreenHandler {
     
     private void updateStats()
     {
-        int size = 3245;
-        double maxSize = 1000000.0;
+        int size = 20000000;
+        double maxSize = 1000000000.0;
         double maxFeatures = 6000.0;
         
         Stability s = Stability.Stable;

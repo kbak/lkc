@@ -99,8 +99,8 @@ public class FeatureHandlerServer extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
         
-        featureMap.put(Features.Netfilter, new Feature(fsh, description, 3000, Stability.Stable));
-        featureMap.put(Features.Qos, new Feature(fsh, descriptionQos, 6000, Stability.Warning));
+        featureMap.put(Features.Netfilter, new Feature(fsh, description, 300000, Stability.Stable));
+        featureMap.put(Features.Qos, new Feature(fsh, descriptionQos, 600000, Stability.Warning));
         
         buttonMap.get(Features.Netfilter).connect(new Button.Clicked() {
             

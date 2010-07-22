@@ -45,7 +45,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
         selectedOptions.add(Features.None);
         
         featureMap.put(Features.KVM, new Feature(fsh, description, 0, Stability.Stable));
-        featureMap.put(Features.XEN, new Feature(fsh, descriptionXEN, 3000, Stability.Stable));
+        featureMap.put(Features.XEN, new Feature(fsh, descriptionXEN, 300000, Stability.Stable));
 
         buttonMap.get(Features.KVM).connect(new Button.Clicked() {
             

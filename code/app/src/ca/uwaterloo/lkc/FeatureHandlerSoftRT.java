@@ -46,8 +46,8 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         
         selectedOptions.add(Features.NoSoftRT);
         
-        featureMap.put(Features.SoftRT, new Feature(fsh, description, 2000, Stability.Warning));
-        featureMap.put(Features.NoSoftRT, new Feature(fsh, description, 1000, Stability.Stable));
+        featureMap.put(Features.SoftRT, new Feature(fsh, description, 200000, Stability.Warning));
+        featureMap.put(Features.NoSoftRT, new Feature(fsh, description, 100000, Stability.Stable));
         
         buttonMap.get(Features.SoftRT).connect(new Button.Clicked() {
             

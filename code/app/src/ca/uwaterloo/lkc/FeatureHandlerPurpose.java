@@ -37,9 +37,9 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         
         selectedOptions.add(Features.Desktop);
         
-        featureMap.put(Features.Desktop, new Feature(fsh, description, 200000, Stability.Stable));
-        featureMap.put(Features.Server, new Feature(fsh, description, 50000, Stability.Stable));
-        featureMap.put(Features.Minimum, new Feature(fsh, description, 2000, Stability.Stable));
+        featureMap.put(Features.Desktop, new Feature(fsh, description, 2000000, Stability.Stable));
+        featureMap.put(Features.Server, new Feature(fsh, description, 500000, Stability.Stable));
+        featureMap.put(Features.Minimum, new Feature(fsh, description, 20000, Stability.Stable));
               
         buttonMap.get(Features.Desktop).connect(new Button.Clicked() {
             

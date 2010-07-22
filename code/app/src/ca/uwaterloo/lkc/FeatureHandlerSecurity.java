@@ -37,8 +37,8 @@ public class FeatureHandlerSecurity extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
 
-        featureMap.put(Features.SELinux, new Feature(fsh, description, 200, Stability.Stable));
-        featureMap.put(Features.CryptoAPI, new Feature(fsh, descriptionCrypto, 300, Stability.Stable));
+        featureMap.put(Features.SELinux, new Feature(fsh, description, 200000, Stability.Stable));
+        featureMap.put(Features.CryptoAPI, new Feature(fsh, descriptionCrypto, 300000, Stability.Stable));
         
         buttonMap.get(Features.SELinux).connect(new Button.Clicked() {
             
