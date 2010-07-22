@@ -36,7 +36,21 @@ public class FeatureHandlerMemory extends FeatureHandler {
         
         selectedOptions.add(Features.NoHighMem);
         
-        featureMap.put(Features.HighMem, new Feature(fsh, "4gb Description", 200000, Stability.Warning));
+        featureMap.put(Features.HighMem, new Feature(fsh, "Linux can use up to 64 Gigabytes of physical memory on x86 systems. " +
+        		"However, the address space of 32-bit x86 processors is only 4 " +
+        		"Gigabytes large. That means that, if you have a large amount of " +
+        		"physical memory, not all of it can be \"permanently mapped\" by the " +
+        		"kernel. The physical memory that's not permanently mapped is called " +
+        		"\"high memory\".\n\n" +
+        		"If the machine has between 1 and 4 Gigabytes physical RAM, then answer \"No\" here.\n\n" +
+        	    "If more than 4 Gigabytes is used then answer \"Yes\" here. This selection turns Intel PAE (Physical Address Extension) mode on. " +
+        	    "PAE implements 3-level paging on IA32 processors. PAE is fully supported by Linux, PAE mode is implemented on all recent Intel" +
+        	    "processors (Pentium Pro and better). NOTE: If you say \"Yes\" here, then the kernel will not boot on CPUs that don't support PAE!\n\n" +
+        	    "The actual amount of total physical memory will either be auto detected or can be forced by using a kernel command line option" +
+        	    "such as \"mem=256M\". (Try \"man bootparam\" or see the documentation of your boot loader (lilo or loadlin) about how to pass options to the" +
+        	    "kernel at boot time.)\n\n" +
+        	    "If unsure, say \"No\".", 200000, Stability.Warning));
+        
         featureMap.put(Features.NoHighMem, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
         
         buttonMap.get(Features.HighMem).connect(new Button.Clicked() {

@@ -29,6 +29,7 @@ import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ProgressBar;
+import org.gnome.gtk.ScrolledWindow;
 import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
@@ -62,7 +63,7 @@ public class FeatureScreenHandler {
     private Label lblFeatureSizeN;
     private Image imgFeatureStability;
     private TextBuffer textBuffer = new TextBuffer();
-    private Viewport vp;
+    private ScrolledWindow sw;
     private HBox hbox1;
     final Button btnBackFeature;
     final Button btnNextFeature;
@@ -92,7 +93,7 @@ public class FeatureScreenHandler {
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         lblInstructions = (Label) xmlWndConfig.getWidget("lblInstructions");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
-        vp = (Viewport) xmlWndConfig.getWidget("viewport3");
+        sw = (ScrolledWindow) xmlWndConfig.getWidget("sw");
         hbox1 = (HBox) xmlWndConfig.getWidget("hbox1");
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
@@ -226,7 +227,7 @@ public class FeatureScreenHandler {
         if (0 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(false);
-            vp.hide();
+            sw.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
@@ -234,7 +235,7 @@ public class FeatureScreenHandler {
         else if (featureHandlers.size() - 1 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(true);
-            vp.hide();
+            sw.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(false);
             btnFinishFeature.setSensitive(false);
@@ -244,7 +245,7 @@ public class FeatureScreenHandler {
             btnBackFeature.setSensitive(true);
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
-            vp.show();
+            sw.show();
             hbox1.show();
         }
         
@@ -263,18 +264,18 @@ public class FeatureScreenHandler {
     public void showScreen(int screenIndex) {
     	if (0 == screenIndex) {
             btnBackFeature.setSensitive(false);
-            vp.hide();
+            sw.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(true);
         } else if (featureHandlers.size() - 1 == screenIndex) {
             btnBackFeature.setSensitive(true);
-            vp.hide();
+            sw.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(false);
         } else {
             btnBackFeature.setSensitive(true);
             btnNextFeature.setSensitive(true);
-            vp.show();
+            sw.show();
             hbox1.show();
         }
         
