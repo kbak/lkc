@@ -13,6 +13,7 @@ import org.gnome.gtk.ResponseType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
+import org.gnome.gtk.WindowPosition;
 
 public class WindowWelcome {
 
@@ -74,5 +75,6 @@ public class WindowWelcome {
                 }
             }
         });
+        w.setPosition(WindowPosition.CENTER);
     }
 }

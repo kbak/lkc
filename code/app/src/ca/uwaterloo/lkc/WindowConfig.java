@@ -21,6 +21,7 @@ import org.gnome.gtk.TreeView;
 import org.gnome.gtk.TreeViewColumn;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
+import org.gnome.gtk.WindowPosition;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -189,7 +190,7 @@ public class WindowConfig {
 				e.printStackTrace();
 			}
 		}
-		
+		w.setPosition(WindowPosition.CENTER);
 	}
 	
 	public void updateUndoRedo(boolean undoSensitive, boolean redoSensitive) {

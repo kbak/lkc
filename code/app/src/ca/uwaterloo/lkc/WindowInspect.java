@@ -18,6 +18,7 @@ import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToggleButton;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
+import org.gnome.gtk.WindowPosition;
 
 public class WindowInspect extends Thread {
 
@@ -93,6 +94,7 @@ public class WindowInspect extends Thread {
                 Clipboard.getDefault().setText(tvConsole.getBuffer().getText());
             }
         });
+        w.setPosition(WindowPosition.CENTER);
     }
     
     public void run() {
