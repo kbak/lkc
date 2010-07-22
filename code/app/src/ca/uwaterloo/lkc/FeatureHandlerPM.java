@@ -12,34 +12,38 @@ import org.gnome.gtk.RadioButtonGroup;
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
-public class FeatureHandlerProcessor extends FeatureHandler {
+public class FeatureHandlerPM extends FeatureHandler {
 
     private static RadioButtonGroup rg = new RadioButtonGroup();
     
     public static final Map<FeatureScreenHandler.Features, RadioButton> buttonMap = new TreeMap<FeatureScreenHandler.Features, RadioButton>() {{ 
-        put(Features.Proc32, new RadioButton(rg, "32-bit"));
-        put(Features.Proc64, new RadioButton(rg, "64-bit"));
+        put(Features.PM, new RadioButton(rg, "Yes"));
+        put(Features.NoPM, new RadioButton(rg, "No"));
     }};
     
-    FeatureHandlerProcessor(final FeatureScreenHandler fsh)
+    static String description = "Enable or disable power management options (such as CPU frequency scaling, system hibernation, etc.)";
+    
+    FeatureHandlerPM(final FeatureScreenHandler fsh)
     {
+        this.fsh = fsh;
+        
         for (int i = 0; i < buttonMap.size(); ++i)
         {
             fsh.layOption.put((RadioButton) buttonMap.values().toArray()[i], 0, i * 23);
         }
         
-        selectedOptions.add(Features.Proc32);
+        selectedOptions.add(Features.PM);
         
-        featureMap.put(Features.Proc32, new Feature(fsh, "4gb Description", 200000, Stability.Warning));
-        featureMap.put(Features.Proc64, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        featureMap.put(Features.PM, new Feature(fsh, description, 200000, Stability.Warning));
+        featureMap.put(Features.NoPM, new Feature(fsh, description, 5000, Stability.Stable));
         
-        buttonMap.get(Features.Proc32).connect(new Button.Clicked() {
+        buttonMap.get(Features.PM).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                featureMap.get(Features.Proc32).updateUI();
-                selectedOptions.set(0, Features.Proc32);
+                featureMap.get(Features.PM).updateUI();
+                selectedOptions.set(0, Features.PM);
                 
                 try {
 					fsh.rememberForUndoRedo();
@@ -49,13 +53,13 @@ public class FeatureHandlerProcessor extends FeatureHandler {
             }
         });
         
-        buttonMap.get(Features.Proc64).connect(new Button.Clicked() {
+        buttonMap.get(Features.NoPM).connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
-                featureMap.get(Features.Proc64).updateUI();
-                selectedOptions.set(0, Features.Proc64);
+                featureMap.get(Features.NoPM).updateUI();
+                selectedOptions.set(0, Features.NoPM);
                 
                 try {
 					fsh.rememberForUndoRedo();
@@ -69,7 +73,7 @@ public class FeatureHandlerProcessor extends FeatureHandler {
     
     @Override
     public String getQuestion() {
-        return "Do you want to use 64-bit processor?";
+        return "Do you want to enable power management?";
     }
 
     public void updateUI()
@@ -77,6 +81,7 @@ public class FeatureHandlerProcessor extends FeatureHandler {
         featureMap.get(selectedOptions.elementAt(0)).updateUI();
         buttonMap.get(selectedOptions.elementAt(0)).setActive(true);
         buttonMap.get(selectedOptions.elementAt(0)).grabFocus();
+        fsh.updateFeatureDescription(description);
     }
     
     @Override

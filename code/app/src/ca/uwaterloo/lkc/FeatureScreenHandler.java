@@ -3,19 +3,16 @@ package ca.uwaterloo.lkc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.TreeMap;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
-
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import org.gnome.gdk.Color;
-import org.gnome.gdk.Gdk;
 import org.gnome.glade.XML;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CellRendererText;
@@ -29,25 +26,24 @@ import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ProgressBar;
+import org.gnome.gtk.ScrolledWindow;
 import org.gnome.gtk.SelectionMode;
 import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToolButton;
-import org.gnome.gtk.TreeIter;
 import org.gnome.gtk.TreePath;
 import org.gnome.gtk.TreeSelection;
 import org.gnome.gtk.TreeView;
 import org.gnome.gtk.TreeViewColumn;
-import org.gnome.gtk.Viewport;
 import org.gnome.gtk.Widget;
 
 import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureScreenHandler {
 
-    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, Proc32, Proc64, NoHighMem, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
+    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, PM, NoPM, NoHighMem, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
     
     public static final Map<Stability, Stock> stabilityMap = new TreeMap<IFeatureHandler.Stability, Stock>() {{ 
         put(IFeatureHandler.Stability.Stable, Stock.APPLY);
@@ -64,7 +60,7 @@ public class FeatureScreenHandler {
     private Label lblFeatureSizeN;
     private Image imgFeatureStability;
     private TextBuffer textBuffer = new TextBuffer();
-    private Viewport vp;
+    private ScrolledWindow sw;
     private HBox hbox1;
     final Button btnBackFeature;
     final Button btnNextFeature;
@@ -94,7 +90,7 @@ public class FeatureScreenHandler {
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         lblInstructions = (Label) xmlWndConfig.getWidget("lblInstructions");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
-        vp = (Viewport) xmlWndConfig.getWidget("viewport3");
+        sw = (ScrolledWindow) xmlWndConfig.getWidget("sw");
         hbox1 = (HBox) xmlWndConfig.getWidget("hbox1");
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
@@ -110,7 +106,7 @@ public class FeatureScreenHandler {
         featureHandlers.add(new FeatureHandlerWelcome(this));
         featureHandlers.add(new FeatureHandlerPurpose(this));
         featureHandlers.add(new FeatureHandlerSoftRT(this));
-        featureHandlers.add(new FeatureHandlerProcessor(this));
+        featureHandlers.add(new FeatureHandlerPM(this));
         featureHandlers.add(new FeatureHandlerMemory(this));
         featureHandlers.add(new FeatureHandlerServer(this));
         featureHandlers.add(new FeatureHandlerSecurity(this));
@@ -245,7 +241,7 @@ public class FeatureScreenHandler {
         if (0 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(false);
-            vp.hide();
+            sw.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
@@ -253,7 +249,7 @@ public class FeatureScreenHandler {
         else if (featureHandlers.size() - 1 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(true);
-            vp.hide();
+            sw.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(false);
             btnFinishFeature.setSensitive(false);
@@ -263,7 +259,7 @@ public class FeatureScreenHandler {
             btnBackFeature.setSensitive(true);
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
-            vp.show();
+            sw.show();
             hbox1.show();
         }
         
@@ -277,7 +273,7 @@ public class FeatureScreenHandler {
         lblInstructions.setLabel(fh.getInstruction());
         pgProgress.setFraction(1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1));
         fh.show();
-        
+    
         // Update the left panel to select the current screen
         treeviewFeatures.getSelection().selectRow(new TreePath(featureHistory.lastElement().toString()));
     }
@@ -286,7 +282,6 @@ public class FeatureScreenHandler {
     {
         pickNext();
         showScreen();
-        textBuffer.setText("");
     }
     
     void pickNext()
@@ -301,7 +296,6 @@ public class FeatureScreenHandler {
         }
         
         for (; !featureHandlers.elementAt(featureHistory.lastElement() + i).isRelevant(v); ++i);
-        
         featureHistory.add(featureHistory.lastElement() + i);
     }
     

@@ -8,6 +8,8 @@ import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public abstract class FeatureHandler implements IFeatureHandler {
 
+    public FeatureScreenHandler fsh;
+    
     public Vector<Features> selectedOptions = new Vector<Features>();
     
     public Map<FeatureScreenHandler.Features, Feature> featureMap = new TreeMap<FeatureScreenHandler.Features, Feature>();
