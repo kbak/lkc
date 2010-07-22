@@ -29,11 +29,13 @@ import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ProgressBar;
+import org.gnome.gtk.SelectionMode;
 import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToolButton;
+import org.gnome.gtk.TreeIter;
 import org.gnome.gtk.TreePath;
 import org.gnome.gtk.TreeSelection;
 import org.gnome.gtk.TreeView;
@@ -119,13 +121,10 @@ public class FeatureScreenHandler {
         btnNextFeature = (Button) xmlWndConfig.getWidget("btnNextFeature");
         btnFinishFeature = (Button) xmlWndConfig.getWidget("btnFinishFeature");
         
-        featureHistory.add(0);
-        
         btnBackFeature.connect(new Button.Clicked() {
             
             @Override
             public void onClicked(Button arg0) {
-                // TODO Auto-generated method stub
                 featureHistory.remove(featureHistory.size() - 1);
                 showScreen();
             }
@@ -135,7 +134,7 @@ public class FeatureScreenHandler {
             
             @Override
             public void onClicked(Button arg0) {
-                run();
+            	run();
             }
         });
         
@@ -157,12 +156,16 @@ public class FeatureScreenHandler {
 		treeviewFeatures = (TreeView) xmlWndConfig.getWidget("treeviewFeatures");
 		createLeftPanel();
 		updateStats();
+		
+		featureHistory.add(0);
+		//updateLeftPanelSelection();
     }
     
     private void createLeftPanel() {
-		TreeViewColumn column = treeviewFeatures.appendColumn();
-		DataColumnString featureName = new DataColumnString();
-		ListStore model = new ListStore( new DataColumn[] {featureName});
+		final TreeViewColumn column = treeviewFeatures.appendColumn();
+		final DataColumnString featureName = new DataColumnString();
+		final ListStore model = new ListStore( new DataColumn[] {featureName});
+		final TreeSelection selection;
 
 		// Populate the step names in the cells of the tree
 		model.setValue(model.appendRow(), featureName, "Welcome");
@@ -180,6 +183,22 @@ public class FeatureScreenHandler {
 		column.setTitle("Steps");
 		CellRendererText text = new CellRendererText(column);
 		text.setText(featureName);
+		
+		// Add selectedRow event
+		selection = treeviewFeatures.getSelection();
+		selection.setMode(SelectionMode.SINGLE); // Only one screen can be selected at a time
+		selection.connect(new TreeSelection.Changed() {
+
+			@Override
+			public void onChanged(TreeSelection source) {
+				final TreePath[] selectedRows = selection.getSelectedRows();
+				if(selectedRows[0].getIndices()[0] != featureHistory.lastElement()) {
+					featureHistory.add(selectedRows[0].getIndices()[0]);
+					showScreen();
+				}
+			}
+		});
+		
     }
     
     public void updateStability(IFeatureHandler.Stability s)
@@ -258,35 +277,9 @@ public class FeatureScreenHandler {
         lblInstructions.setLabel(fh.getInstruction());
         pgProgress.setFraction(1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1));
         fh.show();
-    }
-    
-    public void showScreen(int screenIndex) {
-    	if (0 == screenIndex) {
-            btnBackFeature.setSensitive(false);
-            vp.hide();
-            hbox1.hide();
-            btnNextFeature.setSensitive(true);
-        } else if (featureHandlers.size() - 1 == screenIndex) {
-            btnBackFeature.setSensitive(true);
-            vp.hide();
-            hbox1.hide();
-            btnNextFeature.setSensitive(false);
-        } else {
-            btnBackFeature.setSensitive(true);
-            btnNextFeature.setSensitive(true);
-            vp.show();
-            hbox1.show();
-        }
         
-        for (Widget c : layOption.getChildren()) {
-            c.hide();
-        }
-        
-        IFeatureHandler fh = featureHandlers.elementAt(screenIndex);
-        lblOption.setLabel("<b>" + fh.getQuestion() + "</b>");
-        lblInstructions.setLabel(fh.getInstruction());
-        pgProgress.setFraction(1.0 * screenIndex / (featureHandlers.size() - 1));
-        fh.show();
+        // Update the left panel to select the current screen
+        treeviewFeatures.getSelection().selectRow(new TreePath(featureHistory.lastElement().toString()));
     }
     
     public void run()
@@ -385,28 +378,28 @@ public class FeatureScreenHandler {
     }
     
     public boolean incrementCurrentFeaturesIndex() {
-    	System.out.println("BEFORE IncrementIndex: " + this.currentFeaturesIndex);
+    	//System.out.println("BEFORE IncrementIndex: " + this.currentFeaturesIndex);
     	this.currentFeaturesIndex++;
     	if (this.currentFeaturesIndex >= this.MAX_UNDO_REDO) {
             this.currentFeaturesIndex = this.MAX_UNDO_REDO - 1;
-            System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
+            //System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
             return true;
         }
     	
-    	System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
+    	//System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
     	return false;
     }
     
     public boolean decrementCurrentFeaturesIndex() {
-    	System.out.println("BEFORE DecrementIndex: " + this.currentFeaturesIndex);
+    	//System.out.println("BEFORE DecrementIndex: " + this.currentFeaturesIndex);
     	this.currentFeaturesIndex--;
 		if (this.currentFeaturesIndex <= 0) {
             this.currentFeaturesIndex = 0;
-            System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
+            //System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
             return true;
         }
 		
-        System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
+        //System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
 		return false;
     }
     
