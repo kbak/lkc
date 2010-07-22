@@ -46,7 +46,7 @@ import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureScreenHandler {
 
-    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, Proc32, Proc64, NoHighMem, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
+    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, PM, NoPM, NoHighMem, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
     
     public static final Map<Stability, Stock> stabilityMap = new TreeMap<IFeatureHandler.Stability, Stock>() {{ 
         put(IFeatureHandler.Stability.Stable, Stock.APPLY);
@@ -109,7 +109,7 @@ public class FeatureScreenHandler {
         featureHandlers.add(new FeatureHandlerWelcome(this));
         featureHandlers.add(new FeatureHandlerPurpose(this));
         featureHandlers.add(new FeatureHandlerSoftRT(this));
-        featureHandlers.add(new FeatureHandlerProcessor(this));
+        featureHandlers.add(new FeatureHandlerPM(this));
         featureHandlers.add(new FeatureHandlerMemory(this));
         featureHandlers.add(new FeatureHandlerServer(this));
         featureHandlers.add(new FeatureHandlerSecurity(this));
@@ -294,7 +294,6 @@ public class FeatureScreenHandler {
     {
         pickNext();
         showScreen();
-        textBuffer.setText("");
     }
     
     void pickNext()
@@ -309,7 +308,6 @@ public class FeatureScreenHandler {
         }
         
         for (; !featureHandlers.elementAt(featureHistory.lastElement() + i).isRelevant(v); ++i);
-        
         featureHistory.add(featureHistory.lastElement() + i);
     }
     

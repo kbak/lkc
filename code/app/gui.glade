@@ -410,6 +410,7 @@
                               <widget class="GtkTextView" id="tvFeatureDescription">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="editable">False</property>
                                 <property name="wrap_mode">word</property>
                               </widget>
                             </child>
@@ -522,6 +523,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <accelerator key="BackSpace" signal="clicked"/>
                             <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                           </widget>
                           <packing>
