@@ -114,4 +114,9 @@ public class FeatureHandlerServer extends FeatureHandler {
         return v.contains(Features.Server);
     }
 
+    @Override
+    public String getInstruction() {
+        return "Select options and click Next";
+    }
+
 }

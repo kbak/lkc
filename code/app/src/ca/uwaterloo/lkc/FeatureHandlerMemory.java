@@ -96,4 +96,9 @@ public class FeatureHandlerMemory extends FeatureHandler {
     public boolean isRelevant(Vector<Features> v) {
         return !v.contains(Features.Minimum);
     }
+
+    @Override
+    public String getInstruction() {
+        return "Select an option and click Next";
+    }
 }

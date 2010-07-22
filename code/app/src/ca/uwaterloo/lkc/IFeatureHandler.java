@@ -10,6 +10,8 @@ public interface IFeatureHandler {
     
     public String getQuestion();
     
+    public String getInstruction();
+    
     public void show();
     
     void load(Vector<Features> features);

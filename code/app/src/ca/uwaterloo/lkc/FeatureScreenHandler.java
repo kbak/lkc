@@ -14,17 +14,21 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.gnome.gdk.Color;
+import org.gnome.gdk.Gdk;
 import org.gnome.glade.XML;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CellRendererText;
 import org.gnome.gtk.DataColumn;
 import org.gnome.gtk.DataColumnString;
+import org.gnome.gtk.EventBox;
 import org.gnome.gtk.HBox;
 import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
 import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
+import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
@@ -49,6 +53,7 @@ public class FeatureScreenHandler {
     public Vector<IFeatureHandler> featureHandlers = new Vector<IFeatureHandler>();
 
     private Label lblOption;
+    private Label lblInstructions;
     public Layout layOption;
     private TextView tvFeatureDescription;
     private Label lblFeatureSizeN;
@@ -78,12 +83,16 @@ public class FeatureScreenHandler {
 		currentFeaturesIndex = -1;
 		
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
+        lblInstructions = (Label) xmlWndConfig.getWidget("lblInstructions");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
         vp = (Viewport) xmlWndConfig.getWidget("viewport3");
         hbox1 = (HBox) xmlWndConfig.getWidget("hbox1");
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
         imgFeatureStability = (Image) xmlWndConfig.getWidget("imgFeatureStability");
+        final EventBox eb = (EventBox) xmlWndConfig.getWidget("eventbox1");
+        
+        eb.modifyBackground(StateType.NORMAL, new Color(0xFFFF, 0xFFFF, 0xFFFF));
         
         featureHandlers.add(new FeatureHandlerWelcome(this));
         featureHandlers.add(new FeatureHandlerPurpose(this));
@@ -229,7 +238,8 @@ public class FeatureScreenHandler {
             c.hide();
         }
         IFeatureHandler fh = featureHandlers.elementAt(featureHistory.lastElement());
-        lblOption.setLabel(fh.getQuestion());
+        lblOption.setLabel("<b>" + fh.getQuestion() + "</b>");
+        lblInstructions.setLabel(fh.getInstruction());
         fh.show();
     }
     
@@ -256,7 +266,8 @@ public class FeatureScreenHandler {
         }
         
         IFeatureHandler fh = featureHandlers.elementAt(screenIndex);
-        lblOption.setLabel(fh.getQuestion());
+        lblOption.setLabel("<b>" + fh.getQuestion() + "</b>");
+        lblInstructions.setLabel(fh.getInstruction());
         fh.show();
     }
     

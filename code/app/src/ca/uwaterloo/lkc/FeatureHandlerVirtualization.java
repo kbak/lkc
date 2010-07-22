@@ -95,4 +95,9 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
     public boolean isRelevant(Vector<Features> v) {
         return !v.contains(Features.Minimum);
     }
+
+    @Override
+    public String getInstruction() {
+        return "Select options and click Next";
+    }
 }

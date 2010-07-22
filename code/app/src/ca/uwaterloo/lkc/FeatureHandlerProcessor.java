@@ -69,7 +69,7 @@ public class FeatureHandlerProcessor extends FeatureHandler {
     
     @Override
     public String getQuestion() {
-        return "Do you want to use 64-bit processor (not recommended for desktop";
+        return "Do you want to use 64-bit processor?";
     }
 
     public void updateUI()
@@ -90,6 +90,11 @@ public class FeatureHandlerProcessor extends FeatureHandler {
     @Override
     public boolean isRelevant(Vector<Features> v) {
         return true;
+    }
+
+    @Override
+    public String getInstruction() {
+        return "Select an option and click Next";
     }
 
 }

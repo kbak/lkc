@@ -92,4 +92,9 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         return v.contains(Features.Desktop);
     }
 
+    @Override
+    public String getInstruction() {
+        return "Select an option and click Next";
+    }
+
 }

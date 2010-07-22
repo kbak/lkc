@@ -13,7 +13,7 @@ public class FeatureHandlerSummary extends FeatureHandler {
     
     @Override
     public String getQuestion() {
-        return "Congratulations blablabla";
+        return "Congratulations! You have successfully configured kernel";
     }
 
     @Override
@@ -32,5 +32,10 @@ public class FeatureHandlerSummary extends FeatureHandler {
 		// TODO Auto-generated method stub
 		
 	}
+
+    @Override
+    public String getInstruction() {
+        return "Click Save to save the configuration";
+    }
 
 }

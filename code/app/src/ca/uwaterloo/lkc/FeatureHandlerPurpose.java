@@ -109,4 +109,9 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         return true;
     }
 
+    @Override
+    public String getInstruction() {
+        return "Select an option and click Next";
+    }
+
 }

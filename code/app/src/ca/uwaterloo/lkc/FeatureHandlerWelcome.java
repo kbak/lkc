@@ -29,4 +29,8 @@ public class FeatureHandlerWelcome extends FeatureHandler {
 		// TODO Auto-generated method stub
 		
 	}
+    @Override
+    public String getInstruction() {
+        return "Read the instructions and click Next";
+    }
 }
