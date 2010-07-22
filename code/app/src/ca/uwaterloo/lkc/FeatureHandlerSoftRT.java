@@ -98,4 +98,19 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         return "Select an option and click Next";
     }
 
+    @Override
+    public int getSize() {
+        return featureMap.get(selectedOptions.elementAt(0)).size;
+    }
+
+    @Override
+    public Stability getStability() {
+        return featureMap.get(selectedOptions.elementAt(0)).stability;
+    }
+
+    @Override
+    public int getNum() {
+        return 1;
+    }
+
 }

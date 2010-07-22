@@ -200,7 +200,6 @@
                           <widget class="GtkLabel" id="label6">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="label" translatable="yes">Stability:</property>
                           </widget>
                           <packing>
@@ -211,7 +210,7 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkProgressBar" id="totalSizeProgressBar">
+                          <widget class="GtkProgressBar" id="pgTotalSize">
                             <property name="height_request">14</property>
                             <property name="visible">True</property>
                             <property name="show_text">True</property>
@@ -225,7 +224,7 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkProgressBar" id="totalNumFeaturesProgressBar">
+                          <widget class="GtkProgressBar" id="pgTotalNumFeatures">
                             <property name="height_request">14</property>
                             <property name="visible">True</property>
                             <property name="show_text">True</property>

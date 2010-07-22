@@ -42,4 +42,16 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     public String getInstruction() {
         return "Read the instructions and click Next";
     }
+    @Override
+    public int getSize() {
+        return 0;
+    }
+    @Override
+    public Stability getStability() {
+        return Stability.Stable;
+    }
+    @Override
+    public int getNum() {
+        return 0;
+    }
 }

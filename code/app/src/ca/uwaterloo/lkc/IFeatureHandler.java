@@ -12,6 +12,12 @@ public interface IFeatureHandler {
     
     public String getInstruction();
     
+    public int getSize();
+    
+    public Stability getStability();
+    
+    public int getNum();
+    
     public void show();
     
     void load(Vector<Features> features);

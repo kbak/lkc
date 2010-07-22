@@ -22,4 +22,20 @@ public abstract class FeatureHandler implements IFeatureHandler {
     public Vector<Features> save() {
         return selectedOptions;
     }
+    
+    public static Stability minStability(Stability s1, Stability s2)
+    {
+        if (Stability.Unstable == s1 || Stability.Unstable == s2)
+        {
+            return Stability.Unstable;
+        }
+        else if (Stability.Warning == s1 || Stability.Warning == s2)
+        {
+            return Stability.Warning;
+        }
+        else
+        {
+            return Stability.Stable;
+        }
+    }
 }

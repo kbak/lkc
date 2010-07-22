@@ -37,7 +37,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.KVM).updateUI();
-                selectedOptions.set(0, buttonMap.get(Features.KVM).getActive() ? Features.None : Features.KVM);
+                selectedOptions.set(0, buttonMap.get(Features.KVM).getActive() ? Features.KVM : Features.None);
 
                 try {
 					fsh.rememberForUndoRedo();
@@ -53,7 +53,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.XEN).updateUI();
-                selectedOptions.set(1, buttonMap.get(Features.XEN).getActive() ? Features.None : Features.XEN);
+                selectedOptions.set(1, buttonMap.get(Features.XEN).getActive() ? Features.XEN : Features.None);
                 
                 try {
 					fsh.rememberForUndoRedo();
@@ -100,5 +100,47 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
     @Override
     public String getInstruction() {
         return "Select options and click Next";
+    }
+
+    @Override
+    public int getSize() {
+        int size = 0;
+        
+        for (Features f : selectedOptions)
+        {
+            if (Features.None != f)
+            {
+                size += featureMap.get(f).size;
+            }
+        }
+        return size;
+    }
+
+    @Override
+    public Stability getStability() {
+        Stability s = Stability.Stable;
+        
+        for (Features f : selectedOptions)
+        {
+            if (Features.None != f)
+            {
+                s = FeatureHandler.minStability(s, featureMap.get(f).stability);
+            }
+        }
+        return s;
+    }
+
+    @Override
+    public int getNum() {
+        int size = 0;
+        
+        for (Features f : selectedOptions)
+        {
+            if (Features.None != f)
+            {
+                ++size;
+            }
+        }
+        return size;
     }
 }

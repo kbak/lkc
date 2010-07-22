@@ -28,11 +28,14 @@ import org.gnome.gtk.Image;
 import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
+import org.gnome.gtk.ProgressBar;
 import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToolButton;
+import org.gnome.gtk.TreePath;
+import org.gnome.gtk.TreeSelection;
 import org.gnome.gtk.TreeView;
 import org.gnome.gtk.TreeViewColumn;
 import org.gnome.gtk.Viewport;
@@ -65,6 +68,9 @@ public class FeatureScreenHandler {
     final Button btnNextFeature;
     final Button btnFinishFeature;
     final TreeView treeviewFeatures;
+    final ProgressBar pgTotalSize;
+    final ProgressBar pgTotalNumFeatures;
+    final Image imgKernelStability;
     
     // To manage the enable/disable of those buttons
     public final ToolButton tbtnUndo;
@@ -90,6 +96,9 @@ public class FeatureScreenHandler {
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
         imgFeatureStability = (Image) xmlWndConfig.getWidget("imgFeatureStability");
+        pgTotalSize = (ProgressBar) xmlWndConfig.getWidget("pgTotalSize");
+        pgTotalNumFeatures = (ProgressBar) xmlWndConfig.getWidget("pgTotalNumFeatures");
+        imgKernelStability = (Image) xmlWndConfig.getWidget("imgKernelStability");
         final EventBox eb = (EventBox) xmlWndConfig.getWidget("eventbox1");
         
         eb.modifyBackground(StateType.NORMAL, new Color(0xFFFF, 0xFFFF, 0xFFFF));
@@ -145,6 +154,7 @@ public class FeatureScreenHandler {
 		// Create the left feature panel
 		treeviewFeatures = (TreeView) xmlWndConfig.getWidget("treeviewFeatures");
 		createLeftPanel();
+		updateStats();
     }
     
     private void createLeftPanel() {
@@ -175,7 +185,7 @@ public class FeatureScreenHandler {
         imgFeatureStability.setImage(stabilityMap.get(s), IconSize.SMALL_TOOLBAR);
     }
     
-    public void updateSize(int size)
+    public String formatSize(int size)
     {
         String str;
         
@@ -191,8 +201,12 @@ public class FeatureScreenHandler {
         {
             str = Double.toString(normalize(size / 1024.0 / 1024.0)) + " mb";
         }
-        
-        lblFeatureSizeN.setLabel(str);
+        return str;
+    }
+    
+    public void updateSize(int size)
+    {
+        lblFeatureSizeN.setLabel(formatSize(size));
     }
     
     private double normalize(double d)
@@ -349,6 +363,8 @@ public class FeatureScreenHandler {
     }
     
     public void rememberForUndoRedo() throws IOException {
+        updateStats();
+        
     	// Add to the vector that holds the history for undo/redo
     	URI fileName = new File("history" + File.pathSeparator + System.currentTimeMillis()).toURI(); 
     	this.save(fileName);
@@ -388,5 +404,28 @@ public class FeatureScreenHandler {
 		
         System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
 		return false;
+    }
+    
+    private void updateStats()
+    {
+        int size = 3245;
+        double maxSize = 10000000.0;
+        double maxFeatures = 6000.0;
+        
+        Stability s = Stability.Stable;
+        int n = 445;
+        
+        for (IFeatureHandler f : featureHandlers)
+        {
+            size += f.getSize();
+            s = FeatureHandler.minStability(s, f.getStability());
+            n += f.getNum();
+        }
+        
+        pgTotalSize.setText(formatSize(size));
+        pgTotalSize.setFraction(size / maxSize);
+        pgTotalNumFeatures.setText(Integer.toString(n));
+        pgTotalNumFeatures.setFraction(n / maxFeatures);
+        imgKernelStability.setImage(stabilityMap.get(s), IconSize.SMALL_TOOLBAR);
     }
 }

@@ -38,4 +38,19 @@ public class FeatureHandlerSummary extends FeatureHandler {
         return "Click Save to save the configuration";
     }
 
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
+    @Override
+    public Stability getStability() {
+        return Stability.Stable;
+    }
+
+    @Override
+    public int getNum() {
+        return 0;
+    }
+
 }

@@ -9,6 +9,7 @@ import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
+import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerServer extends FeatureHandler {
 
@@ -39,7 +40,7 @@ public class FeatureHandlerServer extends FeatureHandler {
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.IPv6).updateUI();
-                selectedOptions.set(0, buttonMap.get(Features.IPv6).getActive() ? Features.None : Features.IPv6);
+                selectedOptions.set(0, buttonMap.get(Features.IPv6).getActive() ? Features.IPv6 : Features.None);
                 
                 try {
 					fsh.rememberForUndoRedo();
@@ -55,7 +56,7 @@ public class FeatureHandlerServer extends FeatureHandler {
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Netfilter).updateUI();
-                selectedOptions.set(1, buttonMap.get(Features.Netfilter).getActive() ? Features.None : Features.Netfilter);
+                selectedOptions.set(1, buttonMap.get(Features.Netfilter).getActive() ? Features.Netfilter : Features.None);
                 
                 try {
 					fsh.rememberForUndoRedo();
@@ -71,7 +72,7 @@ public class FeatureHandlerServer extends FeatureHandler {
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Qos).updateUI();
-                selectedOptions.set(2, buttonMap.get(Features.Qos).getActive() ? Features.None : Features.Qos);
+                selectedOptions.set(2, buttonMap.get(Features.Qos).getActive() ? Features.Qos : Features.None);
                 
                 try {
 					fsh.rememberForUndoRedo();
@@ -118,6 +119,48 @@ public class FeatureHandlerServer extends FeatureHandler {
     @Override
     public String getInstruction() {
         return "Select options and click Next";
+    }
+
+    @Override
+    public int getSize() {
+        int size = 0;
+        
+        for (Features f : selectedOptions)
+        {
+            if (Features.None != f)
+            {
+                size += featureMap.get(f).size;
+            }
+        }
+        return size;
+    }
+
+    @Override
+    public Stability getStability() {
+        Stability s = Stability.Stable;
+        
+        for (Features f : selectedOptions)
+        {
+            if (Features.None != f)
+            {
+                s = FeatureHandler.minStability(s, featureMap.get(f).stability);
+            }
+        }
+        return s;
+    }
+
+    @Override
+    public int getNum() {
+        int size = 0;
+        
+        for (Features f : selectedOptions)
+        {
+            if (Features.None != f)
+            {
+                ++size;
+            }
+        }
+        return size;
     }
 
 }
