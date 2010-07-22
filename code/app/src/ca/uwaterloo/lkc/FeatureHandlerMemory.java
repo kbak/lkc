@@ -24,7 +24,7 @@ public class FeatureHandlerMemory extends FeatureHandler {
         put(Features.NoHighMem, new RadioButton(rg, "No"));
     }};
     
-    static String description = "Linux can use up to 64 Gigabytes of physical memory on x86 systems. " +
+    final static String description = "Linux can use up to 64 Gigabytes of physical memory on x86 systems. " +
     "However, the address space of 32-bit x86 processors is only 4 " +
     "Gigabytes large. That means that, if you have a large amount of " +
     "physical memory, not all of it can be \"permanently mapped\" by the " +
@@ -50,9 +50,9 @@ public class FeatureHandlerMemory extends FeatureHandler {
         
         selectedOptions.add(Features.NoHighMem);
         
-        featureMap.put(Features.HighMem, new Feature(fsh, description, 200000, Stability.Warning));
+        featureMap.put(Features.HighMem, new Feature(fsh, description, 1000, Stability.Stable));
         
-        featureMap.put(Features.NoHighMem, new Feature(fsh, description, 5000, Stability.Stable));
+        featureMap.put(Features.NoHighMem, new Feature(fsh, description, 500, Stability.Stable));
         
         buttonMap.get(Features.HighMem).connect(new Button.Clicked() {
             

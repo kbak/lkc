@@ -22,8 +22,14 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         put(Features.Minimum, new RadioButton(rg, "Minimal Configuration"));
     }};
     
+    final static String description = "You can optimize kernel for different purposes.\n" +
+    		"If you are a home user or use your computer as a workstation, choose Desktop.\n" +
+    		"If you are building a network server, choose Server.\n" +
+    		"If you want to build a minimal configuration that would run on your computer, choose Minimal Configuration.";
+    
     FeatureHandlerPurpose(final FeatureScreenHandler fsh)
     {
+        this.fsh = fsh;
         for (int i = 0; i < buttonMap.size(); ++i)
         {
             fsh.layOption.put((RadioButton) buttonMap.values().toArray()[i], 0, i * 23);
@@ -31,9 +37,9 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         
         selectedOptions.add(Features.Desktop);
         
-        featureMap.put(Features.Desktop, new Feature(fsh, "4gb Description", 200000, Stability.Warning));
-        featureMap.put(Features.Server, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
-        featureMap.put(Features.Minimum, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        featureMap.put(Features.Desktop, new Feature(fsh, description, 200000, Stability.Stable));
+        featureMap.put(Features.Server, new Feature(fsh, description, 50000, Stability.Stable));
+        featureMap.put(Features.Minimum, new Feature(fsh, description, 2000, Stability.Stable));
               
         buttonMap.get(Features.Desktop).connect(new Button.Clicked() {
             
@@ -94,6 +100,7 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         featureMap.get(selectedOptions.elementAt(0)).updateUI();
         buttonMap.get(selectedOptions.elementAt(0)).setActive(true);
         buttonMap.get(selectedOptions.elementAt(0)).grabFocus();
+        fsh.updateFeatureDescription(description);
     }
     
     @Override

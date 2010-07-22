@@ -19,8 +19,16 @@ public class FeatureHandlerSecurity extends FeatureHandler {
         put(Features.CryptoAPI, new CheckButton("CryptoApi"));
     }};
     
+    final static String description = "This selects NSA Security-Enhanced Linux (SELinux)." +
+    		"You will also need a policy configuration and a labeled filesystem." +
+    		"If you are unsure how to answer this question, answer \"No\".";
+    
+    final static String descriptionCrypto = "This adds cryptographic functions to the kernel." +
+    		"Select this option if you plan to frequently use cryptography, as it may speed-up computations.";
+    
     FeatureHandlerSecurity(final FeatureScreenHandler fsh)
     {
+        this.fsh = fsh;
         for (int i = 0; i < buttonMap.size(); ++i)
         {
             fsh.layOption.put((CheckButton) buttonMap.values().toArray()[i], 0, i * 23);
@@ -29,8 +37,8 @@ public class FeatureHandlerSecurity extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
 
-        featureMap.put(Features.SELinux, new Feature(fsh, "ipv6 Description", 200000, Stability.Warning));
-        featureMap.put(Features.CryptoAPI, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        featureMap.put(Features.SELinux, new Feature(fsh, description, 200, Stability.Stable));
+        featureMap.put(Features.CryptoAPI, new Feature(fsh, descriptionCrypto, 300, Stability.Stable));
         
         buttonMap.get(Features.SELinux).connect(new Button.Clicked() {
             
@@ -83,6 +91,8 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 buttonMap.get(f).setActive(true);
             }
         }
+        fsh.updateFeatureDescription(description);
+        
     }
     
     @Override

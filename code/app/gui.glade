@@ -400,19 +400,41 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkScrolledWindow" id="sw">
+                          <widget class="GtkFrame" id="frFeatureDescription">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="hscrollbar_policy">automatic</property>
-                            <property name="vscrollbar_policy">automatic</property>
-                            <property name="shadow_type">etched-in</property>
+                            <property name="label_xalign">0</property>
                             <child>
-                              <widget class="GtkTextView" id="tvFeatureDescription">
+                              <widget class="GtkAlignment" id="alignment3">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="editable">False</property>
-                                <property name="wrap_mode">word</property>
+                                <property name="left_padding">12</property>
+                                <child>
+                                  <widget class="GtkScrolledWindow" id="sw">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="hscrollbar_policy">automatic</property>
+                                    <property name="vscrollbar_policy">automatic</property>
+                                    <property name="shadow_type">etched-in</property>
+                                    <child>
+                                      <widget class="GtkTextView" id="tvFeatureDescription">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="editable">False</property>
+                                        <property name="wrap_mode">word</property>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                </child>
                               </widget>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label2">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Feature description</property>
+                                <property name="use_markup">True</property>
+                              </widget>
+                              <packing>
+                                <property name="type">label_item</property>
+                              </packing>
                             </child>
                           </widget>
                           <packing>
@@ -523,8 +545,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <accelerator key="BackSpace" signal="clicked"/>
                             <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
+                            <accelerator key="BackSpace" signal="clicked"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -539,8 +561,8 @@
                             <property name="can_focus">True</property>
                             <property name="has_focus">True</property>
                             <property name="receives_default">True</property>
-                            <accelerator key="Return" signal="clicked"/>
                             <accelerator key="Right" signal="clicked" modifiers="GDK_MOD1_MASK"/>
+                            <accelerator key="Return" signal="clicked"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>

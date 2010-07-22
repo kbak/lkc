@@ -19,6 +19,7 @@ import org.gnome.gtk.CellRendererText;
 import org.gnome.gtk.DataColumn;
 import org.gnome.gtk.DataColumnString;
 import org.gnome.gtk.EventBox;
+import org.gnome.gtk.Frame;
 import org.gnome.gtk.HBox;
 import org.gnome.gtk.IconSize;
 import org.gnome.gtk.Image;
@@ -60,7 +61,7 @@ public class FeatureScreenHandler {
     private Label lblFeatureSizeN;
     private Image imgFeatureStability;
     private TextBuffer textBuffer = new TextBuffer();
-    private ScrolledWindow sw;
+    private Frame frFeatureDescription;
     private HBox hbox1;
     final Button btnBackFeature;
     final Button btnNextFeature;
@@ -90,7 +91,7 @@ public class FeatureScreenHandler {
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         lblInstructions = (Label) xmlWndConfig.getWidget("lblInstructions");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
-        sw = (ScrolledWindow) xmlWndConfig.getWidget("sw");
+        frFeatureDescription = (Frame) xmlWndConfig.getWidget("frFeatureDescription");
         hbox1 = (HBox) xmlWndConfig.getWidget("hbox1");
         tvFeatureDescription = (TextView) xmlWndConfig.getWidget("tvFeatureDescription");
         lblFeatureSizeN = (Label) xmlWndConfig.getWidget("lblFeatureSizeN");
@@ -240,7 +241,7 @@ public class FeatureScreenHandler {
         if (0 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(false);
-            sw.hide();
+            frFeatureDescription.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
@@ -248,7 +249,7 @@ public class FeatureScreenHandler {
         else if (featureHandlers.size() - 1 == featureHistory.lastElement())
         {
             btnBackFeature.setSensitive(true);
-            sw.hide();
+            frFeatureDescription.hide();
             hbox1.hide();
             btnNextFeature.setSensitive(false);
             btnFinishFeature.setSensitive(false);
@@ -258,7 +259,7 @@ public class FeatureScreenHandler {
             btnBackFeature.setSensitive(true);
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
-            sw.show();
+            frFeatureDescription.show();
             hbox1.show();
         }
         
@@ -270,7 +271,9 @@ public class FeatureScreenHandler {
         IFeatureHandler fh = featureHandlers.elementAt(featureHistory.lastElement());
         lblOption.setLabel("<b>" + fh.getQuestion() + "</b>");
         lblInstructions.setLabel(fh.getInstruction());
-        pgProgress.setFraction(1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1));
+        double p = 1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1);
+        pgProgress.setText(Long.toString(Math.round(100 * p)) + "%");
+        pgProgress.setFraction(p);
         fh.show();
     
         // Update the left panel to select the current screen

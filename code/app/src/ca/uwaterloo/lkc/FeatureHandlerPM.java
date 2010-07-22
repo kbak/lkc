@@ -21,7 +21,7 @@ public class FeatureHandlerPM extends FeatureHandler {
         put(Features.NoPM, new RadioButton(rg, "No"));
     }};
     
-    static String description = "Enable or disable power management options (such as CPU frequency scaling, system hibernation, etc.)";
+    final static String description = "Enable or disable power management options (such as CPU frequency scaling, system hibernation, etc.)";
     
     FeatureHandlerPM(final FeatureScreenHandler fsh)
     {
@@ -95,7 +95,7 @@ public class FeatureHandlerPM extends FeatureHandler {
 
     @Override
     public boolean isRelevant(Vector<Features> v) {
-        return true;
+        return !v.contains(Features.Minimum);
     }
 
     @Override
