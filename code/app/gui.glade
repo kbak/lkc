@@ -37,9 +37,8 @@
     </child>
   </widget>
   <widget class="GtkWindow" id="wndConfig">
-    <property name="border_width">5</property>
     <property name="title" translatable="yes">Linux Kernel Configuration</property>
-    <property name="default_width">500</property>
+    <property name="default_width">600</property>
     <property name="default_height">600</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
@@ -137,6 +136,7 @@
           <widget class="GtkVPaned" id="vpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="orientation">vertical</property>
             <property name="position">470</property>
             <property name="position_set">True</property>
             <child>
@@ -147,6 +147,7 @@
                 <child>
                   <widget class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkViewport" id="viewport2">
                         <property name="visible">True</property>
@@ -241,7 +242,7 @@
                         </child>
                         <child>
                           <widget class="GtkFixed" id="fixed4">
-                            <property name="height_request">30</property>
+                            <property name="height_request">32</property>
                             <property name="visible">True</property>
                             <child>
                               <widget class="GtkImage" id="imgKernelStability">
@@ -279,24 +280,94 @@
                 <child>
                   <widget class="GtkVBox" id="vbox3">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
-                      <widget class="GtkLabel" id="lblOption">
+                      <widget class="GtkEventBox" id="eventbox1">
                         <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="yalign">0</property>
-                        <property name="label" translatable="yes">option</property>
-                        <property name="use_markup">True</property>
-                        <property name="wrap">True</property>
+                        <child>
+                          <widget class="GtkHBox" id="hbox3">
+                            <property name="visible">True</property>
+                            <child>
+                              <widget class="GtkVBox" id="vbox6">
+                                <property name="visible">True</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <widget class="GtkLabel" id="lblOption">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="yalign">0</property>
+                                    <property name="xpad">10</property>
+                                    <property name="ypad">5</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;option&lt;/b&gt;</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="wrap">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="label1">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="yalign">0</property>
+                                    <property name="xpad">20</property>
+                                    <property name="label" translatable="yes">Select and click Next</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkImage" id="image3">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="yalign">0</property>
+                                <property name="ypad">5</property>
+                                <property name="pixbuf">tux-icon.png</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="padding">5</property>
+                                <property name="pack_type">end</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkHSeparator" id="hseparator3">
+                        <property name="visible">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="GtkVPaned" id="vpaned2">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="orientation">vertical</property>
                         <property name="position">100</property>
                         <child>
                           <widget class="GtkLayout" id="layOption">
@@ -328,7 +399,7 @@
                         </child>
                       </widget>
                       <packing>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -405,7 +476,16 @@
                       </widget>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkHSeparator" id="hseparator2">
+                        <property name="visible">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                     <child>
@@ -462,7 +542,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="padding">4</property>
-                        <property name="position">3</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                   </widget>
@@ -880,7 +960,7 @@ This tool will help you configure the Linux Kernel.</property>
             <property name="visible">True</property>
             <property name="xalign">0</property>
             <property name="xpad">5</property>
-            <property name="label" translatable="yes">Select one option and click on &lt;b&gt;OK&lt;/b&gt;</property>
+            <property name="label" translatable="yes">Select one option and click OK</property>
             <property name="use_markup">True</property>
           </widget>
           <packing>
