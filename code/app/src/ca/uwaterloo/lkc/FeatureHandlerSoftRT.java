@@ -85,7 +85,7 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
     
     @Override
     public String getQuestion() {
-        return "Do you want to support soft RT?";
+        return "Do you want to enable soft Real-Time computations?";
     }
 
     public void updateUI()

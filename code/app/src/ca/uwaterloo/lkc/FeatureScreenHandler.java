@@ -207,15 +207,15 @@ public class FeatureScreenHandler {
         
         if (0 <= size && size < 1024)
         {
-            str = Integer.toString(size) + " b";
+            str = Integer.toString(size) + " B";
         }
         else if (1024 <= size & size < 1024 * 1024)
         {
-            str = Double.toString(normalize(size / 1024.0)) + " kb";
+            str = Double.toString(normalize(size / 1024.0)) + " KB";
         }
         else
         {
-            str = Double.toString(normalize(size / 1024.0 / 1024.0)) + " mb";
+            str = Double.toString(normalize(size / 1024.0 / 1024.0)) + " MB";
         }
         return str;
     }
