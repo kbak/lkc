@@ -13,12 +13,16 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     FeatureHandlerWelcome(final FeatureScreenHandler fsh)
     {
         instruction.setLineWrap(true);
-        instruction.setLabel("bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla");
+        instruction.setUseMarkup(true);
+        instruction.setLabel("This wizard will guide you through the configuration process.\n\n" +
+        		"At any time you can click Finish to use the <b>default</b> options.\n\n" +
+        		"The wizard will show you <b>only</b> options that <b>cannot</b> be configured automatically.\n\n" +
+        		"If you prefer to set all the options yourself, <b>navigate</b> through the list of categories on the <b>left</b>.");
         fsh.layOption.put(instruction, 5, 5);
     }
     @Override
     public String getQuestion() {
-        return "yo, back, next, finish";
+        return "Welcome to the configurator!";
     }
 
     @Override
