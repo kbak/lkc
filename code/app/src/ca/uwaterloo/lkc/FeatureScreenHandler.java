@@ -154,7 +154,6 @@ public class FeatureScreenHandler {
 		updateStats();
 		
 		featureHistory.add(0);
-		//updateLeftPanelSelection();
     }
     
     private void createLeftPanel() {
@@ -167,7 +166,7 @@ public class FeatureScreenHandler {
 		model.setValue(model.appendRow(), featureName, "Welcome");
 		model.setValue(model.appendRow(), featureName, "Purpose");
 		model.setValue(model.appendRow(), featureName, "Software Real Time");
-		model.setValue(model.appendRow(), featureName, "Processor");
+		model.setValue(model.appendRow(), featureName, "Power Management");
 		model.setValue(model.appendRow(), featureName, "Memory");
 		model.setValue(model.appendRow(), featureName, "Server");
 		model.setValue(model.appendRow(), featureName, "Security");
