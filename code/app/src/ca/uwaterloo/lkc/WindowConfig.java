@@ -4,29 +4,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Map;
-import java.util.Vector;
 
 import org.gnome.gdk.Event;
 import org.gnome.glade.Glade;
 import org.gnome.glade.XML;
-import org.gnome.gtk.CellRendererText;
-import org.gnome.gtk.DataColumn;
-import org.gnome.gtk.DataColumnString;
 import org.gnome.gtk.Gtk;
-import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ResponseType;
 import org.gnome.gtk.ToolButton;
-import org.gnome.gtk.TreeView;
-import org.gnome.gtk.TreeViewColumn;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 import org.gnome.gtk.WindowPosition;
 
-import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-
 public class WindowConfig {
 	public final Window w;
+	public final ToolButton tbtnNew;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
 	public final ToolButton tbtnUndo;
@@ -56,6 +47,16 @@ public class WindowConfig {
 		fsh = new FeatureScreenHandler(xmlWndConfig);
 				
 		// Adding events for tool bar buttons
+		/* New */
+		tbtnNew = (ToolButton) xmlWndConfig.getWidget("tbtnNew");
+		tbtnNew.connect(new ToolButton.Clicked() {
+
+			@Override
+			public void onClicked(ToolButton source) {
+				// not implemented yet
+			}
+		});
+		
 		/* Open */
 		tbtnOpen = (ToolButton) xmlWndConfig.getWidget("tbtnOpen");
 		tbtnOpen.connect(new ToolButton.Clicked() {
