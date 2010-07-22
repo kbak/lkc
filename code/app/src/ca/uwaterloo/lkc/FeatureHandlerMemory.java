@@ -81,6 +81,7 @@ public class FeatureHandlerMemory extends FeatureHandler {
     {
         featureMap.get(selectedOptions.elementAt(0)).updateUI();
         buttonMap.get(selectedOptions.elementAt(0)).setActive(true);
+        buttonMap.get(selectedOptions.elementAt(0)).grabFocus();
     }
     
     @Override

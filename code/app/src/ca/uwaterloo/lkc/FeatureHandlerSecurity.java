@@ -74,6 +74,7 @@ public class FeatureHandlerSecurity extends FeatureHandler {
 
     public void updateUI()
     {
+        buttonMap.get(Features.SELinux).grabFocus();
         for (Features f : selectedOptions)
         {
             if (Features.None != f)

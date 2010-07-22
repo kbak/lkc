@@ -90,6 +90,7 @@ public class FeatureHandlerServer extends FeatureHandler {
 
     public void updateUI()
     {        
+        buttonMap.get(Features.IPv6).grabFocus();
         for (Features f : selectedOptions)
         {
             if (Features.None != f)

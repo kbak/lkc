@@ -72,6 +72,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
     }
     public void updateUI()
     {
+        buttonMap.get(Features.KVM).grabFocus();
         for (Features f : selectedOptions)
         {
             if (Features.None != f)
