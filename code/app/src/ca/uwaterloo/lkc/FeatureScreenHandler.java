@@ -70,6 +70,7 @@ public class FeatureScreenHandler {
     final TreeView treeviewFeatures;
     final ProgressBar pgTotalSize;
     final ProgressBar pgTotalNumFeatures;
+    final ProgressBar pgProgress;
     final Image imgKernelStability;
     
     // To manage the enable/disable of those buttons
@@ -98,6 +99,7 @@ public class FeatureScreenHandler {
         imgFeatureStability = (Image) xmlWndConfig.getWidget("imgFeatureStability");
         pgTotalSize = (ProgressBar) xmlWndConfig.getWidget("pgTotalSize");
         pgTotalNumFeatures = (ProgressBar) xmlWndConfig.getWidget("pgTotalNumFeatures");
+        pgProgress = (ProgressBar) xmlWndConfig.getWidget("pgProgress");
         imgKernelStability = (Image) xmlWndConfig.getWidget("imgKernelStability");
         final EventBox eb = (EventBox) xmlWndConfig.getWidget("eventbox1");
         
@@ -182,7 +184,7 @@ public class FeatureScreenHandler {
     
     public void updateStability(IFeatureHandler.Stability s)
     {
-        imgFeatureStability.setImage(stabilityMap.get(s), IconSize.SMALL_TOOLBAR);
+        imgFeatureStability.setImage(stabilityMap.get(s), IconSize.MENU);
     }
     
     public String formatSize(int size)
@@ -254,6 +256,7 @@ public class FeatureScreenHandler {
         IFeatureHandler fh = featureHandlers.elementAt(featureHistory.lastElement());
         lblOption.setLabel("<b>" + fh.getQuestion() + "</b>");
         lblInstructions.setLabel(fh.getInstruction());
+        pgProgress.setFraction(1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1));
         fh.show();
     }
     
@@ -282,6 +285,7 @@ public class FeatureScreenHandler {
         IFeatureHandler fh = featureHandlers.elementAt(screenIndex);
         lblOption.setLabel("<b>" + fh.getQuestion() + "</b>");
         lblInstructions.setLabel(fh.getInstruction());
+        pgProgress.setFraction(1.0 * screenIndex / (featureHandlers.size() - 1));
         fh.show();
     }
     
@@ -426,6 +430,6 @@ public class FeatureScreenHandler {
         pgTotalSize.setFraction(size / maxSize);
         pgTotalNumFeatures.setText(Integer.toString(n));
         pgTotalNumFeatures.setFraction(n / maxFeatures);
-        imgKernelStability.setImage(stabilityMap.get(s), IconSize.SMALL_TOOLBAR);
+        imgKernelStability.setImage(stabilityMap.get(s), IconSize.MENU);
     }
 }
