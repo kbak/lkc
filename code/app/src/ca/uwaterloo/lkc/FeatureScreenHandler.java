@@ -26,7 +26,6 @@ import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ProgressBar;
-import org.gnome.gtk.ScrolledWindow;
 import org.gnome.gtk.SelectionMode;
 import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
@@ -157,7 +156,7 @@ public class FeatureScreenHandler {
     }
     
     private void createLeftPanel() {
-		final TreeViewColumn column = treeviewFeatures.appendColumn();
+        final TreeViewColumn column = treeviewFeatures.appendColumn();
 		final DataColumnString featureName = new DataColumnString();
 		final ListStore model = new ListStore( new DataColumn[] {featureName});
 		final TreeSelection selection;

@@ -29,7 +29,7 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
     		"otherwise not be about to reach a natural preemption point. " +
     		"This allows applications to run more 'smoothly' even when the " +
     		"system is under load, at the cost of slightly lower throughput " +
-    		"and a slight runtime overhead to kernel code.\n\n " +
+    		"and a slight runtime overhead to kernel code.\n\n" +
     		"Select this if you are building a kernel for a desktop or " +
     		"embedded system with latency requirements in the milliseconds " +
     		"range. It is recommended to select this option if you plan to do" +
