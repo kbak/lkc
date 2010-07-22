@@ -126,8 +126,11 @@ public class WindowConfig {
 				    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "make xconfig");
 				    pb.directory(new File("/usr/src/linux"));
 				    pb.start();
-				    w.hide();
+				    Thread.sleep(100); // wait until xconfig loads
+				    Gtk.mainQuit(); // quit our tool
 				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
