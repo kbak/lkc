@@ -2,7 +2,6 @@ package ca.uwaterloo.lkc;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -83,7 +82,7 @@ public class FeatureScreenHandler {
 	public int currentFeaturesIndex;
 	public int MAX_UNDO_REDO = 100;
     
-    FeatureScreenHandler(final XML xmlWndConfig) throws FileNotFoundException
+    FeatureScreenHandler(final XML xmlWndConfig)
     {   
     	featuresUndoRedo = new Vector<URI>();
 		currentFeaturesIndex = -1;
