@@ -32,10 +32,10 @@ public class FeatureHandlerMemory extends FeatureHandler {
     "\"high memory\".\n\n" +
     "If the machine has between 1 and 4 Gigabytes physical RAM, then answer \"No\" here.\n\n" +
     "If more than 4 Gigabytes is used then answer \"Yes\" here. This selection turns Intel PAE (Physical Address Extension) mode on. " +
-    "PAE implements 3-level paging on IA32 processors. PAE is fully supported by Linux, PAE mode is implemented on all recent Intel" +
+    "PAE implements 3-level paging on IA32 processors. PAE is fully supported by Linux, PAE mode is implemented on all recent Intel " +
     "processors (Pentium Pro and better). NOTE: If you say \"Yes\" here, then the kernel will not boot on CPUs that don't support PAE!\n\n" +
-    "The actual amount of total physical memory will either be auto detected or can be forced by using a kernel command line option" +
-    "such as \"mem=256M\". (Try \"man bootparam\" or see the documentation of your boot loader (lilo or loadlin) about how to pass options to the" +
+    "The actual amount of total physical memory will either be auto detected or can be forced by using a kernel command line option " +
+    "such as \"mem=256M\". (Try \"man bootparam\" or see the documentation of your boot loader (lilo or loadlin) about how to pass options to the " +
     "kernel at boot time.)\n\n" +
     "If unsure, say \"No\".";
     

@@ -19,11 +19,11 @@ public class FeatureHandlerSecurity extends FeatureHandler {
         put(Features.CryptoAPI, new CheckButton("CryptoApi"));
     }};
     
-    final static String description = "This selects NSA Security-Enhanced Linux (SELinux)." +
-    		"You will also need a policy configuration and a labeled filesystem." +
+    final static String description = "This selects NSA Security-Enhanced Linux (SELinux). " +
+    		"You will also need a policy configuration and a labeled filesystem. " +
     		"If you are unsure how to answer this question, answer \"No\".";
     
-    final static String descriptionCrypto = "This adds cryptographic functions to the kernel." +
+    final static String descriptionCrypto = "This adds cryptographic functions to the kernel. " +
     		"Select this option if you plan to frequently use cryptography, as it may speed-up computations.";
     
     FeatureHandlerSecurity(final FeatureScreenHandler fsh)
@@ -92,7 +92,6 @@ public class FeatureHandlerSecurity extends FeatureHandler {
             }
         }
         fsh.updateFeatureDescription(description);
-        
     }
     
     @Override

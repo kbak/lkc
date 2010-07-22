@@ -43,7 +43,7 @@ import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureScreenHandler {
 
-    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, PM, NoPM, NoHighMem, HighMem, IPv6, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
+    public static enum Features { None, Desktop, Server, Minimum, NoSoftRT, SoftRT, PM, NoPM, NoHighMem, HighMem, Netfilter, Qos, SELinux, CryptoAPI, KVM, XEN};
     
     public static final Map<Stability, Stock> stabilityMap = new TreeMap<IFeatureHandler.Stability, Stock>() {{ 
         put(IFeatureHandler.Stability.Stable, Stock.APPLY);
@@ -401,7 +401,7 @@ public class FeatureScreenHandler {
     private void updateStats()
     {
         int size = 3245;
-        double maxSize = 10000000.0;
+        double maxSize = 1000000.0;
         double maxFeatures = 6000.0;
         
         Stability s = Stability.Stable;

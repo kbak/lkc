@@ -17,9 +17,25 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
         put(Features.KVM, new CheckButton("KVM"));
         put(Features.XEN, new CheckButton("XEN"));
     }};
+    
+    final static String description = "Support hosting fully virtualized guest machines using hardware " +
+    		"virtualization extensions. You will need a fairly recent " +
+    		"processor equipped with virtualization extensions. You will also " +
+    		"need to select one or more of the processor modules below.\n\n " +
+    		"This module provides access to the hardware capabilities through " +
+    		"a character device node named /dev/kvm.\n\n " +
+    		"To compile this as a module, choose M here: the module " +
+    		"will be called kvm.\n\n " +
+    		"If unsure, say \"No\".";
+    
+    final static String descriptionXEN = "This is the Linux Xen port. Enabling this will allow the " +
+    		"kernel to boot in a paravirtualized environment under the " +
+    		"Xen hypervisor.";
      
     FeatureHandlerVirtualization(final FeatureScreenHandler fsh)
     {
+        this.fsh = fsh;
+        
         for (int i = 0; i < buttonMap.size(); ++i)
         {
             fsh.layOption.put((CheckButton) buttonMap.values().toArray()[i], 0, i * 23);
@@ -28,8 +44,8 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
         
-        featureMap.put(Features.KVM, new Feature(fsh, "ipv6 Description", 200000, Stability.Warning));
-        featureMap.put(Features.XEN, new Feature(fsh, "no high mem Description", 5000, Stability.Stable));
+        featureMap.put(Features.KVM, new Feature(fsh, description, 0, Stability.Stable));
+        featureMap.put(Features.XEN, new Feature(fsh, descriptionXEN, 3000, Stability.Stable));
 
         buttonMap.get(Features.KVM).connect(new Button.Clicked() {
             
@@ -81,6 +97,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 buttonMap.get(f).setActive(true);
             }
         }
+        fsh.updateFeatureDescription(description);
     }
     
     @Override
