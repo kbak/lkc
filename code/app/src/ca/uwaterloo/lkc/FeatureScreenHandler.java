@@ -305,6 +305,21 @@ public class FeatureScreenHandler {
         featureHistory.add(featureHistory.lastElement() + i);
     }
     
+    public void newConfig() {
+		// set the defaults for the feature handlers
+    	setDefaults();
+    	featureHistory.removeAllElements();
+    	
+    	featureHistory.add(0);
+    	showScreen();
+    }
+    
+    public void setDefaults() {
+    	for(IFeatureHandler featureHandler : this.featureHandlers) {
+    		featureHandler.setDefault();
+    	}
+    }
+    
     public void load(URI file) throws IOException, ClassNotFoundException {
     	File outputFile = new File(file);
 		
