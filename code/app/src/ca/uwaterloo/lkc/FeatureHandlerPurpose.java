@@ -1,8 +1,7 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
-import java.util.TreeMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import org.gnome.gtk.Button;
@@ -10,7 +9,6 @@ import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerPurpose extends FeatureHandler {
 
@@ -48,12 +46,6 @@ public class FeatureHandlerPurpose extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Desktop).updateUI();
                 selectedOptions.set(0, Features.Desktop);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -64,12 +56,6 @@ public class FeatureHandlerPurpose extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Server).updateUI();
                 selectedOptions.set(0, Features.Server);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -80,12 +66,6 @@ public class FeatureHandlerPurpose extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Minimum).updateUI();
                 selectedOptions.set(0, Features.Minimum);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
     }

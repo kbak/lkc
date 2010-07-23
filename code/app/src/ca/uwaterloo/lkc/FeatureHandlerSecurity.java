@@ -1,16 +1,13 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
-import org.gnome.gtk.RadioButton;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerSecurity extends FeatureHandler {
 
@@ -47,12 +44,6 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.SELinux).updateUI();
                 selectedOptions.set(0, buttonMap.get(Features.SELinux).getActive() ?  Features.SELinux : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -63,12 +54,6 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.CryptoAPI).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.CryptoAPI).getActive() ? Features.CryptoAPI : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 

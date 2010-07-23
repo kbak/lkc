@@ -79,16 +79,8 @@ public class FeatureScreenHandler {
     
     private Vector<Integer> featureHistory = new Vector<Integer>();
     
-    // Undo/Redo related variables
-    public Vector<URI> featuresUndoRedo;
-	public int currentFeaturesIndex;
-	public int MAX_UNDO_REDO = 100;
-    
     FeatureScreenHandler(final XML xmlWndConfig)
     {   
-    	featuresUndoRedo = new Vector<URI>();
-		currentFeaturesIndex = -1;
-		
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         lblInstructions = (Label) xmlWndConfig.getWidget("lblInstructions");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
@@ -378,10 +370,6 @@ public class FeatureScreenHandler {
 		}
     }
     
-    public void updateCurrentFeatures() throws IOException, ClassNotFoundException {
-    	this.load(this.featuresUndoRedo.get(this.currentFeaturesIndex));
-    }
-    
     public void save(URI file) throws IOException {
     	File outputFile = new File(file);
     	outputFile.createNewFile();
@@ -398,50 +386,6 @@ public class FeatureScreenHandler {
 			}
 			writer.close();
 		}
-    }
-    
-    public void rememberForUndoRedo() throws IOException {
-        updateStats();
-        
-    	// Add to the vector that holds the history for undo/redo
-    	URI fileName = new File("history" + File.pathSeparator + System.currentTimeMillis()).toURI(); 
-    	this.save(fileName);
-    	this.featuresUndoRedo.add(fileName);
-    	
-    	// If we are over the max size of history, delete the first element in the vector
-    	if(this.featuresUndoRedo.size() > this.MAX_UNDO_REDO) {
-    		this.featuresUndoRedo.removeElementAt(0);
-    	}
-    	
-    	this.incrementCurrentFeaturesIndex();
-    	
-    	tbtnUndo.setSensitive(this.currentFeaturesIndex > 0);
-    }
-    
-    public boolean incrementCurrentFeaturesIndex() {
-    	//System.out.println("BEFORE IncrementIndex: " + this.currentFeaturesIndex);
-    	this.currentFeaturesIndex++;
-    	if (this.currentFeaturesIndex >= this.MAX_UNDO_REDO) {
-            this.currentFeaturesIndex = this.MAX_UNDO_REDO - 1;
-            //System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
-            return true;
-        }
-    	
-    	//System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
-    	return false;
-    }
-    
-    public boolean decrementCurrentFeaturesIndex() {
-    	//System.out.println("BEFORE DecrementIndex: " + this.currentFeaturesIndex);
-    	this.currentFeaturesIndex--;
-		if (this.currentFeaturesIndex <= 0) {
-            this.currentFeaturesIndex = 0;
-            //System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
-            return true;
-        }
-		
-        //System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
-		return false;
     }
     
     private void updateStats()

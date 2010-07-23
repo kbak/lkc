@@ -1,6 +1,5 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -9,7 +8,6 @@ import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerVirtualization extends FeatureHandler {
 
@@ -23,10 +21,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
     		"processor equipped with virtualization extensions. You will also " +
     		"need to select one or more of the processor modules below.\n\n" +
     		"This module provides access to the hardware capabilities through " +
-    		"a character device node named /dev/kvm.\n\n" +
-    		"To compile this as a module, choose M here: the module " +
-    		"will be called kvm.\n\n" +
-    		"If unsure, say \"No\".";
+    		"a character device node named /dev/kvm.\n\n";
     
     final static String descriptionXEN = "This is the Linux Xen port. Enabling this will allow the " +
     		"kernel to boot in a paravirtualized environment under the " +
@@ -54,12 +49,6 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.KVM).updateUI();
                 selectedOptions.set(0, buttonMap.get(Features.KVM).getActive() ? Features.KVM : Features.None);
-
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -70,12 +59,6 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.XEN).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.XEN).getActive() ? Features.XEN : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 

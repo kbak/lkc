@@ -1,6 +1,5 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -9,7 +8,6 @@ import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerServer extends FeatureHandler {
 
@@ -109,12 +107,6 @@ public class FeatureHandlerServer extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Netfilter).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.Netfilter).getActive() ? Features.Netfilter : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -125,12 +117,6 @@ public class FeatureHandlerServer extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Qos).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.Qos).getActive() ? Features.Qos : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 

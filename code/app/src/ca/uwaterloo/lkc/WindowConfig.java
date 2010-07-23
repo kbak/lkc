@@ -20,8 +20,6 @@ public class WindowConfig {
 	public final ToolButton tbtnNew;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
-	public final ToolButton tbtnUndo;
-	public final ToolButton tbtnRedo;
 	public final ToolButton tbtnAdvanced; 
 
 	private FeatureScreenHandler fsh;
@@ -136,54 +134,6 @@ public class WindowConfig {
 			}
 		});
 		
-		/* Undo */
-		tbtnUndo = (ToolButton) xmlWndConfig.getWidget("tbtnUndo");
-		tbtnUndo.setSensitive(false);
-		tbtnUndo.connect(new ToolButton.Clicked() {
-
-			@Override
-			public void onClicked(ToolButton source) {
-				if(fsh.decrementCurrentFeaturesIndex()) {
-					updateUndoRedo(false, true);
-				} else {
-					updateUndoRedo(true, true);
-				}
-				
-				// Update current features
-				try {
-					fsh.updateCurrentFeatures();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		/* Redo */
-		tbtnRedo = (ToolButton) xmlWndConfig.getWidget("tbtnRedo");
-		tbtnRedo.setSensitive(false);
-		tbtnRedo.connect(new ToolButton.Clicked() {
-
-			@Override
-			public void onClicked(ToolButton source) {
-				if(fsh.incrementCurrentFeaturesIndex()) {
-					updateUndoRedo(true, false);
-				} else {
-					updateUndoRedo(true, true);
-				}
-				
-				// Update current features
-				try {
-					fsh.updateCurrentFeatures();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
 		// Load config file
 		if(configFile != null) {
 			try {
@@ -195,11 +145,6 @@ public class WindowConfig {
 			}
 		}
 		w.setPosition(WindowPosition.CENTER);
-	}
-	
-	public void updateUndoRedo(boolean undoSensitive, boolean redoSensitive) {
-		tbtnUndo.setSensitive(undoSensitive);
-		tbtnRedo.setSensitive(redoSensitive);
 	}
 	
     public void run()
