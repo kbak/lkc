@@ -14,8 +14,10 @@ import java.util.Vector;
 import org.gnome.gdk.Color;
 import org.gnome.glade.XML;
 import org.gnome.gtk.Button;
+import org.gnome.gtk.CellRendererPixbuf;
 import org.gnome.gtk.CellRendererText;
 import org.gnome.gtk.DataColumn;
+import org.gnome.gtk.DataColumnStock;
 import org.gnome.gtk.DataColumnString;
 import org.gnome.gtk.EventBox;
 import org.gnome.gtk.Frame;
@@ -32,6 +34,7 @@ import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToolButton;
+import org.gnome.gtk.TreeIter;
 import org.gnome.gtk.TreePath;
 import org.gnome.gtk.TreeSelection;
 import org.gnome.gtk.TreeView;
@@ -156,26 +159,70 @@ public class FeatureScreenHandler {
     }
     
     private void createLeftPanel() {
-        final TreeViewColumn column = treeviewFeatures.appendColumn();
-		final DataColumnString featureName = new DataColumnString();
-		final ListStore model = new ListStore( new DataColumn[] {featureName});
+    	final TreeViewColumn featureIconColumn = treeviewFeatures.appendColumn();
+    	final TreeViewColumn featureNameColumn = treeviewFeatures.appendColumn();
+        
+    	final DataColumnStock featureIcon = new DataColumnStock();
+        final DataColumnString featureName = new DataColumnString();
+		
+		final ListStore model = new ListStore( new DataColumn[] {featureIcon, featureName});
 		final TreeSelection selection;
 
-		// Populate the step names in the cells of the tree
-		model.setValue(model.appendRow(), featureName, "Welcome");
-		model.setValue(model.appendRow(), featureName, "Purpose");
-		model.setValue(model.appendRow(), featureName, "Software Real Time");
-		model.setValue(model.appendRow(), featureName, "Power Management");
-		model.setValue(model.appendRow(), featureName, "Memory");
-		model.setValue(model.appendRow(), featureName, "Server");
-		model.setValue(model.appendRow(), featureName, "Security");
-		model.setValue(model.appendRow(), featureName, "Virtualization");
-		model.setValue(model.appendRow(), featureName, "Summary");
+		// Populate the icons and names in the cells of the tree
+		/* Welcome */
+		TreeIter iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.HOME);
+		model.setValue(iter, featureName, "Welcome");
+		
+		/* Purpose */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.DIALOG_QUESTION);
+		model.setValue(iter, featureName, "Purpose");
+		
+		/* Soft RT */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.PREFERENCES);
+		model.setValue(iter, featureName, "Software Real Time");
+		
+		/* Power Management */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.DISCONNECT);
+		model.setValue(iter, featureName, "Power Management");
+		
+		/* Memory */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.SAVE);
+		model.setValue(iter, featureName, "Memory");
+		
+		/* Server */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.NETWORK);
+		model.setValue(iter, featureName, "Server");
+		
+		/* Security */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.DIALOG_AUTHENTICATION);
+		model.setValue(iter, featureName, "Security");
+		
+		/* Virtualization */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.EXECUTE);
+		model.setValue(iter, featureName, "Virtualization");
+		
+		/* Summary */
+		iter = model.appendRow();
+		model.setValue(iter, featureIcon, Stock.FILE);
+		model.setValue(iter, featureName, "Summary");
 		
 		treeviewFeatures.setModel(model);
-				
-		column.setTitle("Steps");
-		CellRendererText text = new CellRendererText(column);
+		
+		featureIconColumn.setTitle("");
+		featureNameColumn.setTitle("Steps");
+		
+		CellRendererPixbuf icon = new CellRendererPixbuf(featureIconColumn);
+		CellRendererText text = new CellRendererText(featureNameColumn);
+		
+		icon.setStock(featureIcon);
 		text.setText(featureName);
 		
 		// Add selectedRow event
