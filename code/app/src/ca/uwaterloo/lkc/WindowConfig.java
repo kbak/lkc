@@ -51,7 +51,7 @@ public class WindowConfig {
 
 			@Override
 			public void onClicked(ToolButton source) {
-				// not implemented yet
+				fsh.newConfig();
 			}
 		});
 		
