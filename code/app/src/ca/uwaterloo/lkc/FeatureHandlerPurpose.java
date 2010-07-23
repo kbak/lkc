@@ -16,7 +16,7 @@ public class FeatureHandlerPurpose extends FeatureHandler {
     private static RadioButtonGroup rg = new RadioButtonGroup();
     
     public static final Map<FeatureScreenHandler.Features, RadioButton> buttonMap = new TreeMap<FeatureScreenHandler.Features, RadioButton>() {{ 
-        put(Features.Desktop, new RadioButton(rg, "Desktop"));
+        put(Features.Desktop, new RadioButton(rg, "Desktop/Workstation"));
         put(Features.Server, new RadioButton(rg, "Server"));
         put(Features.Minimum, new RadioButton(rg, "Minimal Configuration"));
     }};
