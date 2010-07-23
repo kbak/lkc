@@ -213,4 +213,12 @@ public class FeatureHandlerServer extends FeatureHandler {
         return "Server";
     }
 
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.None);
+        v.add(Features.None);
+        load(v);
+    }
+
 }

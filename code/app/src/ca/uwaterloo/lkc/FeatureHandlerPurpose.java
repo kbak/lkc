@@ -128,4 +128,11 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         return "Purpose";
     }
 
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.Desktop);
+        load(v);
+    }
+
 }

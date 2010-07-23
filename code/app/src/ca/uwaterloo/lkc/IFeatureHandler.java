@@ -33,4 +33,6 @@ public interface IFeatureHandler {
     public Stock getImage();
     
     public String getName();
+    
+    public void setDefault();
 }

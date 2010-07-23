@@ -127,4 +127,11 @@ public class FeatureHandlerMemory extends FeatureHandler {
     public String getName() {
         return "Memory";
     }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.NoHighMem);
+        load(v);
+    }
 }

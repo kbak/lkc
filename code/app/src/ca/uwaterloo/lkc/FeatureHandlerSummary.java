@@ -65,4 +65,8 @@ public class FeatureHandlerSummary extends FeatureHandler {
         return "Summary";
     }
 
+    @Override
+    public void setDefault() {
+    }
+
 }

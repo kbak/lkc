@@ -127,4 +127,11 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         return "Software Real Time";
     }
 
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.NoSoftRT);
+        load(v);
+    }
+
 }

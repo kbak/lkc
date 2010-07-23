@@ -151,4 +151,12 @@ public class FeatureHandlerSecurity extends FeatureHandler {
     public String getName() {
         return "Security";
     }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.None);
+        v.add(Features.None);
+        load(v);
+    }
 }

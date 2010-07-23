@@ -115,4 +115,11 @@ public class FeatureHandlerPM extends FeatureHandler {
         return "Power Management";
     }
 
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.PM);
+        load(v);
+    }
+
 }

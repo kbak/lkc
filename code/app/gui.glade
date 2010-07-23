@@ -37,7 +37,7 @@
     </child>
   </widget>
   <widget class="GtkWindow" id="wndConfig">
-    <property name="title" translatable="yes">Linux Kernel Configuration</property>
+    <property name="title" translatable="yes">Linux Kernel Configuration tool</property>
     <property name="default_width">600</property>
     <property name="default_height">600</property>
     <child>
@@ -513,8 +513,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                             <accelerator key="BackSpace" signal="clicked"/>
+                            <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -529,8 +529,8 @@
                             <property name="can_focus">True</property>
                             <property name="has_focus">True</property>
                             <property name="receives_default">True</property>
-                            <accelerator key="Right" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                             <accelerator key="Return" signal="clicked"/>
+                            <accelerator key="Right" signal="clicked" modifiers="GDK_MOD1_MASK"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>

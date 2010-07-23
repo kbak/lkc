@@ -154,4 +154,12 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
     public String getName() {
         return "Virtualization";
     }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.None);
+        v.add(Features.None);
+        load(v);
+    }
 }

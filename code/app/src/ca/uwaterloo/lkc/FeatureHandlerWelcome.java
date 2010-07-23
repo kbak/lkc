@@ -63,4 +63,7 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     public String getName() {
         return "Welcome";
     }
+    @Override
+    public void setDefault() {
+    }
 }
