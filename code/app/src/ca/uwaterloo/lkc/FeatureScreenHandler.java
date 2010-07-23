@@ -163,9 +163,7 @@ public class FeatureScreenHandler {
 		final TreeSelection selection;
 
 		// Populate the icons and names in the cells of the tree
-		/* Welcome */
-		for (IFeatureHandler fh : featureHandlers)
-		{
+		for (IFeatureHandler fh : featureHandlers) {
 		    TreeIter iter = model.appendRow();
 	        model.setValue(iter, featureIcon, fh.getImage());
 	        model.setValue(iter, featureName, fh.getName());

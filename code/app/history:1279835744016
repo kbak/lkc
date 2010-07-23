@@ -1,9 +1,0 @@
-ca.uwaterloo.lkc.FeatureHandlerWelcome=
-ca.uwaterloo.lkc.FeatureHandlerPurpose=3,
-ca.uwaterloo.lkc.FeatureHandlerSoftRT=5,
-ca.uwaterloo.lkc.FeatureHandlerPM=6,
-ca.uwaterloo.lkc.FeatureHandlerMemory=8,
-ca.uwaterloo.lkc.FeatureHandlerServer=0,10,
-ca.uwaterloo.lkc.FeatureHandlerSecurity=12,13,
-ca.uwaterloo.lkc.FeatureHandlerVirtualization=14,15,
-ca.uwaterloo.lkc.FeatureHandlerSummary=

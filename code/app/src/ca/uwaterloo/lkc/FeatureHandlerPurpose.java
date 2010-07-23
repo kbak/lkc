@@ -87,8 +87,7 @@ public class FeatureHandlerPurpose extends FeatureHandler {
     @Override
     public void show() {
         updateUI();
-        for (RadioButton rb : buttonMap.values())
-        {
+        for (RadioButton rb : buttonMap.values()) {
             rb.show();
         }
     }
@@ -134,5 +133,4 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         v.add(Features.Desktop);
         load(v);
     }
-
 }
