@@ -20,6 +20,7 @@ public class WindowConfig {
 	public final ToolButton tbtnNew;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
+	public final ToolButton tbtnSearch; 
 	public final ToolButton tbtnAdvanced; 
 
 	private FeatureScreenHandler fsh;
@@ -133,6 +134,22 @@ public class WindowConfig {
 				}
 			}
 		});
+	
+	    tbtnSearch = (ToolButton) xmlWndConfig.getWidget("tbtnSearch");
+	    tbtnSearch.connect(new ToolButton.Clicked() {
+
+	            @Override
+	            public void onClicked(ToolButton source) {
+	                
+	                try {
+	                    WindowSearch wndSearch = new WindowSearch(gladeFile);
+	                    wndSearch.w.show();
+                    } catch (FileNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+	            }
+	        });
 		
 		// Load config file
 		if(configFile != null) {
