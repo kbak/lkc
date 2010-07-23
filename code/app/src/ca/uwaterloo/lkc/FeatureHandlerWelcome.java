@@ -15,7 +15,7 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     {
         instruction.setLineWrap(true);
         instruction.setUseMarkup(true);
-        instruction.setLabel("Your hardware has been detected successfully. Now the wizard will guide you through the configuration process.\n\n" +
+        instruction.setLabel("This wizard will guide you through the configuration process.\n\n" +
         		"At any time you can click Finish to use the <b>default</b> options.\n\n" +
         		"The wizard will show you <b>only</b> options that cannot be configured automatically, thus it will <b>skip</b> some categories from the left list.\n\n" +
         		"If you prefer to set all the options <b>manually</b>, navigate through the list of categories on the <b>left</b>.");
