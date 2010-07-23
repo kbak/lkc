@@ -14,8 +14,10 @@ import java.util.Vector;
 import org.gnome.gdk.Color;
 import org.gnome.glade.XML;
 import org.gnome.gtk.Button;
+import org.gnome.gtk.CellRendererPixbuf;
 import org.gnome.gtk.CellRendererText;
 import org.gnome.gtk.DataColumn;
+import org.gnome.gtk.DataColumnStock;
 import org.gnome.gtk.DataColumnString;
 import org.gnome.gtk.EventBox;
 import org.gnome.gtk.Frame;
@@ -26,13 +28,13 @@ import org.gnome.gtk.Label;
 import org.gnome.gtk.Layout;
 import org.gnome.gtk.ListStore;
 import org.gnome.gtk.ProgressBar;
-import org.gnome.gtk.ScrolledWindow;
 import org.gnome.gtk.SelectionMode;
 import org.gnome.gtk.StateType;
 import org.gnome.gtk.Stock;
 import org.gnome.gtk.TextBuffer;
 import org.gnome.gtk.TextView;
 import org.gnome.gtk.ToolButton;
+import org.gnome.gtk.TreeIter;
 import org.gnome.gtk.TreePath;
 import org.gnome.gtk.TreeSelection;
 import org.gnome.gtk.TreeView;
@@ -70,6 +72,7 @@ public class FeatureScreenHandler {
     final ProgressBar pgTotalNumFeatures;
     final ProgressBar pgProgress;
     final Image imgKernelStability;
+    final Image imgHeader;
     
     // To manage the enable/disable of those buttons
     public final ToolButton tbtnUndo;
@@ -77,16 +80,8 @@ public class FeatureScreenHandler {
     
     private Vector<Integer> featureHistory = new Vector<Integer>();
     
-    // Undo/Redo related variables
-    public Vector<URI> featuresUndoRedo;
-	public int currentFeaturesIndex;
-	public int MAX_UNDO_REDO = 100;
-    
     FeatureScreenHandler(final XML xmlWndConfig)
     {   
-    	featuresUndoRedo = new Vector<URI>();
-		currentFeaturesIndex = -1;
-		
         lblOption = (Label) xmlWndConfig.getWidget("lblOption");
         lblInstructions = (Label) xmlWndConfig.getWidget("lblInstructions");
         layOption = (Layout) xmlWndConfig.getWidget("layOption");
@@ -99,6 +94,7 @@ public class FeatureScreenHandler {
         pgTotalNumFeatures = (ProgressBar) xmlWndConfig.getWidget("pgTotalNumFeatures");
         pgProgress = (ProgressBar) xmlWndConfig.getWidget("pgProgress");
         imgKernelStability = (Image) xmlWndConfig.getWidget("imgKernelStability");
+        imgHeader = (Image) xmlWndConfig.getWidget("imgHeader");
         final EventBox eb = (EventBox) xmlWndConfig.getWidget("eventbox1");
         
         eb.modifyBackground(StateType.NORMAL, new Color(0xFFFF, 0xFFFF, 0xFFFF));
@@ -157,26 +153,31 @@ public class FeatureScreenHandler {
     }
     
     private void createLeftPanel() {
-		final TreeViewColumn column = treeviewFeatures.appendColumn();
-		final DataColumnString featureName = new DataColumnString();
-		final ListStore model = new ListStore( new DataColumn[] {featureName});
+    	final TreeViewColumn featureIconColumn = treeviewFeatures.appendColumn();
+    	final TreeViewColumn featureNameColumn = treeviewFeatures.appendColumn();
+        
+    	final DataColumnStock featureIcon = new DataColumnStock();
+        final DataColumnString featureName = new DataColumnString();
+		
+		final ListStore model = new ListStore( new DataColumn[] {featureIcon, featureName});
 		final TreeSelection selection;
 
-		// Populate the step names in the cells of the tree
-		model.setValue(model.appendRow(), featureName, "Welcome");
-		model.setValue(model.appendRow(), featureName, "Purpose");
-		model.setValue(model.appendRow(), featureName, "Software Real Time");
-		model.setValue(model.appendRow(), featureName, "Power Management");
-		model.setValue(model.appendRow(), featureName, "Memory");
-		model.setValue(model.appendRow(), featureName, "Server");
-		model.setValue(model.appendRow(), featureName, "Security");
-		model.setValue(model.appendRow(), featureName, "Virtualization");
-		model.setValue(model.appendRow(), featureName, "Summary");
+		// Populate the icons and names in the cells of the tree
+		for (IFeatureHandler fh : featureHandlers) {
+		    TreeIter iter = model.appendRow();
+	        model.setValue(iter, featureIcon, fh.getImage());
+	        model.setValue(iter, featureName, fh.getName());
+		}
 		
 		treeviewFeatures.setModel(model);
-				
-		column.setTitle("Steps");
-		CellRendererText text = new CellRendererText(column);
+		
+		featureIconColumn.setTitle("");
+		featureNameColumn.setTitle("Steps");
+		
+		CellRendererPixbuf icon = new CellRendererPixbuf(featureIconColumn);
+		CellRendererText text = new CellRendererText(featureNameColumn);
+		
+		icon.setStock(featureIcon);
 		text.setText(featureName);
 		
 		// Add selectedRow event
@@ -262,6 +263,7 @@ public class FeatureScreenHandler {
             hbox1.show();
         }
         
+        btnNextFeature.grabFocus();
         
         for (Widget c : layOption.getChildren())
         {
@@ -273,8 +275,10 @@ public class FeatureScreenHandler {
         double p = 1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1);
         pgProgress.setText(Long.toString(Math.round(100 * p)) + "%");
         pgProgress.setFraction(p);
-        fh.show();
-    
+        fh.show();   
+        
+        imgHeader.setImage(fh.getImage(), IconSize.DIALOG);
+        
         // Update the left panel to select the current screen
         treeviewFeatures.getSelection().selectRow(new TreePath(featureHistory.lastElement().toString()));
     }
@@ -298,6 +302,18 @@ public class FeatureScreenHandler {
         
         for (; !featureHandlers.elementAt(featureHistory.lastElement() + i).isRelevant(v); ++i);
         featureHistory.add(featureHistory.lastElement() + i);
+    }
+    
+    public void newConfig() {
+		// set the defaults for the feature handlers
+    	for(IFeatureHandler featureHandler : this.featureHandlers) {
+    		featureHandler.setDefault();
+    	}
+    	
+    	featureHistory.removeAllElements();
+    	
+    	featureHistory.add(0);
+    	showScreen();
     }
     
     public void load(URI file) throws IOException, ClassNotFoundException {
@@ -332,10 +348,6 @@ public class FeatureScreenHandler {
 		}
     }
     
-    public void updateCurrentFeatures() throws IOException, ClassNotFoundException {
-    	this.load(this.featuresUndoRedo.get(this.currentFeaturesIndex));
-    }
-    
     public void save(URI file) throws IOException {
     	File outputFile = new File(file);
     	outputFile.createNewFile();
@@ -354,54 +366,10 @@ public class FeatureScreenHandler {
 		}
     }
     
-    public void rememberForUndoRedo() throws IOException {
-        updateStats();
-        
-    	// Add to the vector that holds the history for undo/redo
-    	URI fileName = new File("history" + File.pathSeparator + System.currentTimeMillis()).toURI(); 
-    	this.save(fileName);
-    	this.featuresUndoRedo.add(fileName);
-    	
-    	// If we are over the max size of history, delete the first element in the vector
-    	if(this.featuresUndoRedo.size() > this.MAX_UNDO_REDO) {
-    		this.featuresUndoRedo.removeElementAt(0);
-    	}
-    	
-    	this.incrementCurrentFeaturesIndex();
-    	
-    	tbtnUndo.setSensitive(this.currentFeaturesIndex > 0);
-    }
-    
-    public boolean incrementCurrentFeaturesIndex() {
-    	//System.out.println("BEFORE IncrementIndex: " + this.currentFeaturesIndex);
-    	this.currentFeaturesIndex++;
-    	if (this.currentFeaturesIndex >= this.MAX_UNDO_REDO) {
-            this.currentFeaturesIndex = this.MAX_UNDO_REDO - 1;
-            //System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
-            return true;
-        }
-    	
-    	//System.out.println("AFTER IncrementIndex: " + this.currentFeaturesIndex);
-    	return false;
-    }
-    
-    public boolean decrementCurrentFeaturesIndex() {
-    	//System.out.println("BEFORE DecrementIndex: " + this.currentFeaturesIndex);
-    	this.currentFeaturesIndex--;
-		if (this.currentFeaturesIndex <= 0) {
-            this.currentFeaturesIndex = 0;
-            //System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
-            return true;
-        }
-		
-        //System.out.println("AFTER DecrementIndex: " + this.currentFeaturesIndex);
-		return false;
-    }
-    
     private void updateStats()
     {
-        int size = 3245;
-        double maxSize = 1000000.0;
+        int size = 20000000;
+        double maxSize = 1000000000.0;
         double maxFeatures = 6000.0;
         
         Stability s = Stability.Stable;

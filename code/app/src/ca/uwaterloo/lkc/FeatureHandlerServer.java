@@ -1,15 +1,14 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerServer extends FeatureHandler {
 
@@ -32,7 +31,7 @@ public class FeatureHandlerServer extends FeatureHandler {
     		"firewalls often require changes to the programs running on the local " +
     		"clients. Proxy-based firewalls don't need support by the kernel, but " +
     		"they are often combined with a packet filter, which only works if " +
-    		"you say \"Yes\" here.\n\n " +
+    		"you say \"Yes\" here.\n\n" +
     		"You should also say \"Yes\" here if you intend to use your Linux box as " +
     		"the gateway to the Internet for a local network of machines without " +
     		"globally valid IP addresses. This is called \"masquerading\": if one " +
@@ -47,16 +46,16 @@ public class FeatureHandlerServer extends FeatureHandler {
     		"reach the outside and can receive replies. It is even possible to " +
     		"run globally visible servers from within a masqueraded local network " +
     		"using a mechanism called portforwarding. Masquerading is also often " +
-    		"called NAT (Network Address Translation).\n\n " +
+    		"called NAT (Network Address Translation).\n\n" +
     		"Another use of Netfilter is in transparent proxying: if a machine on " +
     		"the local network tries to connect to an outside host, your Linux " +
     		"box can transparently forward the traffic to a local server, " +
-    		"typically a caching proxy server.\n\n " +
+    		"typically a caching proxy server.\n\n" +
     		"Yet another use of Netfilter is building a bridging firewall. Using " +
     		"a bridge with Network packet filtering enabled makes iptables \"see\" " +
     		"the bridged traffic. For filtering on the lower network and Ethernet " +
     		"protocols over the bridge, use ebtables (under bridge netfilter " +
-    		"configuration).\n\n " +
+    		"configuration).\n\n" +
     		"Various modules exist for netfilter which replace the previous " +
     		"masquerading (ipmasqadm), packet filtering (ipchains), transparent " +
     		"proxying, and portforwarding mechanisms. Please see " +
@@ -67,7 +66,7 @@ public class FeatureHandlerServer extends FeatureHandler {
     		"device, it has to decide which ones to send first, which ones to " +
     		"delay, and which ones to drop. This is the job of the queueing " +
     		"disciplines, several different algorithms for how to do this " +
-    		"\"fairly\" have been proposed.\n\n " +
+    		"\"fairly\" have been proposed.\n\n" +
     		"If you say \"No\" here, you will get the standard packet scheduler, which " +
     		"is a FIFO (first come, first served). If you say \"Yes\" here, you will be " +
     		"able to choose from among several alternative algorithms which can " +
@@ -75,16 +74,16 @@ public class FeatureHandlerServer extends FeatureHandler {
     		"example if some of your network devices are real time devices that " +
     		"need a certain minimum data flow rate, or if you need to limit the " +
     		"maximum data flow rate for traffic which matches specified criteria. " +
-    		"This code is considered to be experimental\n\n. " +
+    		"This code is considered to be experimental.\n\n" +
     		"To administer these schedulers, you'll need the user-level utilities " +
     		"from the package iproute2+tc at <ftp://ftp.tux.org/pub/net/ip-routing/>. " +
     		"That package also contains some documentation; for more, check out " +
-    		"<http://linux-net.osdl.org/index.php/Iproute2>.\n\n " +
+    		"<http://linux-net.osdl.org/index.php/Iproute2>.\n\n" +
     		"This Quality of Service (QoS) support will enable you to use " +
     		"Differentiated Services (diffserv) and Resource Reservation Protocol " +
     		"(RSVP) on your Linux router if you also say Y to the corresponding " +
     		"classifiers below. Documentation and software is at " +
-    		"<http://diffserv.sourceforge.net/>.\n\n " +
+    		"<http://diffserv.sourceforge.net/>.\n\n" +
     		"If unsure, say \"No\" now.";
     
     FeatureHandlerServer(final FeatureScreenHandler fsh)
@@ -99,8 +98,8 @@ public class FeatureHandlerServer extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
         
-        featureMap.put(Features.Netfilter, new Feature(fsh, description, 3000, Stability.Stable));
-        featureMap.put(Features.Qos, new Feature(fsh, descriptionQos, 6000, Stability.Warning));
+        featureMap.put(Features.Netfilter, new Feature(fsh, description, 300000, Stability.Stable));
+        featureMap.put(Features.Qos, new Feature(fsh, descriptionQos, 600000, Stability.Warning));
         
         buttonMap.get(Features.Netfilter).connect(new Button.Clicked() {
             
@@ -109,12 +108,6 @@ public class FeatureHandlerServer extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Netfilter).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.Netfilter).getActive() ? Features.Netfilter : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -125,12 +118,6 @@ public class FeatureHandlerServer extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Qos).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.Qos).getActive() ? Features.Qos : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 
@@ -214,6 +201,28 @@ public class FeatureHandlerServer extends FeatureHandler {
             }
         }
         return size;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.NETWORK;
+    }
+
+    @Override
+    public String getName() {
+        return "Server";
+    }
+
+    @Override
+    public void setDefault() {
+        for (CheckButton c : buttonMap.values())
+        {
+            c.setActive(false);
+        }
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.None);
+        v.add(Features.None);
+        load(v);
     }
 
 }

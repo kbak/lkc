@@ -1,23 +1,22 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
-import java.util.TreeMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerPurpose extends FeatureHandler {
 
     private static RadioButtonGroup rg = new RadioButtonGroup();
     
     public static final Map<FeatureScreenHandler.Features, RadioButton> buttonMap = new TreeMap<FeatureScreenHandler.Features, RadioButton>() {{ 
-        put(Features.Desktop, new RadioButton(rg, "Desktop"));
+        put(Features.Desktop, new RadioButton(rg, "Desktop/Workstation"));
         put(Features.Server, new RadioButton(rg, "Server"));
         put(Features.Minimum, new RadioButton(rg, "Minimal Configuration"));
     }};
@@ -37,9 +36,9 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         
         selectedOptions.add(Features.Desktop);
         
-        featureMap.put(Features.Desktop, new Feature(fsh, description, 200000, Stability.Stable));
-        featureMap.put(Features.Server, new Feature(fsh, description, 50000, Stability.Stable));
-        featureMap.put(Features.Minimum, new Feature(fsh, description, 2000, Stability.Stable));
+        featureMap.put(Features.Desktop, new Feature(fsh, description, 2000000, Stability.Stable));
+        featureMap.put(Features.Server, new Feature(fsh, description, 500000, Stability.Stable));
+        featureMap.put(Features.Minimum, new Feature(fsh, description, 20000, Stability.Stable));
               
         buttonMap.get(Features.Desktop).connect(new Button.Clicked() {
             
@@ -48,12 +47,6 @@ public class FeatureHandlerPurpose extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Desktop).updateUI();
                 selectedOptions.set(0, Features.Desktop);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -64,12 +57,6 @@ public class FeatureHandlerPurpose extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Server).updateUI();
                 selectedOptions.set(0, Features.Server);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -80,12 +67,6 @@ public class FeatureHandlerPurpose extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.Minimum).updateUI();
                 selectedOptions.set(0, Features.Minimum);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
     }
@@ -106,8 +87,7 @@ public class FeatureHandlerPurpose extends FeatureHandler {
     @Override
     public void show() {
         updateUI();
-        for (RadioButton rb : buttonMap.values())
-        {
+        for (RadioButton rb : buttonMap.values()) {
             rb.show();
         }
     }
@@ -137,4 +117,20 @@ public class FeatureHandlerPurpose extends FeatureHandler {
         return 666;
     }
 
+    @Override
+    public Stock getImage() {
+        return Stock.DIALOG_QUESTION;
+    }
+
+    @Override
+    public String getName() {
+        return "Purpose";
+    }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.Desktop);
+        load(v);
+    }
 }

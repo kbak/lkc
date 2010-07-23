@@ -1,6 +1,5 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -8,9 +7,9 @@ import java.util.Vector;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerPM extends FeatureHandler {
 
@@ -34,8 +33,8 @@ public class FeatureHandlerPM extends FeatureHandler {
         
         selectedOptions.add(Features.PM);
         
-        featureMap.put(Features.PM, new Feature(fsh, description, 200000, Stability.Stable));
-        featureMap.put(Features.NoPM, new Feature(fsh, description, 5000, Stability.Stable));
+        featureMap.put(Features.PM, new Feature(fsh, description, 2000000, Stability.Stable));
+        featureMap.put(Features.NoPM, new Feature(fsh, description, 0, Stability.Stable));
         
         buttonMap.get(Features.PM).connect(new Button.Clicked() {
             
@@ -43,13 +42,7 @@ public class FeatureHandlerPM extends FeatureHandler {
             public void onClicked(Button arg0) {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.PM).updateUI();
-                selectedOptions.set(0, Features.PM);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+                selectedOptions.set(0, Features.PM);                
             }
         });
         
@@ -60,12 +53,6 @@ public class FeatureHandlerPM extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.NoPM).updateUI();
                 selectedOptions.set(0, Features.NoPM);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -116,6 +103,23 @@ public class FeatureHandlerPM extends FeatureHandler {
     @Override
     public int getNum() {
         return 1;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.DISCONNECT;
+    }
+
+    @Override
+    public String getName() {
+        return "Power Management";
+    }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.PM);
+        load(v);
     }
 
 }

@@ -1,16 +1,14 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
-import org.gnome.gtk.RadioButton;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerSecurity extends FeatureHandler {
 
@@ -37,8 +35,8 @@ public class FeatureHandlerSecurity extends FeatureHandler {
         selectedOptions.add(Features.None);
         selectedOptions.add(Features.None);
 
-        featureMap.put(Features.SELinux, new Feature(fsh, description, 200, Stability.Stable));
-        featureMap.put(Features.CryptoAPI, new Feature(fsh, descriptionCrypto, 300, Stability.Stable));
+        featureMap.put(Features.SELinux, new Feature(fsh, description, 200000, Stability.Stable));
+        featureMap.put(Features.CryptoAPI, new Feature(fsh, descriptionCrypto, 300000, Stability.Stable));
         
         buttonMap.get(Features.SELinux).connect(new Button.Clicked() {
             
@@ -47,12 +45,6 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.SELinux).updateUI();
                 selectedOptions.set(0, buttonMap.get(Features.SELinux).getActive() ?  Features.SELinux : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -63,12 +55,6 @@ public class FeatureHandlerSecurity extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.CryptoAPI).updateUI();
                 selectedOptions.set(1, buttonMap.get(Features.CryptoAPI).getActive() ? Features.CryptoAPI : Features.None);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 
@@ -88,7 +74,7 @@ public class FeatureHandlerSecurity extends FeatureHandler {
             if (Features.None != f)
             {
                 featureMap.get(f).updateUI();
-                buttonMap.get(f).setActive(true);
+                buttonMap.get(f).setActive(true);   
             }
         }
         fsh.updateFeatureDescription(description);
@@ -153,5 +139,28 @@ public class FeatureHandlerSecurity extends FeatureHandler {
             }
         }
         return size;
+    }
+
+    @Override
+    public Stock getImage() {
+        // TODO Auto-generated method stub
+        return Stock.DIALOG_AUTHENTICATION;
+    }
+
+    @Override
+    public String getName() {
+        return "Security";
+    }
+
+    @Override
+    public void setDefault() {
+        for (CheckButton c : buttonMap.values())
+        {
+            c.setActive(false);
+        }
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.None);
+        v.add(Features.None);
+        load(v);
     }
 }

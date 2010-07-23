@@ -1,17 +1,13 @@
 package ca.uwaterloo.lkc;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import org.gnome.gdk.EventCrossing;
-import org.gnome.gdk.EventFocus;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
-import org.gnome.gtk.Widget;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -60,12 +56,6 @@ public class FeatureHandlerMemory extends FeatureHandler {
             public void onClicked(Button arg0) {
                 featureMap.get(Features.HighMem).updateUI();
                 selectedOptions.set(0, Features.HighMem);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -76,12 +66,6 @@ public class FeatureHandlerMemory extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.NoHighMem).updateUI();
                 selectedOptions.set(0, Features.NoHighMem);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 
@@ -89,7 +73,7 @@ public class FeatureHandlerMemory extends FeatureHandler {
     
     @Override
     public String getQuestion() {
-        return "Are you planning to use more than 4gb of ram?";
+        return "Are you planning to use more than 4GB of RAM?";
     }
 
     public void updateUI()
@@ -132,5 +116,22 @@ public class FeatureHandlerMemory extends FeatureHandler {
     @Override
     public int getNum() {
         return 1;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.SAVE;
+    }
+
+    @Override
+    public String getName() {
+        return "Memory";
+    }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.NoHighMem);
+        load(v);
     }
 }

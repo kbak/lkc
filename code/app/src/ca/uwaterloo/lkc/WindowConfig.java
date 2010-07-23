@@ -20,8 +20,7 @@ public class WindowConfig {
 	public final ToolButton tbtnNew;
 	public final ToolButton tbtnOpen;
 	public final ToolButton tbtnSave;
-	public final ToolButton tbtnUndo;
-	public final ToolButton tbtnRedo;
+	public final ToolButton tbtnSearch; 
 	public final ToolButton tbtnAdvanced; 
 
 	private FeatureScreenHandler fsh;
@@ -53,7 +52,7 @@ public class WindowConfig {
 
 			@Override
 			public void onClicked(ToolButton source) {
-				// not implemented yet
+				fsh.newConfig();
 			}
 		});
 		
@@ -135,54 +134,22 @@ public class WindowConfig {
 				}
 			}
 		});
-		
-		/* Undo */
-		tbtnUndo = (ToolButton) xmlWndConfig.getWidget("tbtnUndo");
-		tbtnUndo.setSensitive(false);
-		tbtnUndo.connect(new ToolButton.Clicked() {
+	
+	    tbtnSearch = (ToolButton) xmlWndConfig.getWidget("tbtnSearch");
+	    tbtnSearch.connect(new ToolButton.Clicked() {
 
-			@Override
-			public void onClicked(ToolButton source) {
-				if(fsh.decrementCurrentFeaturesIndex()) {
-					updateUndoRedo(false, true);
-				} else {
-					updateUndoRedo(true, true);
-				}
-				
-				// Update current features
-				try {
-					fsh.updateCurrentFeatures();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		/* Redo */
-		tbtnRedo = (ToolButton) xmlWndConfig.getWidget("tbtnRedo");
-		tbtnRedo.setSensitive(false);
-		tbtnRedo.connect(new ToolButton.Clicked() {
-
-			@Override
-			public void onClicked(ToolButton source) {
-				if(fsh.incrementCurrentFeaturesIndex()) {
-					updateUndoRedo(true, false);
-				} else {
-					updateUndoRedo(true, true);
-				}
-				
-				// Update current features
-				try {
-					fsh.updateCurrentFeatures();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	            @Override
+	            public void onClicked(ToolButton source) {
+	                
+	                try {
+	                    WindowSearch wndSearch = new WindowSearch(gladeFile);
+	                    wndSearch.w.show();
+                    } catch (FileNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+	            }
+	        });
 		
 		// Load config file
 		if(configFile != null) {
@@ -195,11 +162,6 @@ public class WindowConfig {
 			}
 		}
 		w.setPosition(WindowPosition.CENTER);
-	}
-	
-	public void updateUndoRedo(boolean undoSensitive, boolean redoSensitive) {
-		tbtnUndo.setSensitive(undoSensitive);
-		tbtnRedo.setSensitive(redoSensitive);
 	}
 	
     public void run()

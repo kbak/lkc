@@ -2,6 +2,8 @@ package ca.uwaterloo.lkc;
 
 import java.util.Vector;
 
+import org.gnome.gtk.Stock;
+
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public class FeatureHandlerSummary extends FeatureHandler {
@@ -51,6 +53,20 @@ public class FeatureHandlerSummary extends FeatureHandler {
     @Override
     public int getNum() {
         return 0;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.FILE;
+    }
+
+    @Override
+    public String getName() {
+        return "Summary";
+    }
+
+    @Override
+    public void setDefault() {
     }
 
 }

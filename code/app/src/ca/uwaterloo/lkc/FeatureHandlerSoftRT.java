@@ -1,6 +1,5 @@
 package ca.uwaterloo.lkc;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -8,9 +7,9 @@ import java.util.Vector;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
-import ca.uwaterloo.lkc.IFeatureHandler.Stability;
 
 public class FeatureHandlerSoftRT extends FeatureHandler {
 
@@ -29,11 +28,11 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
     		"otherwise not be about to reach a natural preemption point. " +
     		"This allows applications to run more 'smoothly' even when the " +
     		"system is under load, at the cost of slightly lower throughput " +
-    		"and a slight runtime overhead to kernel code.\n\n " +
+    		"and a slight runtime overhead to kernel code.\n\n" +
     		"Select this if you are building a kernel for a desktop or " +
     		"embedded system with latency requirements in the milliseconds " +
-    		"range. It is recommended to select this option if you plan to do" +
-    		"DSP (Digital Signal Processing) on this computer, i.e. by processing signal from the guitar.";
+    		"range. It is recommended to select this option if you plan to do " +
+    		"DSP (Digital Signal Processing) on this computer, e.g. by processing signal from the guitar or synthesizer.";
     
     FeatureHandlerSoftRT(final FeatureScreenHandler fsh)
     {
@@ -46,8 +45,8 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
         
         selectedOptions.add(Features.NoSoftRT);
         
-        featureMap.put(Features.SoftRT, new Feature(fsh, description, 2000, Stability.Warning));
-        featureMap.put(Features.NoSoftRT, new Feature(fsh, description, 1000, Stability.Stable));
+        featureMap.put(Features.SoftRT, new Feature(fsh, description, 200000, Stability.Warning));
+        featureMap.put(Features.NoSoftRT, new Feature(fsh, description, 100000, Stability.Stable));
         
         buttonMap.get(Features.SoftRT).connect(new Button.Clicked() {
             
@@ -56,12 +55,6 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.SoftRT).updateUI();
                 selectedOptions.set(0, Features.SoftRT);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
         
@@ -72,12 +65,6 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
                 // TODO Auto-generated method stub
                 featureMap.get(Features.NoSoftRT).updateUI();
                 selectedOptions.set(0, Features.NoSoftRT);
-                
-                try {
-					fsh.rememberForUndoRedo();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
             }
         });
 
@@ -128,6 +115,23 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
     @Override
     public int getNum() {
         return 1;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.PREFERENCES;
+    }
+
+    @Override
+    public String getName() {
+        return "Software Real Time";
+    }
+
+    @Override
+    public void setDefault() {
+        Vector<Features> v = new Vector<Features>();
+        v.add(Features.NoSoftRT);
+        load(v);
     }
 
 }
