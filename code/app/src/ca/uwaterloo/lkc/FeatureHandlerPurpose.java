@@ -7,6 +7,7 @@ import java.util.Vector;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -115,6 +116,16 @@ public class FeatureHandlerPurpose extends FeatureHandler {
     @Override
     public int getNum() {
         return 666;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.DIALOG_QUESTION;
+    }
+
+    @Override
+    public String getName() {
+        return "Purpose";
     }
 
 }

@@ -3,6 +3,7 @@ package ca.uwaterloo.lkc;
 import java.util.Vector;
 
 import org.gnome.gtk.Label;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -53,5 +54,13 @@ public class FeatureHandlerWelcome extends FeatureHandler {
     @Override
     public int getNum() {
         return 0;
+    }
+    @Override
+    public Stock getImage() {
+        return Stock.HOME;
+    }
+    @Override
+    public String getName() {
+        return "Welcome";
     }
 }

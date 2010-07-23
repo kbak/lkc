@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import org.gnome.gtk.Stock;
+
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public abstract class FeatureHandler implements IFeatureHandler {

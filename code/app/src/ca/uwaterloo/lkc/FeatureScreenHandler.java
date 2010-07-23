@@ -72,6 +72,7 @@ public class FeatureScreenHandler {
     final ProgressBar pgTotalNumFeatures;
     final ProgressBar pgProgress;
     final Image imgKernelStability;
+    final Image imgHeader;
     
     // To manage the enable/disable of those buttons
     public final ToolButton tbtnUndo;
@@ -93,6 +94,7 @@ public class FeatureScreenHandler {
         pgTotalNumFeatures = (ProgressBar) xmlWndConfig.getWidget("pgTotalNumFeatures");
         pgProgress = (ProgressBar) xmlWndConfig.getWidget("pgProgress");
         imgKernelStability = (Image) xmlWndConfig.getWidget("imgKernelStability");
+        imgHeader = (Image) xmlWndConfig.getWidget("imgHeader");
         final EventBox eb = (EventBox) xmlWndConfig.getWidget("eventbox1");
         
         eb.modifyBackground(StateType.NORMAL, new Color(0xFFFF, 0xFFFF, 0xFFFF));
@@ -162,49 +164,12 @@ public class FeatureScreenHandler {
 
 		// Populate the icons and names in the cells of the tree
 		/* Welcome */
-		TreeIter iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.HOME);
-		model.setValue(iter, featureName, "Welcome");
-		
-		/* Purpose */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.DIALOG_QUESTION);
-		model.setValue(iter, featureName, "Purpose");
-		
-		/* Soft RT */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.PREFERENCES);
-		model.setValue(iter, featureName, "Software Real Time");
-		
-		/* Power Management */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.DISCONNECT);
-		model.setValue(iter, featureName, "Power Management");
-		
-		/* Memory */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.SAVE);
-		model.setValue(iter, featureName, "Memory");
-		
-		/* Server */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.NETWORK);
-		model.setValue(iter, featureName, "Server");
-		
-		/* Security */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.DIALOG_AUTHENTICATION);
-		model.setValue(iter, featureName, "Security");
-		
-		/* Virtualization */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.EXECUTE);
-		model.setValue(iter, featureName, "Virtualization");
-		
-		/* Summary */
-		iter = model.appendRow();
-		model.setValue(iter, featureIcon, Stock.FILE);
-		model.setValue(iter, featureName, "Summary");
+		for (IFeatureHandler fh : featureHandlers)
+		{
+		    TreeIter iter = model.appendRow();
+	        model.setValue(iter, featureIcon, fh.getImage());
+	        model.setValue(iter, featureName, fh.getName());
+		}
 		
 		treeviewFeatures.setModel(model);
 		
@@ -311,8 +276,10 @@ public class FeatureScreenHandler {
         double p = 1.0 * featureHistory.lastElement() / (featureHandlers.size() - 1);
         pgProgress.setText(Long.toString(Math.round(100 * p)) + "%");
         pgProgress.setFraction(p);
-        fh.show();
-    
+        fh.show();   
+        
+        imgHeader.setImage(fh.getImage(), IconSize.DIALOG);
+        
         // Update the left panel to select the current screen
         treeviewFeatures.getSelection().selectRow(new TreePath(featureHistory.lastElement().toString()));
     }

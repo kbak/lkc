@@ -7,6 +7,7 @@ import java.util.Vector;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.RadioButton;
 import org.gnome.gtk.RadioButtonGroup;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -114,6 +115,16 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
     @Override
     public int getNum() {
         return 1;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.PREFERENCES;
+    }
+
+    @Override
+    public String getName() {
+        return "Software Real Time";
     }
 
 }

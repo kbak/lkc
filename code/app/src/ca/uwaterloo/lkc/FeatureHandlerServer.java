@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -200,6 +201,16 @@ public class FeatureHandlerServer extends FeatureHandler {
             }
         }
         return size;
+    }
+
+    @Override
+    public Stock getImage() {
+        return Stock.NETWORK;
+    }
+
+    @Override
+    public String getName() {
+        return "Server";
     }
 
 }

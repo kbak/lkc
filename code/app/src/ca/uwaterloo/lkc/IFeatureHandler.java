@@ -2,6 +2,8 @@ package ca.uwaterloo.lkc;
 
 import java.util.Vector;
 
+import org.gnome.gtk.Stock;
+
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
 public interface IFeatureHandler {
@@ -27,4 +29,8 @@ public interface IFeatureHandler {
     boolean isRelevant(Vector<Features> v);
     
     public void updateUI();
+    
+    public Stock getImage();
+    
+    public String getName();
 }

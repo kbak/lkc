@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import org.gnome.gtk.Button;
 import org.gnome.gtk.CheckButton;
+import org.gnome.gtk.Stock;
 
 import ca.uwaterloo.lkc.FeatureScreenHandler.Features;
 
@@ -138,5 +139,16 @@ public class FeatureHandlerSecurity extends FeatureHandler {
             }
         }
         return size;
+    }
+
+    @Override
+    public Stock getImage() {
+        // TODO Auto-generated method stub
+        return Stock.DIALOG_AUTHENTICATION;
+    }
+
+    @Override
+    public String getName() {
+        return "Security";
     }
 }
