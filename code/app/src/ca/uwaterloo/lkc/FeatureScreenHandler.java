@@ -263,6 +263,7 @@ public class FeatureScreenHandler {
             hbox1.show();
         }
         
+        btnNextFeature.grabFocus();
         
         for (Widget c : layOption.getChildren())
         {
