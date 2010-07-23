@@ -73,7 +73,7 @@ public class FeatureHandlerMemory extends FeatureHandler {
     
     @Override
     public String getQuestion() {
-        return "Are you planning to use more than 4gb of ram?";
+        return "Are you planning to use more than 4GB of RAM?";
     }
 
     public void updateUI()

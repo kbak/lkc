@@ -19,10 +19,7 @@ public class FeatureHandlerVirtualization extends FeatureHandler {
     
     final static String description = "Support hosting fully virtualized guest machines using hardware " +
     		"virtualization extensions. You will need a fairly recent " +
-    		"processor equipped with virtualization extensions. You will also " +
-    		"need to select one or more of the processor modules below.\n\n" +
-    		"This module provides access to the hardware capabilities through " +
-    		"a character device node named /dev/kvm.\n\n";
+    		"processor equipped with virtualization extensions.";
     
     final static String descriptionXEN = "This is the Linux Xen port. Enabling this will allow the " +
     		"kernel to boot in a paravirtualized environment under the " +

@@ -32,7 +32,7 @@ public class FeatureHandlerSoftRT extends FeatureHandler {
     		"Select this if you are building a kernel for a desktop or " +
     		"embedded system with latency requirements in the milliseconds " +
     		"range. It is recommended to select this option if you plan to do " +
-    		"DSP (Digital Signal Processing) on this computer, i.e. by processing signal from the guitar.";
+    		"DSP (Digital Signal Processing) on this computer, e.g. by processing signal from the guitar or synthesizer.";
     
     FeatureHandlerSoftRT(final FeatureScreenHandler fsh)
     {
