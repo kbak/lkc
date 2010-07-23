@@ -74,7 +74,7 @@ public class FeatureHandlerSecurity extends FeatureHandler {
             if (Features.None != f)
             {
                 featureMap.get(f).updateUI();
-                buttonMap.get(f).setActive(true);
+                buttonMap.get(f).setActive(true);   
             }
         }
         fsh.updateFeatureDescription(description);
@@ -154,6 +154,10 @@ public class FeatureHandlerSecurity extends FeatureHandler {
 
     @Override
     public void setDefault() {
+        for (CheckButton c : buttonMap.values())
+        {
+            c.setActive(false);
+        }
         Vector<Features> v = new Vector<Features>();
         v.add(Features.None);
         v.add(Features.None);

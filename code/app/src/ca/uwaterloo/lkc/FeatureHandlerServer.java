@@ -215,6 +215,10 @@ public class FeatureHandlerServer extends FeatureHandler {
 
     @Override
     public void setDefault() {
+        for (CheckButton c : buttonMap.values())
+        {
+            c.setActive(false);
+        }
         Vector<Features> v = new Vector<Features>();
         v.add(Features.None);
         v.add(Features.None);
