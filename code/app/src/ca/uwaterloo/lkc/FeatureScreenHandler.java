@@ -73,6 +73,8 @@ public class FeatureScreenHandler {
     final ProgressBar pgProgress;
     final Image imgKernelStability;
     final Image imgHeader;
+    private ToolButton tbtnBack;
+    private ToolButton tbtnForward;
     
     // To manage the enable/disable of those buttons
     public final ToolButton tbtnUndo;
@@ -96,6 +98,8 @@ public class FeatureScreenHandler {
         imgKernelStability = (Image) xmlWndConfig.getWidget("imgKernelStability");
         imgHeader = (Image) xmlWndConfig.getWidget("imgHeader");
         final EventBox eb = (EventBox) xmlWndConfig.getWidget("eventbox1");
+        tbtnBack = (ToolButton) xmlWndConfig.getWidget("tbtnBack");
+        tbtnForward = (ToolButton) xmlWndConfig.getWidget("tbtnForward");
         
         eb.modifyBackground(StateType.NORMAL, new Color(0xFFFF, 0xFFFF, 0xFFFF));
         
@@ -150,6 +154,32 @@ public class FeatureScreenHandler {
 		updateStats();
 		
 		featureHistory.add(0);
+		
+		tbtnBack.connect(new ToolButton.Clicked() {
+            
+            @Override
+            public void onClicked(ToolButton arg0) {
+                // TODO Auto-generated method stub
+                if(0 < featureHistory.lastElement())
+                {
+                    featureHistory.add(featureHistory.lastElement() - 1);
+                    showScreen();
+                }
+            }
+        });
+		
+		tbtnForward.connect(new ToolButton.Clicked() {
+            
+            @Override
+            public void onClicked(ToolButton arg0) {
+                // TODO Auto-generated method stub
+                if(featureHandlers.size() - 1 > featureHistory.lastElement())
+                {
+                    featureHistory.add(featureHistory.lastElement() + 1);
+                    showScreen();
+                }
+            }
+        });
     }
     
     private void createLeftPanel() {
@@ -245,6 +275,8 @@ public class FeatureScreenHandler {
             hbox1.hide();
             btnNextFeature.setSensitive(true);
             btnFinishFeature.setSensitive(true);
+            tbtnBack.setSensitive(false);
+            tbtnForward.setSensitive(true);
         }
         else if (featureHandlers.size() - 1 == featureHistory.lastElement())
         {
@@ -253,6 +285,8 @@ public class FeatureScreenHandler {
             hbox1.hide();
             btnNextFeature.setSensitive(false);
             btnFinishFeature.setSensitive(false);
+            tbtnBack.setSensitive(true);
+            tbtnForward.setSensitive(false);
         }
         else
         {
@@ -261,6 +295,8 @@ public class FeatureScreenHandler {
             btnFinishFeature.setSensitive(true);
             frFeatureDescription.show();
             hbox1.show();
+            tbtnBack.setSensitive(true);
+            tbtnForward.setSensitive(true);
         }
         
         btnNextFeature.grabFocus();

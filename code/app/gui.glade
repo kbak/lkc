@@ -43,6 +43,7 @@
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkToolbar" id="toolbar1">
             <property name="height_request">62</property>
@@ -92,8 +93,8 @@
                 <property name="label" translatable="yes">Search</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-find</property>
-                <accelerator key="f" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                 <accelerator key="F3" signal="clicked"/>
+                <accelerator key="f" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -112,6 +113,42 @@
                 <property name="homogeneous">True</property>
               </packing>
             </child>
+            <child>
+              <widget class="GtkSeparatorToolItem" id="separatortoolitem1">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolButton" id="tbtnBack">
+                <property name="visible">True</property>
+                <property name="tooltip" translatable="yes">Go to the previous step</property>
+                <property name="label" translatable="yes">Back</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-go-back</property>
+                <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolButton" id="tbtnForward">
+                <property name="visible">True</property>
+                <property name="tooltip" translatable="yes">Go to the next step</property>
+                <property name="label" translatable="yes">Forward</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-go-forward</property>
+                <accelerator key="Right" signal="clicked" modifiers="GDK_MOD1_MASK"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="expand">False</property>
@@ -123,6 +160,7 @@
           <widget class="GtkVPaned" id="vpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="orientation">vertical</property>
             <property name="position">470</property>
             <property name="position_set">True</property>
             <child>
@@ -133,6 +171,7 @@
                 <child>
                   <widget class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkViewport" id="viewport2">
                         <property name="visible">True</property>
@@ -283,6 +322,7 @@
                 <child>
                   <widget class="GtkVBox" id="vbox3">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkEventBox" id="eventbox1">
                         <property name="visible">True</property>
@@ -292,6 +332,7 @@
                             <child>
                               <widget class="GtkVBox" id="vbox6">
                                 <property name="visible">True</property>
+                                <property name="orientation">vertical</property>
                                 <child>
                                   <widget class="GtkLabel" id="lblOption">
                                     <property name="visible">True</property>
@@ -371,6 +412,7 @@
                       <widget class="GtkVPaned" id="vpaned2">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="orientation">vertical</property>
                         <property name="position">100</property>
                         <child>
                           <widget class="GtkLayout" id="layOption">
@@ -527,8 +569,9 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="tooltip" translatable="yes">Go back to the previous wizard option</property>
                             <accelerator key="BackSpace" signal="clicked"/>
-                            <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
+                            <accelerator key="Left" signal="clicked" modifiers="GDK_SHIFT_MASK | GDK_MOD1_MASK"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -543,8 +586,9 @@
                             <property name="can_focus">True</property>
                             <property name="has_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="tooltip" translatable="yes">Go back to the next wizard option</property>
                             <accelerator key="Return" signal="clicked"/>
-                            <accelerator key="Right" signal="clicked" modifiers="GDK_MOD1_MASK"/>
+                            <accelerator key="Right" signal="clicked" modifiers="GDK_SHIFT_MASK | GDK_MOD1_MASK"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -558,6 +602,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="tooltip" translatable="yes">Finish configuration and go to the last step</property>
                             <accelerator key="f" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                           </widget>
                           <packing>

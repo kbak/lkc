@@ -24,7 +24,8 @@ public class FeatureHandlerPurpose extends FeatureHandler {
     final static String description = "You can optimize kernel for different purposes.\n" +
     		"If you are a home user or use your computer as a workstation, choose Desktop.\n" +
     		"If you are building a network server, choose Server.\n" +
-    		"If you want to build a minimal configuration that would run on your computer, choose Minimal Configuration.";
+    		"If you want to build a minimal configuration that would run on your computer, choose Minimal Configuration.\n\n" +
+    		"Depending on your choice, you might be asked differed questions by the wizard.";
     
     FeatureHandlerPurpose(final FeatureScreenHandler fsh)
     {
