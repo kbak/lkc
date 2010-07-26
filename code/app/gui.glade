@@ -125,9 +125,9 @@
               <widget class="GtkToolButton" id="tbtnBack">
                 <property name="visible">True</property>
                 <property name="tooltip" translatable="yes">Go to the previous step</property>
-                <property name="label" translatable="yes">Back</property>
+                <property name="label" translatable="yes">Previous</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-go-back</property>
+                <property name="stock_id">gtk-go-up</property>
                 <accelerator key="Left" signal="clicked" modifiers="GDK_MOD1_MASK"/>
               </widget>
               <packing>
@@ -139,9 +139,9 @@
               <widget class="GtkToolButton" id="tbtnForward">
                 <property name="visible">True</property>
                 <property name="tooltip" translatable="yes">Go to the next step</property>
-                <property name="label" translatable="yes">Forward</property>
+                <property name="label" translatable="yes">Next</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-go-forward</property>
+                <property name="stock_id">gtk-go-down</property>
                 <accelerator key="Right" signal="clicked" modifiers="GDK_MOD1_MASK"/>
               </widget>
               <packing>

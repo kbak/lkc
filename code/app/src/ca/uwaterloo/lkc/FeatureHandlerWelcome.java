@@ -19,7 +19,7 @@ public class FeatureHandlerWelcome extends FeatureHandler {
         		"At any time you can click Finish to use the <b>default</b> options.\n\n" +
         		"The wizard will show you <b>only</b> options that cannot be configured automatically, thus it will <b>skip</b> some categories from the left list.\n\n" +
         		"If you prefer to set all the options <b>manually</b>, navigate through the list of categories on the <b>left</b>. " +
-        		"Back and Forward buttons skip to previous and next steps from the left list.");
+        		"Previous and Next buttons (above) skip to previous and next steps from the left list.");
         fsh.layOption.put(instruction, 5, 5);
     }
     @Override
