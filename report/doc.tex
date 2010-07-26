@@ -1,0 +1,155 @@
+\documentclass{chi2009}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage[pdftex]{hyperref}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\newcommand{\docTitle}{Improving Usability of the Linux Kernel Configuration Tools}
+\newcommand{\docKeywords}{usability, linux, kernel, configuration}
+
+\hypersetup{%
+pdftitle={\docTitle},
+pdfauthor={Kacper Bak},
+pdfkeywords={\docKeywords},
+bookmarksnumbered,
+pdfstartview={FitH},
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black,
+breaklinks=true,
+}
+\newcommand{\comment}[1]{}
+\definecolor{Orange}{rgb}{1,0.5,0}
+\newcommand{\todo}[1]{\textsf{\textbf{\textcolor{Orange}{[[#1]]}}}}
+
+\pagenumbering{arabic}  % Arabic page numbers for submission.  Remove this line to eliminate page numbers for the camera ready copy
+
+\begin{document}
+% to make various LaTeX processors do the right thing with page size
+\special{papersize=8.5in,11in}
+\setlength{\paperheight}{11in}
+\setlength{\paperwidth}{8.5in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+% use this command to override the default ACM copyright statement 
+% (e.g. for preprints). Remove for camera ready copy.
+\toappear{Submitted for CS 889 - Open Source Usability.}
+
+\title{\docTitle}
+\numberofauthors{2}
+\author{
+  \alignauthor Kacper Bak\\
+    \affaddr{Generative Software Development Lab}\\
+    \affaddr{University of Waterloo, Canada}\\
+    \email{kbak@gsd.uwaterloo.ca}
+  \alignauthor Karim Ali\\
+    \affaddr{PLG Group}\\
+    \affaddr{University of Waterloo, Canada}\\
+    \email{karim@uwaterloo.ca}
+}
+
+\maketitle
+
+\begin{abstract}
+Tailoring a Linux kernel to one's needs has been one of the most cumbersome tasks a GNU/Linux user can do. There have been many attempts to overcome this problem by introducing smarter configuration tools. Those tools, however, still lack some important features, which discourages users from using them. In this project, we plan to address the problem of usability of the Linux kernel configuration tools. Our aim is to identify the major usability issues with current tools, propose a better user interface and evaluate it on a group of Linux enthusiasts.
+\end{abstract}
+
+\keywords{\docKeywords} 
+
+\category{H.5.2}{Information Interfaces and Presentation}{Miscellaneous}%[Optional sub-category]
+
+\section{Introduction}
+
+GNU/Linux is a free operating system with Linux as its kernel. The Linux kernel\footnote{Available at: \url{http://www.kernel.org/}} is a mature and very complex piece of software. It has been developed by thousands of programmers led by Linus Torvalds since 1991. The kernel supports many computer architectures, network protocols, thousands of drivers, and many debugging options.
+
+% mention the router case; limited resources; dependencies
+
+Structure of the kernel is very modular, so that each user can tailor it to her particular needs and specific hardware. Users upgrade their kernels mostly to improve stability, apply new bug-fixes, add functionality and drivers. Sometimes it is necessary to upgrade kernel in an embedded system, such as network router. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
+
+\section{Problem}
+All the configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability and supports users during the configuration stage. LKC uses internally the KConfig language to represent variability and dependencies among features. As several researchers \cite{sincero:lkc:2008,she:kernel:2010} showed, there is a direct correspondence between well-understood feature models and practically crafted variability model used by the Linux kernel. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is a serious problem, because users can unconsciously create wrong configurations while having no clue why a particular configuration does not work.
+
+Many users complain about the lack of kernel autoconfiguration \cite{debian:config:2010,soft32:config:2007}, where LKC could detect current hardware and automatically choose relevant modules. The situation is slowly improving as developers added the \textsf{localmodconfig} \footnote{More info at: \url{http://bit.ly/cPgq8R}} target to Linux-2.6.32. The command detects current kernel configuration and applies the same options to the new kernel. It is a step ahead, but the tool is very simplistic and assumes that all the required modules are already loaded. For example, if a computer has built-in Bluetooth, but the module is not loaded, the new kernel will not support the Bluetooth device. Furthermore, the autoconfiguration script offers a very coarse level of options granularity, e.g. if a computer has one sound card, such as Intel HD Audio, the script will select all available sound card drivers and all Intel HD Audio modules. The autoconfiguration tool reads configuration of the running kernel instead of detecting the actual hardware, e.g. for a laptop with the Core Duo 2 processor, it selected 686 processor in the new kernel, because that processor is selected in the running kernel.
+
+Linux kernel configurators are targeted to advanced users. Some kernel developers expressed opinion \cite{kernel:aunt:2002} that kernel should be configured only by experienced users. While this statement might be true, there are still lots of Linux novice users who want to learn how to configure kernel or need to compile a particular driver. As of now, there are millions of web pages describing how to configure and compile the Linux kernel. Novice users are often overwhelmed by the number of available options and required knowledge. LKC offers no progressive-disclosure for them.
+
+\section{Past Attempts}
+Some of the above issues were already solved in 2002 when Eric S. Raymond presented the CML2 configuration system \cite{raymond:cml2:2000}. It allowed for effective reasoning on kernel feature model and also provided progressive-disclosure. There was a long debate and flame war about using that system \cite{kerneltrap:linux:2002}. Finally, it was rejected for various (sometimes silly) reasons, such as Eric S. Raymond's attitude, Python dependency, complexity, radically new design. Many developers preferred to introduce gradual updates instead of applying one big patch.
+
+\section{Solution}
+We would like to improve the usability of the Linux kernel configuration tools either by fixing them or by adding a more intuitive front-end. Many of the LKC shortcomings can be fixed incrementally, without throwing away the whole infrastructure. In our solution we would eliminate the problem of reasoning by limiting user-selectable set of features. A user should only see the most relevant and non-conflicting configuration options. Furthermore, the software should be aware of autoconfiguration limitations. Thus, the tool shall ask the user about non-discoverable devices. The final solution will depend on two initial studies on users.
+
+In the first study people will be asked to use current tools (i.e. \textsf{xconfig}) to configure and compile the Linux kernel. We would like to observe how participants interact with these tools and what problems they have. This will create a baseline for comparing our new interface against. After that, we will propose several paper prototypes of user interfaces and apply the Wizard of Oz method to quickly evaluate and refine them. The method should capture users' expectations and reveal design faults in the proposed interfaces. Afterwards, we shall be ready to construct and implement the most promising solution.
+
+We believe that the proposed improvements will make the kernel configuration infrastructure more intuitive and easier to use. Many of the techniques are not tied to this specific project. The problem of effective product configuration is very common, but rarely solved, it is enough to mention package managers, feature model configurators or even tailoring medical messages to specific patients. The FOSS community could use the ideas in any kind of software that has variability in it.
+
+\section{Scope}
+
+\subsection{Initial User Studies}
+We are going to conduct the two initial studies mostly on computer enthusiasts who have some experience with GNU/Linux and are interested in kernel configuration. The studies will also include less experienced users, so that we can observe the most fundamental problems that people have with configuration. In both studies the number of participants will be around 10.
+
+In the first study participants will be asked to configure the Linux kernel for a popular laptop for typical home/office use. A person succeeds if the new kernel is ready to play music and movies, connect to Ethernet, use WiFi, memory cards, USB devices, Bluetooth, CD/DVD.
+
+In the second study we will propose several UI paper prototypes that address the problems found during the first study. We will present the prototypes to the participants and ask them how they would configure the kernel again using these prototypes. Observations from the second study will tell us which prototype is the most intuitive and what users expect from such a configurator.
+
+\subsection{Implementation}
+
+We will implement a graphical user interface in some popular language. The interface shall match expectations of our target user group. However, it will not try to solve problems of novice or advanced users. The interface will most likely have some connection to the backend, or will be able to update the \textsf{.config} file with user-selected features. When it comes to hardware, the interface will support the most common non-discoverable devices, such as wireless network devices, external devices, and sound cards.
+
+\section{Evaluation Plan}
+
+In order to evaluate the usability of our tool, we will conduct a user study on two groups of participants (group A and group B). Both groups will be presented with the same set of configuration parameters that need to be set for a Linux kernel. However, \textbf{Group A} will use the currently available configuration tools (e.g xconfig), while \textbf{Group B} will use our tool. At the end of the study, we will measure how close each group is to the sample kernel configuration that we presented to them. Consequently, we will be able to assess how usable our tool is compared to the current ones.
+
+\section{Outline}
+Table \ref{tab:outline} shows proposed outline.
+
+\begin{table}[!h]
+\centering
+\begin{tabularx}{0.5\textwidth}{X c c}
+\toprule
+\textbf{Milestone} & \textbf{Start} & \textbf{End}\\ \midrule
+Initial Proposal & May 27 & May 31\\
+Final proposal & May 31 & June 14 \\
+First User Study & June 14 & June 16 \\
+Second User Study & June 16 & June 22 \\
+Implementation & June 23 & July 9 \\
+Final User Study & July 12 & July 14\\
+Report and Blog Entry & July 15 & July 28\\
+\bottomrule
+\end{tabularx}
+\caption{Project Milestones}
+\label{tab:outline}
+\end{table}
+
+\section{Division of Labor}
+Dividing the work in our project might not be as beneficial as working together especially for the user studies that we plan to do. For the studies, working together will allow us to observe more facts about the behavior of our participants and their reposonse to our questions. Dividing those studies between us will lead to either observing less facts if each one of us interviewd a group of users alone, or gathering incomplete facts if each one of us did part of the interview for all our participants.
+The only part of our project where dividing the labor makes sense is the implementation. However, we will not know how to implement our tool until we do our initial studies.
+Table \ref{tab:plan} shows proposed division of labor so far.
+
+\begin{table}[!h]
+\centering
+\begin{tabularx}{0.5\textwidth}{X c c}
+\toprule
+\textbf{Task} & \textbf{Karim Ali} & \textbf{Kacper Bak}\\ \midrule
+User Study & $\surd$ & $\surd$\\
+Report & $\surd$ & $\surd$\\
+\bottomrule
+\end{tabularx}
+\caption{Project Tasks}
+\label{tab:plan}
+\end{table}
+
+% \section{Future Work} - we'll place this section in the final report
+% \todo{what do you think about creating a graphical tool that goes with you step by step and configures a kernel? basically you answer some questions, press next, and finally click install to install the new kernel. It might be appreciated by beginners. Is it too simplistic? would it be useful? it improves usability, but are there many users who need such a limited tool?}
+
+\bibliographystyle{abbrv}
+\bibliography{doc}
+
+\end{document}
