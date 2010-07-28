@@ -28,6 +28,18 @@ breaklinks=true,
 \definecolor{Orange}{rgb}{1,0.5,0}
 \newcommand{\todo}[1]{\textsf{\textbf{\textcolor{Orange}{[[#1]]}}}}
 
+%
+%  Convenience commands for references
+%
+\newcommand{\secref}[1]{Sect.~\ref{sec:#1}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\figref}[1]{Fig.\,\ref{fig:#1}}
+\newcommand{\Figref}[1]{Figure\,\ref{fig:#1}}
+\newcommand{\eqaref}[1]{equation~\eqref{eq:#1}}
+\newcommand{\defref}[1]{Definition~\eqref{def:#1}}
+\newcommand{\lemref}[1]{Lemma~\eqref{lem:#1}}
+\looseness=-1
+
 \pagenumbering{arabic}  % Arabic page numbers for submission.  Remove this line to eliminate page numbers for the camera ready copy
 
 \begin{document}
@@ -58,7 +70,7 @@ breaklinks=true,
 \maketitle
 
 \begin{abstract}
-Tailoring a Linux kernel to one's needs has been one of the most cumbersome tasks a GNU/Linux user can do. There have been many attempts to overcome this problem by introducing smarter configuration tools. Those tools, however, still lack some important features, which discourages users from using them. In this project, we plan to address the problem of usability of the Linux kernel configuration tools. Our aim is to identify the major usability issues with current tools, propose a better user interface and evaluate it on a group of Linux enthusiasts.
+Tailoring a Linux kernel to one's needs has been one of the most cumbersome tasks a GNU/Linux user can do. There have been many attempts to overcome this problem by introducing smarter configuration tools. Those tools, however, still lack some important features, which discourages users from using them. In this project, we addressed the problem of usability of the Linux kernel configuration tools. We identified the major usability issues with current tools, proposed a better user interface and evaluated it on a group of Linux enthusiasts.
 \end{abstract}
 
 \keywords{\docKeywords} 
@@ -66,6 +78,14 @@ Tailoring a Linux kernel to one's needs has been one of the most cumbersome task
 \category{H.5.2}{Information Interfaces and Presentation}{Miscellaneous}%[Optional sub-category]
 
 \section{Introduction}
+
+GNU/Linux is a free operating system with Linux as its kernel. The Linux kernel\footnote{Available at: \url{http://www.kernel.org/}} is a mature and very complex piece of software. It has been developed by thousands of programmers led by Linus Torvalds since 1991. The kernel supports many computer architectures, network protocols, thousands of drivers, and many debugging options.
+
+Structure of the kernel is very modular, so that each user can tailor it to her particular needs and specific hardware. Recent research \cite{she:kernel:2010} showed that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge and the configuration process requires a broad computer knowledge. Users can configure kernel either by manually editing the \textsf{.config} file or by using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
+
+Existing configuration tools have been evolving for over a decade, but the progress is reasonably slow compared to other parts of the kernel. Usability seems to have low priority of developers' task lists. In our project we investigated current configuration tools, identified major usability issues, proposed an alternative design and evaluated it on users. General reactions were positive and participants said the new tool was a significant improvement over the standard tools.
+
+The paper is organized as follows. We describe the problem domain and results of our initial study evaluating standard tools in \secref{problem}. We explain how we reached the new design and how it compares to \textsf{xconfig} in \secref{lkc}. We then present evaluation of the new tool in \secref{evaluation}. We discuss future work in \secref{futurework}. After presenting related work in \secref{relatedwork}, we conclude in \secref{conclusion}.
 
 \section{Problem}\label{sec:problem}
 
@@ -144,7 +164,7 @@ Hardware autodetection and kernel configuration is a recurring problem \cite{deb
 
 Improvements of the configuration tool were already introduced in 2002 when Eric S. Raymond presented the CML2 configuration system \cite{raymond:cml2:2000}. It allowed for effective reasoning on kernel feature model and also provided progressive-disclosure. There was a long debate and flame war about using that system \cite{kerneltrap:linux:2002}. Finally, it was rejected for various reasons, such as Eric S. Raymond's attitude, Python dependency, complexity, radically new design. Many developers preferred to introduce gradual updates instead of applying one big patch.
 
-Debian GNU/Linux device driver check \& report~\cite{muto:check:2010} is an interesting project that helps with matching kernel modules with hardware. It reads output of \textsf{lspci} command, and then outputs driver's name. The project is in fact a big database that stores user's knowledge about the hardware. It could be utilized by the configurator to automatically select relevant modules if devices are hard to discover.
+Debian GNU/Linux device driver check \& report~\cite{muto:check:2010} is an interesting project that helps with matching kernel modules with hardware. It reads output of \textsf{lspci} command, and then outputs driver's name. The project is in fact a big database that stores user's knowledge about the hardware. It could be utilized by the configurator to automatically select relevant modules if devices are hard to discover. Currently, the database aggregates only information about PCI devices, and does not support ISA, USB, IEEE1394 or other hardware.
 
 \section{Conclusion}\label{sec:conclusion}
 
