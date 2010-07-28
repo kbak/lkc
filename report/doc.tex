@@ -67,9 +67,50 @@ Tailoring a Linux kernel to one's needs has been one of the most cumbersome task
 
 \section{Introduction}
 
-\section{Problem Domain}\label{sec:problem}
+\section{Problem}\label{sec:problem}
 
-% motivation: static configuration (customizing kernel), dynamic configuration
+% motivation
+Configuration of a big feature model is a laborious process. Users configure kernels to improve stability, apply new bug-fixes, add functionality and drivers. Sometimes it is necessary to upgrade kernel in an embedded system, such as network router or to customize it to specific hardware. Many users configure kernels without even realizing this fact. We distinguish two types of kernel configuration: static and dynamic. The former is the traditional method, where software is customized before compilation. The advantage of this method is smaller program footprint and faster compilation. On the other hand, later reconfiguration requires more effort, because each additional piece of software has to be compiled separately. In many modern distributions users are provided with fully functional kernels, and they do not have to compile themselves. Instead, they dynamically customize the software, by loading relevant modules. The disadvantage of the second method is that preparing such a big kernel takes a lot of time and resources. Furthermore, it is infeasible to apply it to embedded systems. 
+
+% current sw
+Regardless of configuration type, there is still need to customize the software. Although this task can be done manually, users prefer to use automated and intuitive tools. Unfortunately, the software currently used for kernel configuration is neither fully automated, nor easy to use. The first claim can be easily verified by creating incorrect configurations that are not reported by the tool. We got to the second conclusion after carrying out an initial study on a group of Linux users.
+
+Linux kernel configurators are targeted to advanced users. Some kernel developers expressed opinion \cite{kernel:aunt:2002} that kernel should be configured only by experienced users. While this statement might be true, there are still lots of Linux novice users who want to learn how to configure kernel or need to compile a particular driver. As of now, there are millions of web pages describing how to configure and compile the Linux kernel. Novice users are often overwhelmed by the number of available options and required knowledge. LKC offers no progressive-disclosure for them.
+
+% initial study
+In the first study 6 participants were asked to statically configure the Linux kernel for a popular laptop for typical home or office use. The used the standard \textsf{xconfig} tool that comes with the Linux kernel. A person succeeded if the new kernel was ready to play music and movies, connect to Ethernet, use WiFi, memory cards, USB devices, Bluetooth, CD/DVD. This scenario seemed rather common, because in many Linux distributions users have to fine-tune their configurations to make the whole system work as expected. None of the subjects succeeded with the task without further help. We observed many problems that people had with the tools. We were also interested in how they used \textsf{xconfig}, and how to configure software in general.  \textbf{bleblle}
+
+\begin{description}
+  \item[Menu hierarchy]
+All participants had problems with selecting drivers for laptop's hardware. First of all, the tool showed the whole hierarchy, and people said they were overwhelmed by thousands of options. Several of them started with collapsing all menus, so that only top-level categories were visible. Furthermore, the tree/sub-tree relationship was confusing. It was unclear whether selection of parent option implies selection of required functionality or additional suboptions should be selected as well. To some, even such a basic thing as checking an option was confusing. Besides familiar empty and filled checkbox, the tool showed a box with dot inside. It meant that the option will be compiled, but as a dynamically loadable module.
+
+  \item[Option names and descriptions]
+Cryptic names were another source of problems. The existing infrastructure use names that make sense to programmers and kernel hackers, but are hard to understand for less experienced users. Unfortunately, descriptions were not very helpful, since they often explained implementation details instead of end-user functionality.
+
+  \item[Searching]
+Huge hierarchy of options and cryptic names make it very hard to find a particular feature. All participants used search in \textsf{xconfig}. Searching worked very poorly, since feature descriptions were not searched by the tool. People expressed their frustration and often used Google to match modules with hardware, and later select the module in \textsf{xconfig}. Google was also used to find a list of drivers required by the laptop. Arguably, it was easier than running system tools to discover hardware.
+
+  \item[Configuration]
+We carefully observed how users used current tools to configure a large piece of software. Most of them were jumping between different categories as they tried to locate modules. One person, who had experience with other tools, started \textsf{menuconfig} program, which performs wizard-like configuration. The problem with this tool was that the user could not jump to other categories, but had to answer many irrelevant questions. When users were unsure about drivers, because 2-3 modules seemed similar, they checked them all. 
+\end{description}
+
+% conclusions
+
+The initial study led us to the following conclusions:
+\begin{enumerate}
+\item Menu hierarchy should be as simple as possible. There are far too many options that could be reduced automatically if the configuration tool offered progressive disclosure and good reasoning capabilities.
+\item Feature names and descriptions should reflect end-user functionality instead of low-level details.
+\item Powerful searching capabilities are crucial as the number of configuration options grows.
+\item Automatic hardware detection and kernel autoconfiguration is important, since majority of kernel options is related to hardware drivers.
+\end{enumerate}
+
+This work focused on constructing 
+
+Usability can be improved without constructing application logic. We focused on construction a user interface
+
+ Our project focused on improving usability of the Linux kernel configuration tools, so that they are 
+
+We focused on solving the second problem, i.e. constructing a user interface that would be intuitive, not overwhelming 
 
 \section{Linux Kernel Configuration Tool}\label{sec:lkc}
 
