@@ -164,13 +164,13 @@ requested.
  \item It is highly desirable to have the tool report to them any crashes that occur during the hardware detection process.
 \end{enumerate}
 
-Consequently, we settled down on the design shown in Figure \ref{fig:splash-final} for our splash screen. In the final design of the splash screen, the user
-will be asked a question whether she wants to detect the current hardware or not. If she answered yes to that question, she will be presented with the dialog
-shown in Figure \ref{fig:splash-final}a. The list of tasks along with the progress bar gives the user an idea about the task that the tool is currently doing.
-If the user would like to get more information, she can click on the \textquotedblleft Information \textquotedblright button. The user will then be presented
-by a scrollable window that shows the current action (e.g. detecting device ... dev 40). This window is hidden by default so that it does not get into the way
-of the user while using the tool. In case of a crash occured, this window will show more information to the user about what are the possible causes of the crash
-and what the progress of the tool so far.
+Consequently, we came up with a design and implemented a prototype for our splash screen as shown in Figure \ref{fig:splash-final}. In the prototype of the
+splash screen, the user will be asked a question whether she wants to detect the current hardware or not. If she answered yes to that question, she will be
+presented with the dialog shown in Figure \ref{fig:splash-final}a. The list of tasks along with the progress bar gives the user an idea about the task that the
+tool is currently doing. If the user would like to get more information, she can click on the \textquotedblleft Information \textquotedblright button. The user
+will then be presented by a scrollable text area that shows the current action (e.g. Detecting device ... dev 40). This text area is hidden by default so that
+it does not get into the way of the user while using the tool. In case of a crash occured, the text area will show more information to the user about what are
+the possible causes of the crash and the progress of the tool so far.
 
 \begin{figure*}[!t]
  \centering
@@ -185,15 +185,114 @@ and what the progress of the tool so far.
   (b) \\
  \end{tabular}
 \end{tabular}
-\caption{Final splash screen design}
+\caption{Final splash screen prototype}
 \label{fig:splash-final}
 \end{figure*}
 
-% xconfig vs lkc
+Another part of our second user study was to show the participants of our study the mockups we designed for the tool itself so that we figure out which design
+would be the best fit. Figure \ref{fig:lkc-tool} shows the various mockups that showed to the participants of this study. The feedback we got from the users
+allowed us to make the following conclusions:
+\begin{enumerate}
+ \item Almost all users liked having helpful descriptions for the various kernel features they can select.
+ \item Easy navigation through the various categories of features was also on top of thier desirable design features.
+ \item The fewer the number of categories were, the easier it was for the users to find features.
+ \item Some users did not like the wizard-based design because it did not offer easy navigation through features and that search was not provided in that
+design.
+ \item Most users liked the fact that they will be presented by a summary of the configuration file at the end of the process, with the ability to review it
+and maybe modify it before quitting the application.
+ \item Although many users were not in favor of the wizard-based design, they did like the question format that was presented in that design. The reason is
+that it gave them a better understanding of the effect of selecing/deselecting features.
+\end{enumerate}
 
-% scalability
+\begin{figure*}[!t]
+ \centering
+\begin{tabular}{SS}
+ \multicolumn{2}{c}{\includegraphics[scale=0.5,keepaspectratio=true]{figs/lkc-barwithicons}} \\
+ \multicolumn{2}{c}{(a)} \\
+ \multicolumn{2}{c}{\includegraphics[scale=0.5,keepaspectratio=true]{figs/lkc-browser}} \\
+ \multicolumn{2}{c}{(b)} \\
+ \includegraphics[scale=0.5,keepaspectratio=true]{figs/lkc-tree} &
+ \includegraphics[scale=0.5,keepaspectratio=true]{figs/lkc-wizard} \\
+ (c) & (d) \\
+\end{tabular}
+\caption{\textit{lkc tool} design mockups}
+\label{fig:lkc-tool}
+\end{figure*}
+
+Based on our conclusions, we designed a prototype for the \textit{lkc tool} as shown in Figure \ref{fig:lkc-final}. The figure shows various steps during the
+process of a configuring a Linux Kernel. The design of the prototype is a mixture between the tree-based design (Figure \ref{fig:lkc-tool}c) and the
+wizard-based design (Figure \ref{fig:lkc-tool}d). The rational behind this mixture is that we tried to get the best out of the two designs because they were
+the two most appreciated designs among the participants of our second user study. Having such design allows users to go through the step-by-step configuration
+process that the wizard design. In the meanwhile, users can still enjoy the comfort of free navigation through the various categories of features using the left
+panel. We also tried to provide the users with as few categories as possible and label them with less cryptic names than the ones used in current Linux kernel
+configuration tools (e.g. xconfig). No matter how the user navigates through the categories of features, she will always be presented with a question related
+to the selected currently viewed category. The answer to this question reflects on enabling the related kernel features accordingly. Therefore, the user does
+not have to directly deal with setting/unsetting kernel features, but rather answering questions that better match her usage of the machine that she wants to
+compile this kernel for. The menu bar at the top of the application window provides the user with fast access to tasks like:
+\begin{enumerate}
+ \item Starting a new configuration process.
+ \item Opening a previously saved configuration file into the tool.
+ \item Saving the current configuration to a file on disk.
+ \item Keyword searching within the feature names, descriptions and help text.
+ \item Switching to an advanced mode, where the user will be able to use \textit{xconfig} instead of our to complete the configuration.
+ \item Navigating through the categories of features presented in the left panel.
+\end{enumerate}
+
+We also added to the prototype a panel that shows the statistics of the kernel that will be compiled using the currently selected features. Statistics includ:
+\begin{enumerate}
+ \item Progress of the current configuration session.
+ \item Total kernel size based on the currently selected set of features.
+ \item Total number of features.
+ \item The stability of the kernel to be compiled by the generated configuration file. This is based on the least stable selected kernel feature.
+\end{enumerate}
+
+In addition to statistics about the whole kernel, the prototype also shows information about each feature when selected. The information is about the effect
+of selecting this feature on the total kernel size, and how stable that feature is. Moreover, the prototype shows a panel at the very bottom that lists all the
+conflicts that are currently found in the configuration. However, this feature has not been implemented yet due to time constraints.
+
+The first step that the user will encounter using our tool is the welcome screen (Figure \ref{fig:lkc-final}a) where there is an explanation of how the tool
+can be used to configure a Linux kernel. The explanation includes some notes about the defaults options, how to navigate through categories, and what to do
+when the user is done. Depending on the selections that the user make in the subsequent screens, some categories of features (from the left navigation panel)
+will be skipped because they are marked as irrelevant to the user choices. However, if the user thinks otherwise and would like to change some of the features
+in such categories, she can navigate to any of those categories using the left navigation panel. Once the user feels comfortable with the configuration, she
+can save the configuration to a file on disk using the Save button in the menu bar at the top. She can then exit the application if she wishes.
 
 % implementation
+The implementation of our \textit{lkc tool} prototype seperates the graphical user design from the code that actually manages that design. We used Glade
+\cite{glade:2010}, a rapid application development tool for GTK+ and GNOME, to design the interface of the prototype. Glade is Free Software released under the
+GNU GPL License, which perfectly goes along with the topics we discussed in our class. Glade has many language bindnigs making it easy to re-use the same Glade
+design with different languages. We chose to work with the Java bindings for Glade \cite{java-gnome:2010} because we are more familiar with that language which
+will make the process of protoyping easier and faster. We used Eclipse \cite{eclipse:2010} as our integrated development environmemnt (IDE) to produce the Java
+code that will manipulate the interface designed with Glade.
+
+All the work that we have done so far for this project including: source code files, mockup designs, reports, presentation and this report are avialable online
+at our github repository \cite{git-lkc:2010}.
+
+\begin{figure*}[!t]
+ \centering
+ \begin{tabular}{SS}
+ \begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/lkc-final1} \\
+  (a) \\
+ \end{tabular}
+  & 
+\begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/lkc-final2} \\
+  (b) \\
+ \end{tabular} \\
+ \begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/lkc-final3} \\
+  (c) \\
+ \end{tabular}
+  & 
+\begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/lkc-final4} \\
+  (d) \\
+ \end{tabular}
+\end{tabular}
+\caption{Final \textit{lkc tool} prototype}
+\label{fig:lkc-final}
+\end{figure*}
 
 \section{Evaluation}\label{sec:evaluation}
 
