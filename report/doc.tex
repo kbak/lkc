@@ -144,6 +144,8 @@ Hardware autodetection and kernel configuration is a recurring problem \cite{deb
 
 Improvements of the configuration tool were already introduced in 2002 when Eric S. Raymond presented the CML2 configuration system \cite{raymond:cml2:2000}. It allowed for effective reasoning on kernel feature model and also provided progressive-disclosure. There was a long debate and flame war about using that system \cite{kerneltrap:linux:2002}. Finally, it was rejected for various reasons, such as Eric S. Raymond's attitude, Python dependency, complexity, radically new design. Many developers preferred to introduce gradual updates instead of applying one big patch.
 
+Debian GNU/Linux device driver check \& report~\cite{muto:check:2010} is an interesting project that helps with matching kernel modules with hardware. It reads output of \textsf{lspci} command, and then outputs driver's name. The project is in fact a big database that stores user's knowledge about the hardware. It could be utilized by the configurator to automatically select relevant modules if devices are hard to discover.
+
 \section{Conclusion}\label{sec:conclusion}
 
 \bibliographystyle{abbrv}
