@@ -27,6 +27,7 @@ breaklinks=true,
 \newcommand{\comment}[1]{}
 \definecolor{Orange}{rgb}{1,0.5,0}
 \newcommand{\todo}[1]{\textsf{\textbf{\textcolor{Orange}{[[#1]]}}}}
+\newcolumntype{S}{>{\centering\arraybackslash} m{.4\linewidth} }
 
 \pagenumbering{arabic}  % Arabic page numbers for submission.  Remove this line to eliminate page numbers for the camera ready copy
 
@@ -107,11 +108,51 @@ The initial study led us to the following conclusions:
 The aforementioned problems can be fixed by improving application's backend and creating more intuitive user interface. Our project focused on constructing a better user interface that would be intuitive, simple and targeted to specific group of users.
 
 \section{Linux Kernel Configuration Tool}\label{sec:lkc}
-We started the design process of our Linux Kernel Configuration Tool (lkc tool) by designing several mockups that have our vision for the tool. 
-
 % target group
 
+To design such configuration tool, we first set our target group to be less experienced Linux users. In other words, we are building this tool for novice and
+intermediate Linux users to allow them to to configure a Linux kernel withouth burdening them with many of the unncessary details involved during such process.
+We started the design process of our Linux Kernel Configuration Tool (lkc tool) by designing several mockups that have our vision for the tool. Initially, we
+thought that once the tool is started, it should first fetch the current Linux kernel configuration, then detect the currently connected hardware. A dialog box
+(splash screen) should be shown to the user at that time to show the progress of these processes. Figure \ref{fig:splash} shows four different mockups for that
+dialog box. 
+
 % rationale for the design
+
+\begin{figure*}[!t]
+ \centering
+\begin{tabular}{SS}
+ \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-big.png} & \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-bigico.png} \\
+ (a) & (b) \\
+ \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-readingcurrent.png} &
+ \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-standard.png} \\
+ (c) & (d) \\
+\end{tabular}
+\caption{Splash screen design mockups}
+\label{fig:splash}
+\end{figure*}
+
+We decided to do a second user study that included six participants. The aim of this study was to show the participants those designs and get feedback from
+them regarding what aspects in those designs were appealing to them, and what were not. That study led us to draw the following conclusions:
+\begin{enumerate}
+ \item Users always liked to know what is going on. In other words, they did care about getting more information about what the tool is doing while the progress
+bars are being filled up.
+ \item The fact that users appreciate access to more information does not mean they appreciate that such information should be displayed by default, only when
+requested.
+ \item It is highly desirable to have the tool report to them any crashes that occur during the hardware detection process.
+\end{enumerate}
+
+Consequently, we settled down on the design showin in Figure \ref{fig:splash-final} for our splash screen.
+
+\begin{figure*}[!t]
+ \centering
+\begin{tabular}{cc}
+ \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-final1.png} & \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-final2.png} \\
+ (a) & (b) \\
+\end{tabular}
+\caption{Final splash screen design}
+\label{fig:splash-final}
+\end{figure*}
 
 % xconfig vs lkc
 
