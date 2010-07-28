@@ -164,13 +164,26 @@ requested.
  \item It is highly desirable to have the tool report to them any crashes that occur during the hardware detection process.
 \end{enumerate}
 
-Consequently, we settled down on the design showin in Figure \ref{fig:splash-final} for our splash screen.
+Consequently, we settled down on the design shown in Figure \ref{fig:splash-final} for our splash screen. In the final design of the splash screen, the user
+will be asked a question whether she wants to detect the current hardware or not. If she answered yes to that question, she will be presented with the dialog
+shown in Figure \ref{fig:splash-final}a. The list of tasks along with the progress bar gives the user an idea about the task that the tool is currently doing.
+If the user would like to get more information, she can click on the \textquotedblleft Information \textquotedblright button. The user will then be presented
+by a scrollable window that shows the current action (e.g. detecting device ... dev 40). This window is hidden by default so that it does not get into the way
+of the user while using the tool. In case of a crash occured, this window will show more information to the user about what are the possible causes of the crash
+and what the progress of the tool so far.
 
 \begin{figure*}[!t]
  \centering
-\begin{tabular}{cc}
- \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-final1.png} & \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-final2.png} \\
- (a) & (b) \\
+\begin{tabular}{SS}
+ \begin{tabular}{c}
+  \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-final1.png} \\
+  (a) \\
+ \end{tabular}
+  & 
+\begin{tabular}{c}
+  \includegraphics[scale=0.5,keepaspectratio=true]{figs/splash-final2.png} \\
+  (b) \\
+ \end{tabular}
 \end{tabular}
 \caption{Final splash screen design}
 \label{fig:splash-final}
