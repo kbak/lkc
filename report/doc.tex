@@ -139,7 +139,7 @@ configuration is done by the Linux Kernel Configurator, while dynamic configurat
 Linux kernel configurators are targeted to advanced users. Some kernel developers believe that kernel should be configured only by experienced users
 \cite{kernel:aunt:2002}. While this statement might be true, there are still lots of Linux novice or less experienced users who want to learn how to configure a
 kernel or need to compile/load a particular driver. Currently, there are millions of web pages describing how to configure and compile the Linux kernel. Novice
-users are often overwhelmed by the number of available options and required knowledge. To understand the current challenges of configurating a kernel, we
+users are often overwhelmed by the number of available options and required knowledge. To understand the current challenges of configuring a kernel, we
 carried out an initial study on a group of Linux users.
 
 \section{User Studies}\label{sec:userstudies}
@@ -152,7 +152,7 @@ person succeeded if the new kernel was ready to play music and movies, connect t
 scenario seems reasonable, because in many Linux distributions users have to fine-tune their configurations to make the whole system work as expected. None
 of the subjects succeeded in completing the task without asking us for further assistance. We observed many problems that people faced during the configuration
 process. It is worth noting that our participants had previous experience with Linux, and claimed to be advanced computer users. During the study, we were also
-interested in how they use curret kernel configuration tools (e.g. \textsf{xconfig}), and how people configure software in general. Our findings are summarized
+interested in how they use current kernel configuration tools (e.g. \textsf{xconfig}), and how people configure software in general. Our findings are summarized
 in several categories:
 
 \begin{description}
@@ -200,7 +200,7 @@ constructing a GUI that would be intuitive, simple and targeted to a specific gr
 
 
 \subsection{Design Mockups Evaluation}
-We decided that our tool should be built to help novice and intermediate Linux users configure a Linux kernel without burdening them with many of the unncessary
+We decided that our tool should be built to help novice and intermediate Linux users configure a Linux kernel without burdening them with many of the unnecessary
 details involved in such a process. We designed several mockups that reflect this vision for the tool. Initially, we thought that once the tool is launched, it
 should first fetch the current Linux kernel configuration, then detect the currently connected hardware. A dialog box (splash screen) should be shown to the
 user at that time to show the progress of these processes. Figure \ref{fig:splash} shows four different mockups for that dialog box.
@@ -232,14 +232,14 @@ for the application itself. Figure \ref{fig:lkc-tool} shows the various mockups 
 users allowed us to deduce the following:
 \begin{enumerate}
  \item Almost all users liked having helpful descriptions for the various kernel features they can select.
- \item Easy navigation through the various categories of features was also on top of thier desirable design features.
+ \item Easy navigation through the various categories of features was also on top of their desirable design features.
  \item The fewer the number of categories were, the easier it was for the users to find features.
  \item Some users did not like the wizard-based design (Figure \ref{fig:lkc-tool}d) because it did not offer easy navigation through features and did not
 provide a search feature.
  \item Most users liked the fact that they were presented by a summary of the configuration file at the end of the process with the ability to review it and
 maybe modify it before quitting the application.
  \item Although many users were not in favor of the wizard-based design, they did like the question format that was presented in that design. The reason is
-that it gave them a better understanding of the effect of selecing/deselecting features.
+that it gave them a better understanding of the effect of selecting/deselecting features.
 \end{enumerate}
 
 \begin{figure*}[!t]
@@ -328,14 +328,14 @@ top. Alternatively, she can go on with all the steps, then get a summary of the 
 disk. Thus, the design satisfies our fifth conclusion.
 
 \subsection{Implementation}
-The implementation of our \textsf{lkc} tool prototype seperates the graphical user design from the code that actually manages that design. We used Glade
+The implementation of our \textsf{lkc} tool prototype separates the graphical user design from the code that actually manages that design. We used Glade
 \cite{glade:2010}, a rapid application development tool for GTK+ and GNOME, to design the interface of the prototype. Glade is Free Software released under the
 GNU GPL License, which perfectly goes along with the topics we discussed in class. Glade has many language bindings making it easy to re-use the same Glade
 design with different languages. We chose to work with the Java bindings for Glade \cite{java-gnome:2010} because we are more familiar with that language which
-makes the process of protoyping easier and faster. We used Eclipse \cite{eclipse:2010} as our integrated development environment (IDE) to produce the Java code
+makes the process of prototyping easier and faster. We used Eclipse \cite{eclipse:2010} as our integrated development environment (IDE) to produce the Java code
 that will manipulate the interface designed with Glade.
 
-All the work we have done so far for this project including: source code files, mockup designs, reports, presentation and this report are avialable online at
+All the work we have done so far for this project including: source code files, mockup designs, reports, presentation and this report are available online at
 our github repository \cite{git-lkc:2010}.
 
 \begin{figure*}[!t]
@@ -375,7 +375,7 @@ usability of our prototype with that of \textsf{xconfig}. We opted for the secon
 \subsection{Findings}
 \subsubsection{\textsf{xconfig}}
 In general, users complained about having too many options to configure. The way the options are categorized and laid out confused them even more. In addition,
-users did not find the searching capabilities in \textsf{xconfig} to be usefull at all. The reason is that the search tool only matches substrings in the
+users did not find the searching capabilities in \textsf{xconfig} to be useful at all. The reason is that the search tool only matches substrings in the
 configuration parameter names ignoring the description and help text provided. Some users resorted to Google instead to find the which kernel parameters they
 are after.
 
@@ -384,7 +384,7 @@ difficult to match hardware with kernel module names.
 
 \subsubsection{\textsf{lkc tool prototype}}
 The positive feedback we got from users was that our prototype is definitely an improvement compared to \textsf{xconfig}. Users had various reasons to make such
-a statement. In general, comments stated that the prototype is simple, intuitive and easy to use. Additionaly, users really appreciated the two-way navigation:
+a statement. In general, comments stated that the prototype is simple, intuitive and easy to use. Additionally, users really appreciated the two-way navigation:
 free navigation through the left panel, and wizard-based navigation through \textit{Back/Next} buttons. Users also appreciated the statistics panel because it
 gave them an idea of how their current selections reflect on the overall status of the kernel that will be configured using the generated configuration file.
 Finally, hiding unnecessary details and not overwhelming users with an explosion of features was another source of appreciation.
@@ -415,7 +415,7 @@ question-based configuration usually gives the user a better understanding of th
 We got a very rich feedback from the participants of our final user study about the design of our prototype. Implementing some of those suggestions would add
 more value to the prototype. The design suggestions include the following:
 \begin{enumerate}
- \item Provide progressive disclosure to accomodate both advanced and less experienced users.
+ \item Provide progressive disclosure to accommodate both advanced and less experienced users.
  \item Have the ability to re-detect hardware.
  \item Provide info about detected hardware.
  \item Change the position of the \textit{Save} button.
@@ -434,7 +434,7 @@ feedback from the FOSS community about the feature set it provides, and its desi
 
 All the Linux kernel configuration tools are front-ends built on top of a single engine called Linux Kernel Configurator (LKC). LKC analyzes kernel variability
 and supports users during the configuration stage. Internally, LKC uses the KConfig language to represent variability and dependencies among features.
-A well-understood feature model for the Linux kernel features should always yeild a practically well-crafted variability model for the Linux kernel
+A well-understood feature model for the Linux kernel features should always yield a practically well-crafted variability model for the Linux kernel
 \cite{sincero:lkc:2008,she:kernel:2010}. In contrast with formal feature models, LKC is not supported by any formal reasoning engine (e.g. SAT-solver). This is
 a serious problem, because users can unconsciously create wrong configurations while having no clue why a particular configuration does not work. The Linux
 kernel community can benefit from adopting well-researched feature models which can make their tools more reliable and usable.
@@ -447,7 +447,7 @@ complexity, and its radically new design. Many Linux developers prefer to introd
 \textit{eCos}~\cite{veer:ecos:2000} is an open source real-time operating system. It was designed to be configurable and to run on a wide variety of hardware
 platforms. Similar to the Linux kernel, eCos comes with configuration tools. The eCos configurator is much more advanced, and arguably better-thought, since
 it can detect conflicting options and guide users to resolve them. The eCos Configuration Tool has many features, but presents them in a single tree hierarchy.
-In comparison with our tool, eCos features are often low-level and very technical. Additionaly, the eCos Configuration Tool does not offer any wizard so users
+In comparison with our tool, eCos features are often low-level and very technical. Additionally, the eCos Configuration Tool does not offer any wizard so users
 must have expertise if they want to skip irrelevant categories.
 
 Hardware autodetection and kernel configuration is a recurring problem \cite{debian:config:2010,soft32:config:2007}. Many users complain about the lack of it.
