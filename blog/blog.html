@@ -1,0 +1,12 @@
+<html>
+<p>Linux kernel configuration has always been a challenge for non-experts. Why? There are several reasons:
+<ul>
+<li>kernel is composed of almost six thousands of configuration options</li>
+<li>current configuration tools are aimed at experts</li>
+<li>current infrastructure has significant deficiencies with regard to variability language, engine, and end-user usability</li>
+</ul></p>
+<p>Who configures the Linux kernel these days? Is is a significant problem?</p>
+<p>People configure operating system kernels for several reasons. Usually they want to customize kernels to specific hardware or to particular needs. Majority of users configure kernels without even realizing this fact. We distinguish two types of kernel configuration: static and dynamic. In the former method software is customized before compilation, so that only chosen pieces of code are compiled. It results in a smaller program footprint and faster compilation. On the other hand, later reconfiguration requires more effort, because any additional piece of software has to be compiled separately. In many modern distributions users are provided with fully functional kernels, and they do not have to compile themselves. Instead, they dynamically customize the software, by loading relevant modules. The disadvantage of the second method is that preparing such a big kernel takes a lot of time and resources.</p>
+<p>Regardless of configuration type, there is still need to customize the software. Although this task can be done manually, users prefer to use automated and intuitive tools, that could guarantee that the system works properly. Unfortunately, the software currently used for kernel configuration is neither fully automated, nor easy to use. In addition, static and dynamic configuration are two separate mechanisms and are supported by completely different programs. Static configuration is done by the Linux Kernel Configurator, while dynamic configuration is about adding or removing compiled modules. In our opinion the two worlds can be merged by providing a unified user interface.</p>
+<p>We identified the major usability issues with current tools, proposed a better user interface and evaluated it on a group of Linux enthusiasts.</p>
+</html>
