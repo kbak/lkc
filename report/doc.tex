@@ -28,6 +28,7 @@ breaklinks=true,
 \definecolor{Orange}{rgb}{1,0.5,0}
 \newcommand{\todo}[1]{\textsf{\textbf{\textcolor{Orange}{[[#1]]}}}}
 \newcolumntype{S}{>{\centering\arraybackslash} m{.4\linewidth} }
+\newcolumntype{Q}[1]{>{\centering\arraybackslash} m{#1} }
 
 %
 %  Convenience commands for references
@@ -91,19 +92,10 @@ The structure of the kernel is very modular such that each user can tailor it to
 \cite{she:kernel:2010} has shown that the whole kernel is composed of almost 5500 features, of which 89\% are user-selectable. Thus, the variation space is huge
 and the configuration process requires a broad computer knowledge. Users can configure the kernel either by manually editing the \textsf{.config} file or by
 using some configuration tool (i.e. \textsf{menuconfig, xconfig, gconfig}). The first option is discouraged, because it is very error-prone due to lack of
-automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process.
-
-Existing configuration tools have been evolving for over a decade, but the progress is reasonably slow compared to other parts of the kernel. Usability seems to
-have a low priority on developers' task lists. To address this issue, we started a course project aimed at making the configuration process easier and more
-intuitive for Linux enthusiasts. The project went through three major stages as shown in Figure \ref{fig:flow}. First, we carried out an initial user study
-to identify major usability issues of the current Linux kernel configuration tools. We then proposed some alternative mockup designs based on the feedback we
-got from the participants. Second, we carried out a user study to get comments and constructive feedback on the various design mockups we had for our tool
-prototype. According to the feedback, we reflected user suggestions and remarks in the implementation of the prototype. Finally, we did a final user study to
-evaluate our prototype and compare it to \textsf{xconfig}. General reactions of the test group were positive and participants saw the new tool as an improvement
-over the standard tools as it is simple, intuitive to use. In addition, the participants of our final user study appreciated the two-way navigation: free
-navigation and wizard-based navigation. The participants also liked the statistics panel because it gave them an idea of how their current selections reflect on
-the overall status of the kernel that will be configured using the generated configuration file. We believe that our findings will help in creating better
-configuration applications not only for the Linux kernel, but also for other kinds of variability models.
+automated constraint validation/propagation. Using a configurator is a better solution, but it is still a laborious process. Although existing configuration
+tools have been evolving for over a decade, the progress is reasonably slow compared to other parts of the kernel. Usability seems to have a low priority on
+developers' task lists. To address this issue, we started a course project aimed at making the configuration process easier and more intuitive for Linux
+enthusiasts.
 
 \begin{figure*}[!t]
  \centering
@@ -111,6 +103,29 @@ configuration applications not only for the Linux kernel, but also for other kin
  \caption{Different project stages}
 \label{fig:flow}
 \end{figure*}
+
+The project went through three major stages as shown in Figure \ref{fig:flow}. First, we carried out an initial user study to identify major usability issues of
+the current Linux kernel configuration tools. We then proposed some alternative mockup designs based on the feedback we got from the participants. Second, we
+carried out a user study to get comments and constructive feedback on the various design mockups we had for our tool prototype. According to the feedback, we
+reflected user suggestions and remarks in the implementation of the prototype. Finally, we did a final user study to evaluate our prototype and compare it to
+\textsf{xconfig}. General reactions of the test group were positive and participants saw the new tool as an improvement over the standard tools as it is simple,
+intuitive to use. In addition, the participants of our final user study appreciated the two-way navigation: free navigation and wizard-based navigation. The
+participants also liked the statistics panel because it gave them an idea of how their current selections reflect on the overall status of the kernel that will
+be configured using the generated configuration file. We believe that our findings will help in creating better configuration applications not only for the
+Linux kernel, but also for other kinds of variability models.
+
+\begin{table*}[!t]
+\centering
+\begin{tabular*}{\textwidth}{Q{1.5cm} Q{5.5cm} Q{2.5cm} Q{4cm} Q{2.5cm}}
+\toprule
+Participant Code & Experience with configuration tools & Initial User Study & Design Mockups Study & Final User Study \\
+\midrule
+RR & windows and mac and xconfig \linebreak basic os options & ok & ok & ok \\
+\bottomrule
+\end{tabular*}
+\caption{An overview of participants in our user studies}
+\label{tab:overviewpart}
+\end{table*}
 
 The rest of this paper is organized as follows. We first describe the problem domain. We then present the results of our initial user studies of current tools
 and design mockups. Afterwards, we explain how we reached the design of our tool prototype. We then present the results of our final user study to evaluate our
