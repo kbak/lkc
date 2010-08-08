@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{multirow}
 
 \newcommand{\docTitle}{Improving Usability of the Linux Kernel Configuration Tools}
 \newcommand{\docKeywords}{usability, linux, kernel, configuration}
@@ -114,19 +115,6 @@ participants also liked the statistics panel because it gave them an idea of how
 be configured using the generated configuration file. We believe that our findings will help in creating better configuration applications not only for the
 Linux kernel, but also for other kinds of variability models.
 
-\begin{table*}[!t]
-\centering
-\begin{tabular*}{\textwidth}{Q{1.5cm} Q{5.5cm} Q{2.5cm} Q{4cm} Q{2.5cm}}
-\toprule
-Participant Code & Experience with configuration tools & Initial User Study & Design Mockups Study & Final User Study \\
-\midrule
-RR & windows and mac and xconfig \linebreak basic os options & ok & ok & ok \\
-\bottomrule
-\end{tabular*}
-\caption{An overview of participants in our user studies}
-\label{tab:overviewpart}
-\end{table*}
-
 The rest of this paper is organized as follows. We first describe the problem domain. We then present the results of our initial user studies of current tools
 and design mockups. Afterwards, we explain how we reached the design of our tool prototype. We then present the results of our final user study to evaluate our
 tool in comparison to \textsf{xconfig}. We then discuss possible future work. Finally, we present some related work and end the paper by some concluding
@@ -162,38 +150,97 @@ are often overwhelmed by the number of available options and required knowledge.
 initial study on a group of Linux users.
 
 \section{User Studies}\label{sec:userstudies}
+Througout the three user studies we carried out, we had eight participants. Six of which participated in the initial user study, seven in the design mockups
+evaluation study, and five in the final user study. Table \ref{tab:overviewpart} gives an overview of the participants of our user studies, their previous
+experience with system configuration tools and the studies they participated in.
+
+\begin{table*}[!t]
+\centering
+\begin{tabular*}{\textwidth}{Q{2.73cm} Q{1.5cm} Q{2.5cm} Q{2cm} Q{2cm} Q{2.5cm} Q{2cm}}
+\toprule
+\multirow{2}{*}{Participant Code} & \multicolumn{3}{c}{Experience with OS configuration tools} & \multicolumn{3}{c}{User Studies} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7}
+& Used Before? & Examples & Purpose & Initial User Study & Design Mockups Study & Final User Study \\ \midrule
+P1 & \checkmark & Windows, Mac and xconfig & basic OS options & \checkmark & \checkmark & \checkmark \\ \midrule
+P2 & \checkmark & Windows, Mac and Linux & basic OS options & \checkmark & \checkmark & \checkmark \\ \midrule
+P3 & \checkmark & Windows & basic OS options & \checkmark & \checkmark & \checkmark \\ \midrule
+P4 & \checkmark & Windows, Mac and Linux & basic OS options & - & - & \checkmark \\ \midrule
+P5 & - & - & - & - & \checkmark & - \\ \midrule
+P6 & \checkmark & Windows & configure control panel options & \checkmark & \checkmark & \checkmark \\ \midrule
+P7 & \checkmark & Windows, Linux & configure control panel options, compile new Linux kernels (using menuconfig) & \checkmark & \checkmark & - \\ \midrule
+P8 & \checkmark & Windows & configure control panel options & \checkmark & \checkmark & - \\
+\bottomrule
+\end{tabular*}
+\caption{An overview of the participants in our user studies}
+\label{tab:overviewpart}
+\end{table*}
 
 \subsection{Initial User Study}
 % initial study
-In the study, six participants were asked to statically configure the Linux kernel for a popular laptop for typical home or office use. They used the standard
-\textsf{xconfig} tool that comes with the Linux kernel. \textsf{xconfig} presents a list of options in a tree structure composed of categories and options. A
-person succeeded if the new kernel was ready to play music and movies, connect to Ethernet, use WiFi, memory cards, USB devices, Bluetooth, and CD/DVD. This
-scenario seems reasonable, because in many Linux distributions users have to fine-tune their configurations to make the whole system work as expected. None
-of the subjects succeeded in completing the task without asking us for further assistance. We observed many problems that people faced during the configuration
-process. It is worth noting that our participants had previous experience with Linux, and claimed to be advanced computer users. During the study, we were also
-interested in how they use current kernel configuration tools (e.g. \textsf{xconfig}), and how people configure software in general. Our findings are summarized
-in several categories:
+The six users who participated in this study were divided into two groups, each was asked to statically configure the Linux kernel to support certain machine
+hardware. The first group of users (P1, P2, and P3) was asked to configure a Linux kernel that would run on a Lenovo T500 laptop with the following hardware
+installed: Intel Core 2 Duo processor, 2.5GB RAM, SATA HDD, Intel network card and WIFI + Bluetooth, Ricoh card reader, and DVD+/-RW. The task for this group
+was attempted on a laptop with the same previous specifications, and running Arch Linux as the primary OS. On the other hand, the second group of users (P6, P7,
+and P8) was asked to configure a Linux kernel that would run on a desktop machine with the following hardware installed: ATI Technologies Inc SB700/SB800 USB
+controller, ATI Technologies Inc Sbx00 Azalia (Intel HDA) audio device, ATI Technologies Inc Radeon 3100 graphics card, Realtek RTL8111/8168B PCI Express
+Gigabit Ethernet Controller (rev 02), and 4GB of RAM. The task for this group was attempted on a desktop with the same previous specifications, and running
+Ubuntu 10.04 Lucid Lynx. This study was carried out in the same lab environment where the participants usually work (university labs).
+
+Both groups used the standard \textsf{xconfig} tool that comes with the Linux kernel. \textsf{xconfig} presents a list of options in a tree structure composed
+of categories and options. A person succeeded if the new kernel was ready to play music and movies, connect to Ethernet, use WiFi, memory cards, USB devices,
+Bluetooth, and CD/DVD. This scenario seems reasonable, because in many Linux distributions users have to fine-tune their configurations to make the whole system
+work as expected. None of the subjects succeeded in completing the task without asking us for further assistance. We observed many problems that people faced
+during the configuration process. It is worth noting that our participants had previous experience with Linux, and claimed to be advanced computer users. During
+the study, we were also interested in how they use current kernel configuration tools (e.g. \textsf{xconfig}), and how people configure software in general. Our
+findings can be categorized as follows:
+
+
+\begin{figure*}[!t]
+ \centering
+ \begin{tabular}[textwidth]{Q{0.5\textwidth}Q{0.5\textwidth}}
+ \begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/xconfigmenu} \\
+  (a) \\
+ \end{tabular}
+  & 
+\begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/xconfigoption} \\
+  (b) \\
+ \end{tabular} \\
+ \begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/xconfigsearch} \\
+  (c) \\
+ \end{tabular}
+  & 
+\begin{tabular}{c}
+  \includegraphics[scale=0.25,keepaspectratio=true]{figs/xconfigconfig} \\
+  (d) \\
+ \end{tabular}
+\end{tabular}
+\caption{\textsf{xconfig} usability problems}
+\label{fig:xconfig}
+\end{figure*}
 
 \begin{description}
   \item[Menu hierarchy]
-All participants had problems with selecting drivers for the laptop's hardware. First of all, the tool showed the whole menu hierarchy, and people said they
-were overwhelmed by thousands of options. Several of them started by collapsing all menus such that only top-level categories were visible. Furthermore, the
-tree/sub-tree relationship was confusing. It was unclear whether marking the checkbox beside a parent option implies the selection of the required
-functionality or additional sub-options should be selected as well. To some, even such a basic action such as checking an option was confusing. Besides the
-familiar empty and filled checkboxes, the tool showed some boxes with dots inside. This meant that the option will be compiled, but as a dynamically loadable
-module.
+All participants had problems with selecting drivers for the given machine hardware. First of all, the tool showed the whole menu hierarchy, and people said
+they were overwhelmed by thousands of options (Figure \ref{fig:xconfig}a). Several of them started by collapsing all menus such that only top-level categories
+were visible. Furthermore, the tree/sub-tree relationship was confusing. It was unclear whether marking the checkbox beside a parent option implies the
+selection of the required functionality or additional sub-options should be selected as well. To some, even such a basic action such as checking an option was
+confusing. Besides the familiar empty and filled checkboxes, the tool showed some boxes with dots inside. This meant that the option will be compiled, but as a
+dynamically loadable module.
 
   \item[Option names and descriptions]
-Cryptic names were another source of problems. The existing infrastructure uses option names that make sense to programmers and kernel hackers, but are hard to
-understand for less experienced users. Unfortunately, the descriptions were not very helpful since they often explained implementation details instead of
-end-user functionality. Participants expected to see what an option means to them, and whether the device driver is appropriate for their hardware. In many
-cases, their expectations were not met.
+Cryptic names were another source of problems (Figure \ref{fig:xconfig}b). The existing infrastructure uses option names that make sense to programmers and
+kernel hackers, but are hard to understand for less experienced users. Unfortunately, the descriptions were not very helpful since they often explained
+implementation details instead of end-user functionality. Participants expected to see what an option means to them, and whether the device driver is
+appropriate for their hardware. In many cases, it was difficult for our participants to set the options compatible with the given hardware devices.
 
   \item[Searching]
 The huge hierarchy of options and cryptic names make it very hard to find a particular feature. All participants used the search option in \textsf{xconfig}.
-Searching worked very poorly since feature descriptions were not included in the search space of the tool. People expressed their frustration and often used
-Google to match modules with hardware, and later select the module in \textsf{xconfig}. Google was also used to find a list of the drivers required by the
-laptop. For all users, querying a web search engine was easier than running system tools to discover hardware devices.
+Searching worked very poorly since feature descriptions were not included in the search space of the tool (Figure \ref{fig:xconfig}c). People expressed their
+frustration and often used Google to match modules with hardware, and later select the module in \textsf{xconfig}. Google was also used to find a list of the
+drivers required by the laptop. For all users, querying a web search engine was easier than running system tools to discover hardware devices.
 
   \item[Configuration]
 We carefully observed how users used current tools to configure a large piece of software. Most of them were jumping between different categories as they tried
@@ -237,12 +284,12 @@ user at that time to show the progress of these processes. Figure \ref{fig:splas
 \label{fig:splash}
 \end{figure*}
 
-We carried out a second user study that included six participants. The aim of this study was to show the participants those mockup designs and get feedback from
-them regarding which aspects in those designs were appealing to them, and which were not. That study led us to draw the following conclusions:
+We carried out a second user study that included seven participants (P1, P2, P3, P5, P6, P7, and P8) to get feedback which aspects in our design mockups were
+appealing to them, and which were not. That study led us to draw the following conclusions:
 \begin{enumerate}
  \item Users always like to know what is going on. In other words, they did care about getting more information about what the tool is doing while the progress
 bars are being filled up.
- \item Users appreciate access to more information, but prefer such information to be displayed only when requested rather than by default.
+ \item Although users appreciate access to more information, they do not prefer such information to be displayed by default.
  \item It is highly desirable to have the tool report any crashes that occur during the hardware detection process.
 \end{enumerate}
 
@@ -255,7 +302,7 @@ users allowed us to deduce the following:
  \item The fewer the number of categories were, the easier it was for the users to find features.
  \item Some users did not like the wizard-based design (Figure \ref{fig:lkc-tool}d) because it did not offer easy navigation through features and did not
 provide a search feature.
- \item Most users liked the fact that they were presented by a summary of the configuration file at the end of the process with the ability to review it and
+ \item Most users liked the fact that they were presented with a summary of the configuration file at the end of the process with the ability to review it and
 maybe modify it before quitting the application.
  \item Although many users were not in favor of the wizard-based design, they did like the question format that was presented in that design. The reason is
 that it gave them a better understanding of the effect of selecting/deselecting features.
@@ -359,7 +406,7 @@ our github repository \cite{git-lkc:2010}.
 
 \begin{figure*}[!t]
  \centering
- \begin{tabular}{SS}
+ \begin{tabular}{Q{0.5\textwidth}Q{0.5\textwidth}}
  \begin{tabular}{c}
   \includegraphics[scale=0.25,keepaspectratio=true]{figs/lkc-final1} \\
   (a) \\
@@ -384,12 +431,18 @@ our github repository \cite{git-lkc:2010}.
 \end{figure*}
 
 \section{Evaluation}\label{sec:evaluation}
-We carried out a final user study to evaluate the usability of our tool prototype and compare it to \textsf{xconfig}. We had two option to do this study. The
-first option was to provide the participants with our prototype, a list of desired kernel features and a list of hardware to be supported. We then ask the users
-to configure a kernel using our prototype to support such configuration. The disadvantage of this approach is that we will not get to compare our prototype
-with the currently available kernel configuration tools (e.g. \textsf{xconfig}). The other approach was to provide the participants of our study with both
-tools, our prototype and \textsf{xconfig}. We then provide them with the same information as in the first option. However, this time we can compare the
-usability of our prototype with that of \textsf{xconfig}. We opted for the second approach.
+We carried out a final user study to evaluate the usability of our tool prototype and compare it to \textsf{xconfig}. We had two options to do this study. The
+first option was to provide the participants with our prototype, a list of desired kernel features and a list of hardware to be supported. We would then ask the
+users to configure a kernel using our prototype to support such configuration. The disadvantage of this approach is that we will not get to compare our
+prototype with the currently available kernel configuration tools (e.g. \textsf{xconfig}). The other approach was to provide the participants of our study with
+both tools, our prototype and \textsf{xconfig}. We would then provide them with the same information as in the first option. However, this way we can compare
+the usability of our prototype with that of \textsf{xconfig}. We opted for the second approach.
+
+We were able to get five users (P1, P2, P3, P4, and P6) to participate in our final user study. Each one was presented with a usage scenario that involved
+configuring a Linux kernel to support a machine that has the following hardware installed: ATI Technologies Inc SB700/SB800 USB controller, ATI Technologies Inc
+Sbx00 Azalia (Intel HDA) audio device, ATI Technologies Inc Radeon 3100 graphics card, Realtek RTL8111/8168B PCI Express Gigabit Ethernet Controller (rev 02),
+and 5GB of RAM. Each user had to configure the kernel using two tools: \textsf{xconfig} and our prototype. Users (P1, P3) used \textsf{xconfig} first, while
+users (P2, P4, P6) used our prototype first. Each user spent an average of 15-20 minutes using each tool.
 
 \subsection{Findings}
 \subsubsection{\textsf{xconfig}}
@@ -429,6 +482,19 @@ will support his machine usage and hardware.
 Although this scenario seems to reduce the bias as we expected, one user did note that the study was biased to our tool. However, from the comments of that
 user we got that the reason behind such claim is the question format followed by our tool. As we previously mentioned in Section \ref{sec:userstudies}
 question-based configuration usually gives the user a better understanding of the whole process.
+
+\subsection{Limitations}
+The main focus of our project is to design a Linux kernel configuration tool aiming at resolving the usability issues that users experience with current tools.
+Therefore, implementing all possible features in such tool was not as important as the process of designing the user interface. As a result, we decided not to
+implement the hardware autoconfiguration part of the tool although it can be implemented using some of the currently existing tools (e.g. \textsf{lspci},
+\textsf{lsusb}, \textsf{lscpu}).
+
+Another limitation of our suggested design is how scalable it is. In other words, our prototype implementation only offers a subset of the options that are
+available to configure a Linux kernel. However, the tool should be capable of offering all the options a user might require. One possible approach is to ask the
+use to select a usage profile (e.g. laptop, desktop, server, etc) once the tool is launched. The options that will be presented by the tool will be filtered out
+accordingly. If the user would like to have access to an option that is not presented by the tool, it can be made available through the tool's search box. Such
+information should definitely be included in the documentation and the help of the tool. This approach however requires doing more user studies to come up with
+a set of usage profiles that represent most of our target user base.
 
 \section{Future Work}\label{sec:futurework}
 We got a very rich feedback from the participants of our final user study about the design of our prototype. Implementing some of those suggestions would add
@@ -487,13 +553,6 @@ System configuration is a necessary, but difficult process. Our tool tried to si
 of users (novice and intermediate Linux users). \cite{spillers:config:2010} suggests a similar approach. The author goes even further saying that software shall
 configure itself automatically. However, making a configuration-free kernel on any platform seems rather impossible due to requiring extra knowledge that is not
 included in configurators.
-
-% OSS usability
-Free and Open Source Software usability has recently got attention from both academia and the FOSS community. Several researchers
-\cite{nichols:usability:2003, andreasen:usability:2006} tried to understand why FOSS developers traditionally gave low priority to usability issues. Other work
-studied particular projects such as Apache \cite{mockus:apache:2000} or Mozilla \cite{mockus:mozilla:2002} to learn about social interactions, FOSS culture and
-the way the software is developed. Cooperation of the two communities allows the usability community to understand FOSS developers' attitudes. FOSS community,
-on the other hand, benefits from learning usability-related knowledge and evaluation techniques.
 
 \section{Conclusion}\label{sec:conclusion}
 The Linux kernel is a complex piece of software that is highly customizable which might overwhelm novice and intermediate users. Currently available tools do
