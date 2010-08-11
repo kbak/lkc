@@ -1,21 +1,21 @@
 <html>
 <h1>Improving Usability of the Linux Kernel Configuration Tools</h1>
 
-<p>By Karim Ali & Kacper Bak</p>
+<p>By Karim Ali &amp; Kacper Bak</p>
 <p>July 29th, 2010</p>
 
 <p>
-Users usually configure a customized Linux kernel to support specific hardware requirements or particular needs. Unfortunately, configuring a Linux kernel has always been a challenge for non-expert users due to several reasons. To better understand those reasons, we carried out a user study to identify major usability issues with the current Linux kernel configuration tools (mainly <a href="http://en.wikipedia.org/wiki/Xconfig">xconfig</a>). We could conclude from this study that those usability issues can be summarized as follows:
+Users usually configure a customized Linux kernel to support specific hardware requirements or particular needs. Unfortunately, configuring a Linux kernel has always been a challenge for non-expert users due to several reasons. To better understand those reasons, we carried out an initial user study to identify major usability issues with the current Linux kernel configuration tools (mainly <a href="http://en.wikipedia.org/wiki/Xconfig">xconfig</a>). We conclude from this study that these usability issues can be summarized as follows:
 	<ul>
 		<li><b>Overwhelming menu hierarchy.</b> Menus should be as simple as possible. There are far too many options that could be reduced automatically if the configuration tool targeted a specific user group (novice and intermediate users) and had good reasoning capabilities.</li>
 		<li><b>Cryptic option names and descriptions.</b> The existing infrastructure uses option names that reflect low-level implementation details instead of end-user functionality.</li>
-		<li><b>Poor searching capabilities.</b> Searching worked very poorly since option descriptions were not included in the search space desipte the important of having useful search tools as the number of configuration options grows.</li>
+		<li><b>Poor searching capabilities.</b> Searching worked very poorly since option descriptions were not included in the search space.  Having useful search tools becomes increasingly important as the number of configuration options grows.</li>
 		<li><b>Lack of automated hardware detection.</b> Kernel autoconfiguration is important since the majority of kernel options are related to hardware drivers that should be automatically detected by such tool.</li>
 	</ul>
 </p>
 
 <p>
-So, can we do a better job? Well, to answer that question, we designed several mockups for our tool prototype, <a href="http://github.com/kbak/lkc/tree/master/mockups/"><b>lkc</b></a>, that reflect the feedback we got from the participants of our initial user study. We then carried out a second user study aimed at getting feedback from our participants about those design mockups and how well/bad they meet their expectations for a Linux kernel configuration tool. We were able to conclude the following:
+So, can we do a better job? Well, to answer that question, we designed several mockups for our tool prototype, <a href="http://github.com/kbak/lkc/tree/master/mockups/"><b>lkc</b></a>, that reflect the feedback we got from the participants of our initial user study. We then carried out a second user study to get feedback from our participants about those design mockups, and whether they meet their expectations for a Linux kernel configuration tool. We were able to conclude the following:
 	<ul>
 		<li>Users always like to know <b>what is going on</b>. In other words, they did care about getting more information about what the tool is doing while the progress bars are being filled up.</li>
 		<li>Although users appreciate <b>access to more information</b>, they do not prefer such information to be displayed by default.</li>
@@ -24,7 +24,7 @@ So, can we do a better job? Well, to answer that question, we designed several m
 		<li><b>Easy navigation</b> through the various categories of features was also on top of their desirable design features.</li>
 		<li>The <b>fewer</b> the number of <b>categories</b> were, the <b>easier</b> it was for the users <b>to find</b> features.</li>
 		<li>Most users like having a <b>summary</b> of the configuration file at the end of the process with the ability to <b>review/modify</b> it before quitting the application.</li>
-		<li>Many users were n favor of the <b>question format</b> that was presented in one of the design mockups. The reason is that it gave them a better understanding of the effect of selecting/deselecting features.</li>
+		<li>Many users were in favor of the <b>question format</b> that was presented in one of the design mockups. The reason is that it gave them a better understanding of the effect of selecting/deselecting features.</li>
 	</ul>
 </p>
 
@@ -46,17 +46,17 @@ In order to put <b>lkc</b> under test, we carried out a final user study to know
 </p>
 
 <p>
-On the other hand, some users experienced some difficulties using <b>lkc</b>.
+On the other hand, some users experienced some difficulties using <b>lkc</b>. These difficulties can be summarized as follows:
 	<ul>
-		<li>One user did not know the <b>meaning of features in the statistics panel</b>.</li>
-		<li>Two users did not quite understand <b>what stability means</b> in <b>lkc</b>.</li>
+		<li>One user did not know the <b>meaning of "features" in the statistics panel</b>.</li>
+		<li>Two users did not quite understand <b>what "stability" means</b> in <b>lkc</b>.</li>
 		<li>The option <b>minimal configuration</b> was rather confusing for one of our users.</li>
-		<li>One of the users commented on the fact that the study we carried on was <b>biased</b> because it was easy to accomplish the task just by answering the questions provided by the tool.</li>
+		<li>One of the users commented on the fact that the study we carried out was <b>biased</b> because it was easy to accomplish the task by just answering the questions provided by the tool.</li>
 	</ul>
 </p>
 
 <p>
-We only took the first steps and we have many steps ahead of us to be able to claim that the problem is solved (partially at least). However, we think we are on the right track. Additionaly, we got a very rich feedback from the participants of our final user study about the design of our prototype. Implementing some of those suggestions would add more value to the prototype. The design suggestions include the following:
+In this study, we only took the first steps and we still have many steps ahead of us to be able to claim that the problem is solved (partially at least). However, we think we are on the right track. Additionaly, we got a very rich feedback from the participants of our final user study about the design of our prototype. Implementing some of those suggestions would add more value to the prototype. The design suggestions include the following:
 	<ul>
 		<li>Provide progressive disclosure to accommodate both advanced and less experienced users.</li>
 		<li>Have the ability to re-detect hardware.</li>
